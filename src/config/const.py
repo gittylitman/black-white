@@ -66,3 +66,4 @@ class Departments(Enum):
 class TEXTS(Enum):
     CHOOSE_DEPARTMENT = "Choose Department:"
     CHOOSE_FOLDER = "Choose Folder:"
+    NO_FOLDERS_ALERT = "No folders available."
