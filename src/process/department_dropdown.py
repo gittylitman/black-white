@@ -18,13 +18,10 @@ def get_department(env: str, run_type: Run_Type) -> Departments:
 def drop_down(
     page: ft.Page,
     on_folder_selected: Any,
-    env: str = "dev",
     run_type: Run_Type = Run_Type.BLACK
 ) -> ft.Container:
-    ENVIRONMENT_TYPE = get_env_instance().ENVIRONMENT_TYPE
-    department = get_department(ENVIRONMENT_TYPE, run_type)
-    bucket = department.department_bucket
-
+    
+    bucket = get_bucket_by_run_type(run_type)
     result_container = Container()
     selected_folder_text = Text("")
 
@@ -79,3 +76,9 @@ def drop_down(
         alignment=ft.alignment.center,
         height=400,
     )
+
+def get_bucket_by_run_type(run_type):
+    ENVIRONMENT_TYPE = get_env_instance().ENVIRONMENT_TYPE
+    department = get_department(ENVIRONMENT_TYPE, run_type)
+    bucket = department.department_bucket
+    return bucket
