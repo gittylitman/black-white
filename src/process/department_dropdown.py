@@ -1,5 +1,6 @@
 from typing import Any
 
+from modules.set_system_variable import get_env_instance
 from classes.column import Column
 from classes.text import Text
 from classes.container import Container
@@ -20,7 +21,8 @@ def drop_down(
     env: str = "dev",
     run_type: Run_Type = Run_Type.BLACK
 ) -> ft.Container:
-    department = get_department(env, run_type)
+    ENVIRONMENT_TYPE = get_env_instance().ENVIRONMENT_TYPE
+    department = get_department(ENVIRONMENT_TYPE, run_type)
     bucket = department.department_bucket
 
     result_container = Container()
