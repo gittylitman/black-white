@@ -15,6 +15,14 @@ def get_department(env: str, run_type: Run_Type) -> Departments:
             return dept
     raise ValueError("Department not found")
 
+
+def get_bucket_by_run_type(run_type):
+    ENVIRONMENT_TYPE = get_env_instance().ENVIRONMENT_TYPE
+    department = get_department(ENVIRONMENT_TYPE, run_type)
+    bucket = department.department_bucket
+    return bucket
+
+
 def drop_down(
     page: ft.Page,
     on_folder_selected: Any,
@@ -76,9 +84,3 @@ def drop_down(
         alignment=ft.alignment.center,
         height=400,
     )
-
-def get_bucket_by_run_type(run_type):
-    ENVIRONMENT_TYPE = get_env_instance().ENVIRONMENT_TYPE
-    department = get_department(ENVIRONMENT_TYPE, run_type)
-    bucket = department.department_bucket
-    return bucket
