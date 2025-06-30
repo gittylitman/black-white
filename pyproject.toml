@@ -15,7 +15,8 @@ classifiers = [
     "Private :: Do Not Upload"
 ]
 dependencies = [
-    "flet==0.24.1"
+    "flet==0.24.1",
+    "python-dotenv"
 ]
 [tool.setuptools.packages.find]
 where = ["src"]
