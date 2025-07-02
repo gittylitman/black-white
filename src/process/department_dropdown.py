@@ -29,36 +29,53 @@ def dropdown(
     run_type: Run_Type = Run_Type.BLACK
 ) -> Container:
     
-    bucket = get_bucket_by_run_type(run_type)
+    try:
+        bucket = get_bucket_by_run_type(run_type)
+    except ValueError as e:
+        page.snack_bar = ft.SnackBar(Text(f"Error: {str(e)}"))
+        page.snack_bar.open = True
+        page.update()
+        return Container()
+    
     result_container = Container()
     selected_folder_text = Text("")
+    selected_folder = ""
 
     def get_folders_list(bucket: str):
         # TODO: implement actual fetching
         return  ['folder a', 'folder b', 'folder c', 'folder d']
 
     def on_change_folder(e: ft.ControlEvent, selected_bucket: str):
+        nonlocal selected_folder
         selected_folder = e.control.value
         if selected_folder:
             on_folder_selected(f"{selected_bucket}/{selected_folder}")
             page.update()
 
     def on_change_dropdown(e: ft.ControlEvent):
+        nonlocal selected_folder
+        selected_folder = ""
         selected_bucket = e.control.value
-        folders = get_folders_list(selected_bucket)
-        if not folders:
-            selected_folder_text.value = TEXTS.NO_FOLDERS_ALERT.value
-            result_container.content = None
+        on_folder_selected(f"{selected_bucket}/{selected_folder}")
+        try:
+            folders = get_folders_list(selected_bucket)
+            if not folders:
+                selected_folder_text.value = TEXTS.NO_FOLDERS_ALERT.value
+                result_container.content = None
+                page.update()
+                return
+            folder_dropdown = Dropdown(
+                label=TEXTS.CHOOSE_FOLDER.value,
+                options=[ft.dropdown.Option(folder) for folder in folders],
+                width=300,
+                on_change=lambda e: on_change_folder(e, selected_bucket)
+            )
+            result_container.content = folder_dropdown
             page.update()
-            return
-        folder_dropdown = Dropdown(
-            label=TEXTS.CHOOSE_FOLDER.value,
-            options=[ft.dropdown.Option(folder) for folder in folders],
-            width=300,
-            on_change=lambda e: on_change_folder(e, selected_bucket)
-        )
-        result_container.content = folder_dropdown
-        page.update()
+        except Exception as ex:
+            page.snack_bar = ft.SnackBar(Text(f"Error fetching folders: {str(ex)}"))
+            page.snack_bar.open = True
+            page.update()
 
     department_dropdown = Dropdown(
         label=TEXTS.CHOOSE_DEPARTMENT.value,
