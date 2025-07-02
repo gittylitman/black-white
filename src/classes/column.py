@@ -14,6 +14,7 @@ class Column(ft.Column):
         scroll: ft.ScrollMode = None,
         height: Optional[int] = None,
         width: Optional[int] = None,
+        spacing: Optional[int] = None,
     ) -> None:
         super().__init__()
         self.controls = controls
@@ -24,3 +25,4 @@ class Column(ft.Column):
         self.scroll = scroll
         self.height = height
         self.width = width
+        self.spacing = spacing

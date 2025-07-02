@@ -52,10 +52,10 @@ class DepartmentsBucketsBlackProd(Enum):
         
         
 class Departments(Enum):
-    BLACK_PROD = (DepartmentsBucketsBlackProd, "prod", Run_Type.BLACK)
-    BLACK_DEV = (DepartmentsBucketsBlackDev, "dev", Run_Type.BLACK)
-    WHITE_DEV = (DepartmentsBucketsWhiteDev, "dev", Run_Type.WHITE)
-    WHITE_PROD = (DepartmentsBucketsWhiteProd, "prod", Run_Type.WHITE)
+    BLACK_PROD = (DepartmentsBucketsBlackProd, "PROD", Run_Type.BLACK)
+    BLACK_DEV = (DepartmentsBucketsBlackDev, "DEV", Run_Type.BLACK)
+    WHITE_DEV = (DepartmentsBucketsWhiteDev, "DEV", Run_Type.WHITE)
+    WHITE_PROD = (DepartmentsBucketsWhiteProd, "PROD", Run_Type.WHITE)
     
     def __init__(self, department_bucket, env, run_type) -> None:
         self.department_bucket = department_bucket
@@ -66,4 +66,9 @@ class Departments(Enum):
 class TEXTS(Enum):
     CHOOSE_DEPARTMENT = "Choose Department:"
     CHOOSE_FOLDER = "Choose Folder:"
+    CHOOSE_FILES = "Choose files:"
     NO_FOLDERS_ALERT = "No folders available."
+    NO_FILES_ALERT = "No file selected."
+    NO_FOLDER_OR_BUCKET = "No bucket or folder selected."
+    UPLOAD_BUTTON = "Upload"
+    DOWNLOAD_BUTTON = "Download"
