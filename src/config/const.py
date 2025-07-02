@@ -72,3 +72,4 @@ class TEXTS(Enum):
     NO_FOLDER_OR_BUCKET = "No bucket or folder selected."
     UPLOAD_BUTTON = "Upload"
     DOWNLOAD_BUTTON = "Download"
+    INVALID_FOLDER = "Invalid folder or bucket"
