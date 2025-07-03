@@ -72,6 +72,7 @@ class TEXTS(Enum):
     NO_FOLDER_OR_BUCKET = "No bucket or folder selected."
     UPLOAD_BUTTON = "Upload"
     DOWNLOAD_BUTTON = "Download"
+    BACK_TO_MAIN = "Back to Main"
     INVALID_FOLDER = "Invalid folder or bucket"
     PAGE_TITLE = "שער האריות"
     BASIC_TITLE = "ברוך הבא לשער האריות"

@@ -1,5 +1,5 @@
 from classes.text import Text
-from classes.buttons import IconButton
+from classes.buttons import IconButton, ElevatedButton
 from classes.file_picker import FilePicker
 from classes.column import Column
 from utils.basic_function import show_message
@@ -85,6 +85,14 @@ def upload_files(page: ft.Page, run_type: Run_Type)-> Column:
         on_click=upload_file,
         width=200
     )
+    
+    from process.starting_point import starting_point
+
+    back_button = ft.ElevatedButton(
+        text=TEXTS.BACK_TO_MAIN.value,
+        on_click=lambda e: starting_point(page),
+        width=200
+    )
 
     return Column(
         controls=[
@@ -92,7 +100,8 @@ def upload_files(page: ft.Page, run_type: Run_Type)-> Column:
             file_label,
             file_picker,
             department_dropdown,
-            upload_button
+            upload_button,
+            back_button
         ],
         spacing=20,
         alignment=ft.MainAxisAlignment.CENTER,
