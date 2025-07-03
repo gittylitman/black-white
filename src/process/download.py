@@ -1,0 +1,118 @@
+from classes.text import Text
+from process.department_dropdown import dropdown
+from classes.container import Container
+from classes.row import Row
+from classes.column import Column
+from classes.column import Column
+from config.const import TEXTS, Run_Type
+from utils.basic_function import show_message
+import flet as ft
+
+
+
+def download_files(page: ft.Page, run_type: Run_Type)-> Column:
+    """Creates a UI for downloading files from a specified bucket and folder."""
+    selected_files = []
+    bucket = ""
+    folder = ""
+    files = []
+    checkboxes = {}
+    checkbox_container = Container(width=300, height=200)
+    
+    def handle_folder_selection(selected_folder: str)-> None:
+        """Handles the selection of a folder and updates the file list."""
+        nonlocal bucket, folder, files,  checkboxes
+        try:
+            bucket, folder = selected_folder.split("/", 1)
+            checkboxes.clear()
+            checkbox_container.content = Row(controls=[])
+            
+            if bucket and folder:
+                files = get_files(bucket, folder)
+                update_checkboxes()
+                page.update()
+            page.update()
+        except ValueError:
+            show_message(page, TEXTS.INVALID_FOLDER.value, ft.colors.AMBER)
+
+    def update_checkboxes() -> None:
+        """Updates the checkbox container with the list of files."""
+        for file in files:
+            checkboxes[file] = ft.Checkbox(label=file, on_change=select_file)
+        checkbox_container.content = Row([Column(
+                        controls=list(checkboxes.values()),
+                        alignment=ft.MainAxisAlignment.START,
+                        scroll=ft.ScrollMode.AUTO,
+                        ),
+                    ],   
+                    alignment=ft.MainAxisAlignment.START,
+                    width=300,    
+                    scroll=ft.ScrollMode.AUTO)
+
+    def get_files(bucket: str, folder: str) -> list[str]:
+        """Fetches files from the specified bucket and folder."""
+        #TODO fetch files from bucket and folder.
+        return ["filewwwwwwwwwwwwwwwwwwwwwwwww1.txt", "file2.txt", "file3.txt", "file4.txt", "file5.txt", "file6.txt"]
+
+    department_dropdown = dropdown(page, handle_folder_selection, run_type=run_type)
+
+    def select_file(e) -> None:
+        """Updates the list of selected files based on checkbox states."""
+        nonlocal selected_files
+        selected_files = [file for file in files if checkboxes[file].value]
+        update_file_label(len(selected_files))
+        
+    def update_file_label(file_count: int) -> None:
+        """Updates the label showing the number of selected files."""
+        file_label.value = f"Selected {file_count} files."
+        page.update()    
+        
+
+    def download_file(e) -> None:
+        """Handles the file download action."""
+        try:
+            if validate_download():
+                 # TODO: Implement the file download logic here
+                page.update()
+            else:
+                show_alert()
+        except Exception as ex:
+            error_message = f"Error during download: {str(ex)}"
+            show_message(page, error_message, ft.colors.RED)
+    
+    def validate_download() -> bool:
+        """Validates the download action."""
+        return len(selected_files)>0 and bucket and folder
+
+    def show_alert() -> None:
+        """Shows an alert if the download validation fails."""
+        alert_message = TEXTS.NO_FOLDER_OR_BUCKET.value if not bucket or not folder else TEXTS.NO_FILES_ALERT.value
+        show_message(page, alert_message, ft.colors.AMBER)
+            
+    download_icon=ft.Icon(
+        color = ft.colors.LIGHT_BLUE_ACCENT_200,
+        name=ft.icons.ARROW_DOWNWARD,
+        size=70,
+    )
+
+    file_label = Text(TEXTS.CHOOSE_FILES.value, size=30)
+
+    download_button = ft.ElevatedButton(
+        text=TEXTS.DOWNLOAD_BUTTON.value ,
+        on_click=download_file,
+        width=200
+    )
+
+    column = Column(
+        controls=[
+            download_icon,
+            file_label,
+            department_dropdown,
+            checkbox_container,
+            download_button
+        ],
+        spacing=20,
+        alignment=ft.MainAxisAlignment.CENTER,
+        horizontal_alignment=ft.CrossAxisAlignment.CENTER
+    )    
+    return column

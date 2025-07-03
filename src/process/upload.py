@@ -1,8 +1,9 @@
 from classes.text import Text
 from classes.buttons import IconButton
 from classes.file_picker import FilePicker
-from process.department_dropdown import dropdown
 from classes.column import Column
+from utils.basic_function import show_message
+from process.department_dropdown import dropdown
 from config.const import TEXTS, Run_Type
 import flet as ft
 
@@ -56,21 +57,21 @@ def upload_files(page: ft.Page, run_type: Run_Type)-> Column:
             else:
                 show_alert()
         except Exception as ex:
-            page.snack_bar = ft.SnackBar(Text(f"Error during upload: {str(ex)}"))
-            page.snack_bar.open = True
-            page.update()
-    
+            error_message = f"Error during upload: {str(ex)}"
+            show_message(page, error_message, ft.colors.RED)
+        
+
+        
     def validate_upload() -> bool:
         return bool(selected_files["files"]) and bucket and folder
 
     def show_alert() -> None:
         alert_message = TEXTS.NO_FOLDER_OR_BUCKET.value if not bucket or not folder else TEXTS.NO_FILES_ALERT.value
-        page.snack_bar = ft.SnackBar(Text(alert_message))
-        page.snack_bar.open = True
-        page.update()
+        show_message(page, alert_message, ft.colors.AMBER)
             
     upload_icon_button=IconButton(
         icon=ft.icons.ARROW_UPWARD,
+        icon_color = ft.colors.LIGHT_BLUE_ACCENT_200,
         icon_size=70,
         tooltip=TEXTS.CHOOSE_FILES.value,
         on_click=lambda e: file_picker.pick_files(allow_multiple = True),
