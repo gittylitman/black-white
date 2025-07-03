@@ -33,7 +33,7 @@ def download_files(page: ft.Page, run_type: Run_Type)-> Column:
                 page.update()
             page.update()
         except ValueError:
-            show_message(page, TEXTS.INVALID_FOLDER.value, ft.colors.AMBER)
+            show_message(page, TEXTS.INVALID_FOLDER.value, ft.colors.ORANGE)
 
     def update_checkboxes() -> None:
         """Updates the checkbox container with the list of files."""
@@ -87,7 +87,7 @@ def download_files(page: ft.Page, run_type: Run_Type)-> Column:
     def show_alert() -> None:
         """Shows an alert if the download validation fails."""
         alert_message = TEXTS.NO_FOLDER_OR_BUCKET.value if not bucket or not folder else TEXTS.NO_FILES_ALERT.value
-        show_message(page, alert_message, ft.colors.AMBER)
+        show_message(page, alert_message, ft.colors.ORANGE)
             
     download_icon=ft.Icon(
         color = ft.colors.LIGHT_BLUE_ACCENT_200,
