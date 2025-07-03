@@ -2,14 +2,13 @@ from classes.text import Text
 from classes.buttons import IconButton
 from classes.file_picker import FilePicker
 from process.department_dropdown import dropdown
-from classes.container import Container
 from classes.column import Column
 from config.const import TEXTS, Run_Type
 import flet as ft
 
 
 
-def upload_files(page: ft.Page, run_type: Run_Type = Run_Type.BLACK)-> Column:
+def upload_files(page: ft.Page, run_type: Run_Type)-> Column:
     selected_files = {"files": []}
     bucket = ""
     folder = ""
@@ -30,7 +29,6 @@ def upload_files(page: ft.Page, run_type: Run_Type = Run_Type.BLACK)-> Column:
     file_picker = FilePicker(
         on_result=lambda e: select_file(e)
     )
-    page.overlay.append(file_picker)
 
     def select_file(e):
         if e.files:
@@ -91,6 +89,7 @@ def upload_files(page: ft.Page, run_type: Run_Type = Run_Type.BLACK)-> Column:
         controls=[
             upload_icon_button,
             file_label,
+            file_picker,
             department_dropdown,
             upload_button
         ],
