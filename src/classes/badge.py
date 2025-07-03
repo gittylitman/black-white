@@ -1,10 +1,5 @@
-from typing import Any, Optional
 import flet as ft
-from flet_core.alignment import Alignment
-from flet_core.control import Control, OptionalNumber
-from flet_core.ref import Ref
-from flet_core.text_style import TextStyle
-from flet_core.types import OffsetValue, PaddingValue
+from flet_core.control import OptionalNumber
 
 
 class Badge(ft.Badge):

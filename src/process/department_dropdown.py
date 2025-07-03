@@ -26,7 +26,7 @@ def get_bucket_by_run_type(run_type):
 def dropdown(
     page: ft.Page,
     on_folder_selected: Any,
-    run_type: Run_Type = Run_Type.BLACK
+    run_type: Run_Type
 ) -> Container:
     
     try:
@@ -95,9 +95,9 @@ def dropdown(
                 selected_folder_text
             ],
             spacing=20,
-            alignment=ft.MainAxisAlignment.CENTER,
+            alignment=ft.MainAxisAlignment.START,
             horizontal_alignment=ft.CrossAxisAlignment.CENTER
         ),
         alignment=ft.alignment.center,
-        height=400,
+        height=130,
     )

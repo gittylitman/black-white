@@ -3,33 +3,33 @@ from enum import Enum
         
 
 class Run_Type(Enum):
-    BLACK = "black"
-    WHITE = "white"
+    UPLOAD = "Upload"
+    DOWNLOAD = "Download"
     
     
-class DepartmentsBucketsWhiteDev(Enum):
+class DepartmentsBucketsUploadDev(Enum):
     WHITENING = ("הלבנה 9900", "sky-geo-dig-dev-t-lgupld-1")
     DRONES = ("רחפנים", "dig-drn-dev-t-lgupld")
     MAPPING = ("מיפוי", "dig-geo-dev-t-lgupld")
     SATELLITES = ("לווינות", "dig-sat-dev-t-lgupld")
         
-    def __init__(self, departement, bucket) -> None:
-        self.departement = departement
+    def __init__(self, department, bucket) -> None:
+        self.department = department
         self.bucket = bucket
         
         
-class DepartmentsBucketsWhiteProd(Enum):
+class DepartmentsBucketsUploadProd(Enum):
     WHITENING = ("הלבנה 9900", "sky-geo-dig-prd-t-lgupld-1")
     DRONES = ("רחפנים", "dig-drn-prd-t-lgupld")
     MAPPING = ("מיפוי", "dig-geo-prd-t-lgupld")
     SATELLITES = ("לווינות", "dig-sat-prd-t-lgupld")
         
-    def __init__(self, departement, bucket) -> None:
-        self.departement = departement
+    def __init__(self, department, bucket) -> None:
+        self.department = department
         self.bucket = bucket
     
     
-class DepartmentsBucketsBlackDev(Enum):
+class DepartmentsBucketsDownloadDev(Enum):
     WHITENING = ("הלבנה 9900", "sky-geo-dig-dev-t-lgdnld-1")
     DRONES = ("רחפנים", "dig-drn-dev-t-lgdnld")
     MAPPING = ("מיפוי", "dig-geo-dev-t-lgdnld")
@@ -40,7 +40,7 @@ class DepartmentsBucketsBlackDev(Enum):
         self.bucket = bucket
     
     
-class DepartmentsBucketsBlackProd(Enum):
+class DepartmentsBucketsDownloadProd(Enum):
     WHITENING = ("הלבנה 9900", "sky-geo-dig-prd-t-lgdnld-1")
     DRONES = ("רחפנים", "dig-drn-prd-t-lgdnld")
     MAPPING = ("מיפוי", "dig-geo-prd-t-lgdnld")
@@ -52,10 +52,10 @@ class DepartmentsBucketsBlackProd(Enum):
         
         
 class Departments(Enum):
-    BLACK_PROD = (DepartmentsBucketsBlackProd, "PROD", Run_Type.BLACK)
-    BLACK_DEV = (DepartmentsBucketsBlackDev, "DEV", Run_Type.BLACK)
-    WHITE_DEV = (DepartmentsBucketsWhiteDev, "DEV", Run_Type.WHITE)
-    WHITE_PROD = (DepartmentsBucketsWhiteProd, "PROD", Run_Type.WHITE)
+    BLACK_PROD = (DepartmentsBucketsDownloadProd, "PROD", Run_Type.DOWNLOAD)
+    BLACK_DEV = (DepartmentsBucketsDownloadDev, "DEV", Run_Type.DOWNLOAD)
+    WHITE_DEV = (DepartmentsBucketsUploadDev, "DEV", Run_Type.UPLOAD)
+    WHITE_PROD = (DepartmentsBucketsUploadProd, "PROD", Run_Type.UPLOAD)
     
     def __init__(self, department_bucket, env, run_type) -> None:
         self.department_bucket = department_bucket
