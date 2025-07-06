@@ -4,6 +4,7 @@ from classes.container import Container
 from classes.row import Row
 from classes.column import Column
 from classes.column import Column
+from classes.buttons import ElevatedButton
 from config.const import TEXTS, Run_Type
 from utils.basic_function import show_message
 import flet as ft
@@ -97,19 +98,28 @@ def download_files(page: ft.Page, run_type: Run_Type)-> Column:
 
     file_label = Text(TEXTS.CHOOSE_FILES.value, size=30)
 
-    download_button = ft.ElevatedButton(
+    download_button = ElevatedButton(
         text=TEXTS.DOWNLOAD_BUTTON.value ,
         on_click=download_file,
         width=200
     )
+    
+    from process.starting_point import starting_point
 
+    back_button = ElevatedButton(
+        text=TEXTS.BACK_TO_MAIN.value,
+        on_click=lambda e: starting_point(page),
+        width=200
+    )
+    
     column = Column(
         controls=[
             download_icon,
             file_label,
             department_dropdown,
             checkbox_container,
-            download_button
+            download_button,
+            back_button
         ],
         spacing=20,
         alignment=ft.MainAxisAlignment.CENTER,
