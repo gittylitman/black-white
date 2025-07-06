@@ -13,6 +13,7 @@ class Text(ft.Text):
         width: Optional[int] = None,
         color: ft.colors = None,
         rtl: bool = False,
+        elevation: Optional[int] = None
     ):
         super().__init__()
         self.value = text
@@ -22,3 +23,4 @@ class Text(ft.Text):
         self.width = width
         self.color = color
         self.rtl = rtl
+        self.elevation = elevation
