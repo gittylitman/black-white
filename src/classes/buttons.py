@@ -1,5 +1,5 @@
 from typing import Any, Callable, Optional
-
+from config.const import COLORS
 import flet as ft
 
 
@@ -15,14 +15,23 @@ class ElevatedButton(ft.ElevatedButton):
         height: float = DEFAULT_HEIGHT,
         disabled: bool = False,
         visible: bool = True,
+        icon: str = ""
     ) -> None:
-        super().__init__()
+        super().__init__(
+            bgcolor=COLORS.MAIN_COLOR.value,
+            color=ft.colors.WHITE
+        )
         self.text = text
         self.on_click = on_click
         self.width = width
         self.height = height
         self.disabled = disabled
         self.visible = visible
+        self.icon = icon
+        self.style=ft.ButtonStyle(
+            shape=ft.RoundedRectangleBorder(radius=10),
+            elevation=5,
+            )
 
 class Button(ft.CupertinoFilledButton):
     DEFAULT_WIDTH = 300

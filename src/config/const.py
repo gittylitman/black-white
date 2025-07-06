@@ -1,4 +1,5 @@
 from enum import Enum
+import flet as ft
 
         
 
@@ -72,6 +73,11 @@ class TEXTS(Enum):
     NO_FOLDER_OR_BUCKET = "No bucket or folder selected."
     UPLOAD_BUTTON = "Upload"
     DOWNLOAD_BUTTON = "Download"
+    BACK_TO_MAIN = "Back to Main"
     INVALID_FOLDER = "Invalid folder or bucket"
     PAGE_TITLE = "שער האריות"
     BASIC_TITLE = "ברוך הבא לשער האריות"
+    
+class COLORS(Enum):
+    MAIN_COLOR = ft.colors.BLUE_ACCENT_700
+    BACKGROUND_COLOR = ft.colors.GREY_300

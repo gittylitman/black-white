@@ -1,10 +1,10 @@
 from classes.text import Text
-from classes.buttons import IconButton
+from classes.buttons import IconButton, ElevatedButton
 from classes.file_picker import FilePicker
 from classes.column import Column
 from utils.basic_function import show_message
 from process.department_dropdown import dropdown
-from config.const import TEXTS, Run_Type
+from config.const import TEXTS, Run_Type, COLORS
 import flet as ft
 
 
@@ -70,8 +70,8 @@ def upload_files(page: ft.Page, run_type: Run_Type)-> Column:
         show_message(page, alert_message, ft.colors.ORANGE)
             
     upload_icon_button=IconButton(
-        icon=ft.icons.ARROW_UPWARD,
-        icon_color = ft.colors.LIGHT_BLUE_ACCENT_200,
+        icon=ft.icons.CLOUD_UPLOAD_OUTLINED,
+        icon_color = COLORS.MAIN_COLOR.value,
         icon_size=70,
         tooltip=TEXTS.CHOOSE_FILES.value,
         on_click=lambda e: file_picker.pick_files(allow_multiple = True),
@@ -80,9 +80,17 @@ def upload_files(page: ft.Page, run_type: Run_Type)-> Column:
 
     file_label = Text(TEXTS.CHOOSE_FILES.value, size=30)
 
-    upload_button = ft.ElevatedButton(
+    upload_button = ElevatedButton(
         text=TEXTS.UPLOAD_BUTTON.value ,
         on_click=upload_file,
+        width=200
+    )
+    
+    from process.starting_point import starting_point
+
+    back_button = ElevatedButton(
+        text=TEXTS.BACK_TO_MAIN.value,
+        on_click=lambda e: starting_point(page),
         width=200
     )
 
@@ -92,7 +100,8 @@ def upload_files(page: ft.Page, run_type: Run_Type)-> Column:
             file_label,
             file_picker,
             department_dropdown,
-            upload_button
+            upload_button,
+            back_button
         ],
         spacing=20,
         alignment=ft.MainAxisAlignment.CENTER,
