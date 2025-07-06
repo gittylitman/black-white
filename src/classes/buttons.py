@@ -3,6 +3,27 @@ from typing import Any, Callable, Optional
 import flet as ft
 
 
+class ElevatedButton(ft.ElevatedButton):
+    DEFAULT_WIDTH = 300
+    DEFAULT_HEIGHT = 35
+
+    def __init__(
+        self,
+        text: Optional[str],
+        on_click: Callable,
+        width: float = DEFAULT_WIDTH,
+        height: float = DEFAULT_HEIGHT,
+        disabled: bool = False,
+        visible: bool = True,
+    ) -> None:
+        super().__init__()
+        self.text = text
+        self.on_click = on_click
+        self.width = width
+        self.height = height
+        self.disabled = disabled
+        self.visible = visible
+
 class Button(ft.CupertinoFilledButton):
     DEFAULT_WIDTH = 300
     DEFAULT_HEIGHT = 35
@@ -50,4 +71,4 @@ class IconButton(ft.IconButton):
         self.visible = visible
         self.data = data
         self.icon_size = icon_size
-        border_radius = border_radius
+        self.border_radius = border_radius
