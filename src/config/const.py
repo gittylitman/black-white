@@ -73,3 +73,5 @@ class TEXTS(Enum):
     UPLOAD_BUTTON = "Upload"
     DOWNLOAD_BUTTON = "Download"
     INVALID_FOLDER = "Invalid folder or bucket"
+    PAGE_TITLE = "שער האריות"
+    BASIC_TITLE = "ברוך הבא לשער האריות"

@@ -67,7 +67,7 @@ def upload_files(page: ft.Page, run_type: Run_Type)-> Column:
 
     def show_alert() -> None:
         alert_message = TEXTS.NO_FOLDER_OR_BUCKET.value if not bucket or not folder else TEXTS.NO_FILES_ALERT.value
-        show_message(page, alert_message, ft.colors.AMBER)
+        show_message(page, alert_message, ft.colors.ORANGE)
             
     upload_icon_button=IconButton(
         icon=ft.icons.ARROW_UPWARD,
