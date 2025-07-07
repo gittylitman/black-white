@@ -1,10 +1,13 @@
 from typing import Any
 
+from utils.gcloud_calls import set_gcloud_project
+from utils.basic_function import show_message
 from modules.set_system_variable import get_env_instance
 from classes.column import Column
 from classes.text import Text
 from classes.container import Container
 from classes.dropdown import Dropdown
+from config.const import TEXTS, VALIDATION_MESSAGES, ERROR_MESSAGES
 
 import flet as ft
 from config.const import Run_Type, Departments, TEXTS
@@ -13,7 +16,7 @@ def get_department(env: str, run_type: Run_Type) -> Departments:
     for dept in Departments:
         if dept.env == env and dept.run_type == run_type:
             return dept
-    raise ValueError("Department not found")
+    raise ValueError(ERROR_MESSAGES.DEPARTMENT_NOT_FOUND.value)
 
 
 def get_bucket_by_run_type(run_type):
@@ -32,9 +35,8 @@ def dropdown(
     try:
         bucket = get_bucket_by_run_type(run_type)
     except ValueError as e:
-        page.snack_bar = ft.SnackBar(Text(f"Error: {str(e)}"))
-        page.snack_bar.open = True
-        page.update()
+        error_message = ERROR_MESSAGES.BASIC_ERROR_MESSAGE.format(str(e))
+        show_message(page, error_message, ft.colors.RED)
         return Container()
     
     result_container = Container()
@@ -42,6 +44,9 @@ def dropdown(
     selected_folder = ""
 
     def get_folders_list(bucket: str):
+        # result = set_gcloud_project(bucket, page)
+        # if result != []:
+        #     return result
         # TODO: implement actual fetching
         return  ['folder a', 'folder b', 'folder c', 'folder d']
 
@@ -60,7 +65,7 @@ def dropdown(
         try:
             folders = get_folders_list(selected_bucket)
             if not folders:
-                selected_folder_text.value = TEXTS.NO_FOLDERS_ALERT.value
+                selected_folder_text.value = VALIDATION_MESSAGES.NO_FOLDERS_ALERT.value
                 result_container.content = None
                 page.update()
                 return
@@ -73,9 +78,8 @@ def dropdown(
             result_container.content = folder_dropdown
             page.update()
         except Exception as ex:
-            page.snack_bar = ft.SnackBar(Text(f"Error fetching folders: {str(ex)}"))
-            page.snack_bar.open = True
-            page.update()
+            error_message =  ERROR_MESSAGES.ERROR_FETCHING_FOLDERS.value.format(str(ex))
+            show_message(page, error_message, ft.colors.RED)
 
     department_dropdown = Dropdown(
         label=TEXTS.CHOOSE_DEPARTMENT.value,

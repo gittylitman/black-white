@@ -6,7 +6,7 @@ from classes.row import Row
 from classes.column import Column
 from classes.column import Column
 from classes.buttons import ElevatedButton
-from config.const import TEXTS, Run_Type, COLORS
+from config.const import TEXTS, Run_Type, COLORS, ERROR_MESSAGES, VALIDATION_MESSAGES
 from utils.basic_function import show_message
 import flet as ft
 
@@ -79,7 +79,7 @@ def download_files(page: ft.Page, run_type: Run_Type)-> Column:
             else:
                 show_alert()
         except Exception as ex:
-            error_message = f"Error during download: {str(ex)}"
+            error_message = ERROR_MESSAGES.ERROR_DURING_DOWNLOAD.value.format(str(ex))
             show_message(page, error_message, ft.colors.RED)
     
     def validate_download() -> bool:
@@ -88,7 +88,7 @@ def download_files(page: ft.Page, run_type: Run_Type)-> Column:
 
     def show_alert() -> None:
         """Shows an alert if the download validation fails."""
-        alert_message = TEXTS.NO_FOLDER_OR_BUCKET.value if not bucket or not folder else TEXTS.NO_FILES_ALERT.value
+        alert_message = VALIDATION_MESSAGES.NO_FOLDER_OR_BUCKET.value if not bucket or not folder else VALIDATION_MESSAGES.NO_FILES_ALERT.value
         show_message(page, alert_message, ft.colors.ORANGE)
             
     download_icon=ft.Icon(
