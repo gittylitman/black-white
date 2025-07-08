@@ -1,10 +1,12 @@
 from classes.text import Text
 from process.department_dropdown import dropdown
 from classes.container import Container
+from classes.checkbox import Checkbox
 from classes.row import Row
 from classes.column import Column
 from classes.column import Column
-from config.const import TEXTS, Run_Type
+from classes.buttons import ElevatedButton
+from config.const import TEXTS, Run_Type, COLORS, ERROR_MESSAGES, VALIDATION_MESSAGES
 from utils.basic_function import show_message
 import flet as ft
 
@@ -38,7 +40,7 @@ def download_files(page: ft.Page, run_type: Run_Type)-> Column:
     def update_checkboxes() -> None:
         """Updates the checkbox container with the list of files."""
         for file in files:
-            checkboxes[file] = ft.Checkbox(label=file, on_change=select_file)
+            checkboxes[file] = Checkbox(label=file, on_change=select_file, value = False)
         checkbox_container.content = Row([Column(
                         controls=list(checkboxes.values()),
                         alignment=ft.MainAxisAlignment.START,
@@ -75,41 +77,50 @@ def download_files(page: ft.Page, run_type: Run_Type)-> Column:
                  # TODO: Implement the file download logic here
                 page.update()
             else:
-                show_alert()
+                show_alert_not_found()
         except Exception as ex:
-            error_message = f"Error during download: {str(ex)}"
+            error_message = ERROR_MESSAGES.ERROR_DURING_DOWNLOAD.format(str(ex))
             show_message(page, error_message, ft.colors.RED)
     
     def validate_download() -> bool:
         """Validates the download action."""
         return len(selected_files)>0 and bucket and folder
 
-    def show_alert() -> None:
+    def show_alert_not_found() -> None:
         """Shows an alert if the download validation fails."""
-        alert_message = TEXTS.NO_FOLDER_OR_BUCKET.value if not bucket or not folder else TEXTS.NO_FILES_ALERT.value
+        alert_message = VALIDATION_MESSAGES.NO_FOLDER_OR_BUCKET.value if not bucket or not folder else VALIDATION_MESSAGES.NO_FILES_ALERT.value
         show_message(page, alert_message, ft.colors.ORANGE)
             
     download_icon=ft.Icon(
-        color = ft.colors.LIGHT_BLUE_ACCENT_200,
-        name=ft.icons.ARROW_DOWNWARD,
+        color = COLORS.MAIN_COLOR.value,
+        name=ft.icons.CLOUD_DOWNLOAD_OUTLINED,
         size=70,
     )
 
-    file_label = Text(TEXTS.CHOOSE_FILES.value, size=30)
+    file_label = Text(TEXTS.CHOOSE_FILES.value, size=30, color=COLORS.MAIN_COLOR.value)
 
-    download_button = ft.ElevatedButton(
+    download_button = ElevatedButton(
         text=TEXTS.DOWNLOAD_BUTTON.value ,
         on_click=download_file,
         width=200
     )
+    
+    from process.starting_point import starting_point
 
+    back_button = ElevatedButton(
+        text=TEXTS.BACK_TO_MAIN.value,
+        on_click=lambda e: starting_point(page),
+        width=200
+    )
+    
     column = Column(
         controls=[
             download_icon,
             file_label,
             department_dropdown,
             checkbox_container,
-            download_button
+            download_button,
+            back_button
         ],
         spacing=20,
         alignment=ft.MainAxisAlignment.CENTER,

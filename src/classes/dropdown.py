@@ -1,4 +1,5 @@
 from typing import Any, Callable, Optional
+from config.const import COLORS
 
 import flet as ft
 
@@ -13,13 +14,22 @@ class Dropdown(ft.Dropdown):
         label: str = "",
         width: Optional[int] = None,
     ) -> None:
-        super().__init__()
+        super().__init__(
+            color=COLORS.MAIN_COLOR.value,
+            bgcolor=COLORS.BACKGROUND_COLOR.value,
+            border_color=COLORS.MAIN_COLOR.value,
+            border_width=2,
+            border_radius=8,
+            filled=True
+        )
         self.value = value
         self.options = options
         self.label = label
         self.width = width
         self.on_change = on_change
         self.on_click = on_click
+        self.elevation=5
+        self.icon_enabled_color = COLORS.MAIN_COLOR.value
 
     def add_option(self, value: str) -> None:
         option_exists = any(option.key == value for option in self.options)
