@@ -1,4 +1,5 @@
 import flet as ft
+from config.const import COLORS
 
 class Input(ft.TextField):
     
@@ -10,10 +11,14 @@ class Input(ft.TextField):
         label: str,
         value: str = "",
         width: float = DEFAULT_WIDTH,
-        height: float = DEFAULT_HEIGHT
+        height: float = DEFAULT_HEIGHT,
+        color: str = COLORS.MAIN_COLOR.value,
+        border_color: str = COLORS.MAIN_COLOR.value,
     ):
         super().__init__()
         self.label = label
         self.value = value
         self.width = width
         self.height = height
+        self.color = color
+        self.border_color = border_color

@@ -75,6 +75,10 @@ class ERROR_MESSAGES(Enum):
     GCLOUD_PROCESS_NOT_AVAILABLE = "The gcloud process is no longer available.😢"
     INVALID_BUCKET = "No such bucket in gcloud"
     INVALID_FOLDER = "Invalid folder or bucket"
+    # NO_FOLDERS_ALERT = "No folders available."
+    # NO_FILES_ALERT = "No file selected."
+    # NO_FOLDER_OR_BUCKET = "No bucket or folder selected."
+    # MISSING_VERIFICATION_CODE = "Verification code must be entered."
     
     def format(self, *args, **kwargs):
         return self.value.format(*args, **kwargs)
@@ -99,12 +103,13 @@ class TEXTS(Enum):
     DOWNLOAD_BUTTON = "Download"
     BACK_TO_MAIN = "Back"
     INSTRUCTIONS = "1. Sign in with Google\n2. Copy the verification code that appears in the browser\n3. Paste it here and click 'Next'"
-    PAGE_TITLE = "שער האריות"
-    BASIC_TITLE = "ברוך הבא לשער האריות"
     VERIFICATION_CODE = "Paste the verification code here"
     CONFIRM_VERIFICATION = "Confirm verification code"
     LOGGED_IN = "🎉 You have successfully logged in! Loading user information..."
+    PAGE_TITLE = "שער האריות"
+    BASIC_TITLE = "ברוך הבא לשער האריות"
+
 
 class COLORS(Enum):
     MAIN_COLOR = ft.colors.BLUE_ACCENT_700
-    BACKGROUND_COLOR = ft.colors.GREY_300
+    BACKGROUND_COLOR = ft.colors.WHITE

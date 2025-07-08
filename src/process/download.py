@@ -77,7 +77,7 @@ def download_files(page: ft.Page, run_type: Run_Type)-> Column:
                  # TODO: Implement the file download logic here
                 page.update()
             else:
-                show_alert()
+                show_alert_not_found()
         except Exception as ex:
             error_message = ERROR_MESSAGES.ERROR_DURING_DOWNLOAD.value.format(str(ex))
             show_message(page, error_message, ft.colors.RED)
@@ -86,7 +86,7 @@ def download_files(page: ft.Page, run_type: Run_Type)-> Column:
         """Validates the download action."""
         return len(selected_files)>0 and bucket and folder
 
-    def show_alert() -> None:
+    def show_alert_not_found() -> None:
         """Shows an alert if the download validation fails."""
         alert_message = VALIDATION_MESSAGES.NO_FOLDER_OR_BUCKET.value if not bucket or not folder else VALIDATION_MESSAGES.NO_FILES_ALERT.value
         show_message(page, alert_message, ft.colors.ORANGE)

@@ -1,3 +1,4 @@
+from classes.container import Container
 from config.const import ERROR_MESSAGES
 import flet as ft
 import subprocess
@@ -15,16 +16,18 @@ gcloud_process = None
 
 def setup_ui(page: ft.Page) -> None:
     """Initial screen setup."""
+    background_container = _create_background_container(page)
     column = _create_main_column()
     title = _create_title()
-    instructions = Text(TEXTS.INSTRUCTIONS.value)
+    instructions = Text(TEXTS.INSTRUCTIONS.value, color=COLORS.MAIN_COLOR.value)
     login_button = ElevatedButton(
         TEXTS.SIGN_IN.value,
         on_click=lambda e: start_login_process(page, column, login_button)
     )
     
     column.controls = [title, instructions, login_button]
-    page.add(column)
+    background_container.content = column
+    page.add(background_container)    
 
     
 def start_login_process(page: ft.Page, column: Column, login_button: ElevatedButton) -> None:
@@ -106,7 +109,7 @@ def reset_ui(page: ft.Page, column: Column, login_button: ElevatedButton) -> Non
     """Resets UI to initial state."""
     login_button.disabled = False
     title = _create_title()
-    instructions = Text(TEXTS.INSTRUCTIONS.value)
+    instructions = Text(TEXTS.INSTRUCTIONS.value, color=COLORS.MAIN_COLOR.value)
     column.controls = [title, instructions, login_button]
     page.update()
 
@@ -122,6 +125,14 @@ def _create_title() -> Text:
         text_align=ft.TextAlign.CENTER,
     )
 
+def _create_background_container(page)-> Container:
+    return ft.Container(
+        bgcolor=COLORS.BACKGROUND_COLOR.value,
+        padding=20,
+        width=page.width,
+        height=page.height,
+    )
+    
 
 def _create_main_column() -> Column:
     return Column(

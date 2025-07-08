@@ -53,7 +53,7 @@ def upload_files(page: ft.Page, run_type: Run_Type)-> Column:
                 # upload_page(page, selected_files["files"])
                 page.update()
             else:
-                show_alert()
+                show_alert_not_found()
         except Exception as ex:
             error_message = ERROR_MESSAGES.ERROR_DURING_UPLOAD.format(ex)
             show_message(page, error_message, ft.colors.RED)
@@ -63,7 +63,7 @@ def upload_files(page: ft.Page, run_type: Run_Type)-> Column:
     def validate_upload() -> bool:
         return bool(selected_files["files"]) and bucket and folder
 
-    def show_alert() -> None:
+    def show_alert_not_found() -> None:
         alert_message = VALIDATION_MESSAGES.NO_FOLDER_OR_BUCKET.value if not bucket or not folder else VALIDATION_MESSAGES.NO_FILES_ALERT.value
         show_message(page, alert_message, ft.colors.ORANGE)
             
@@ -76,7 +76,7 @@ def upload_files(page: ft.Page, run_type: Run_Type)-> Column:
         border_radius=5
     )
 
-    file_label = Text(TEXTS.CHOOSE_FILES.value, size=30)
+    file_label = Text(TEXTS.CHOOSE_FILES.value, size=30, color=COLORS.MAIN_COLOR.value)
 
     upload_button = ElevatedButton(
         text=TEXTS.UPLOAD_BUTTON.value ,
