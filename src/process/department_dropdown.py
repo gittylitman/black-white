@@ -78,7 +78,7 @@ def dropdown(
             result_container.content = folder_dropdown
             page.update()
         except Exception as ex:
-            error_message =  ERROR_MESSAGES.ERROR_FETCHING_FOLDERS.value.format(str(ex))
+            error_message =  ERROR_MESSAGES.ERROR_FETCHING_FOLDERS.format(str(ex))
             show_message(page, error_message, ft.colors.RED)
 
     department_dropdown = Dropdown(

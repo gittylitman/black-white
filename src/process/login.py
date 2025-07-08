@@ -74,7 +74,7 @@ def perform_gcloud_login(page: ft.Page, column: Column, login_button: ElevatedBu
                     break
 
     except Exception as e:
-        _handle_error(page, column, login_button, ERROR_MESSAGES.ERROR_RUNNING_GCLOUD.value.format(e))
+        _handle_error(page, column, login_button, ERROR_MESSAGES.ERROR_RUNNING_GCLOUD.format(e))
 
 
 def handle_auth_code_submission(page: ft.Page, code: str, column: Column, login_button: ElevatedButton) -> None:
@@ -99,10 +99,10 @@ def handle_auth_code_submission(page: ft.Page, code: str, column: Column, login_
             show_message(page, TEXTS.LOGGED_IN.value, ft.colors.GREEN)
             starting_point(page)
         else:
-            _handle_error(page, column, login_button, ERROR_MESSAGES.BASIC_ERROR_MESSAGE.value.format(output))
+            _handle_error(page, column, login_button, ERROR_MESSAGES.BASIC_ERROR_MESSAGE.format(output))
 
     except Exception as e:
-        _handle_error(page, column, login_button, ERROR_MESSAGES.ERROR_SENDING_CODE.value.format(e))
+        _handle_error(page, column, login_button, ERROR_MESSAGES.ERROR_SENDING_CODE.format(e))
         
         
 def reset_ui(page: ft.Page, column: Column, login_button: ElevatedButton) -> None:

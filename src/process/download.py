@@ -79,7 +79,7 @@ def download_files(page: ft.Page, run_type: Run_Type)-> Column:
             else:
                 show_alert_not_found()
         except Exception as ex:
-            error_message = ERROR_MESSAGES.ERROR_DURING_DOWNLOAD.value.format(str(ex))
+            error_message = ERROR_MESSAGES.ERROR_DURING_DOWNLOAD.format(str(ex))
             show_message(page, error_message, ft.colors.RED)
     
     def validate_download() -> bool:
