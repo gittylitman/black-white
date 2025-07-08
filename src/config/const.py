@@ -62,22 +62,54 @@ class Departments(Enum):
         self.department_bucket = department_bucket
         self.env = env
         self.run_type = run_type
-        
-        
-class TEXTS(Enum):
-    CHOOSE_DEPARTMENT = "Choose Department:"
-    CHOOSE_FOLDER = "Choose Folder:"
-    CHOOSE_FILES = "Choose files:"
+       
+       
+class ERROR_MESSAGES(Enum):
+    BASIC_ERROR_MESSAGE = "Error: {}"
+    DEPARTMENT_NOT_FOUND = "Department not found"
+    ERROR_FETCHING_FOLDERS = "Error fetching folders: {}"
+    ERROR_DURING_DOWNLOAD = "Error during download: {}"
+    ERROR_DURING_UPLOAD = "Error during upload: {}"
+    ERROR_RUNNING_GCLOUD = "Error while running gcloud: {}"
+    ERROR_SENDING_CODE = "Error sending code: {}"
+    GCLOUD_PROCESS_NOT_AVAILABLE = "The gcloud process is no longer available.😢"
+    INVALID_BUCKET = "No such bucket in gcloud"
+    INVALID_FOLDER = "Invalid folder or bucket"
+    # NO_FOLDERS_ALERT = "No folders available."
+    # NO_FILES_ALERT = "No file selected."
+    # NO_FOLDER_OR_BUCKET = "No bucket or folder selected."
+    # MISSING_VERIFICATION_CODE = "Verification code must be entered."
+    
+    def format(self, *args, **kwargs):
+        return self.value.format(*args, **kwargs)
+    
+       
+class VALIDATION_MESSAGES(Enum):
     NO_FOLDERS_ALERT = "No folders available."
     NO_FILES_ALERT = "No file selected."
     NO_FOLDER_OR_BUCKET = "No bucket or folder selected."
+    MISSING_VERIFICATION_CODE = "Verification code must be entered."
+    
+    def format(self, *args, **kwargs):
+        return self.value.format(*args, **kwargs)
+        
+        
+class TEXTS(Enum):
+    SIGN_IN = "Sign in with Google"
+    CHOOSE_DEPARTMENT = "Choose Department:"
+    CHOOSE_FOLDER = "Choose Folder:"
+    CHOOSE_FILES = "Choose files:"
     UPLOAD_BUTTON = "Upload"
     DOWNLOAD_BUTTON = "Download"
-    BACK_TO_MAIN = "Back to Main"
-    INVALID_FOLDER = "Invalid folder or bucket"
+    BACK_TO_MAIN = "Back"
+    INSTRUCTIONS = "1. Sign in with Google\n2. Copy the verification code that appears in the browser\n3. Paste it here and click 'Next'"
+    VERIFICATION_CODE = "Paste the verification code here"
+    CONFIRM_VERIFICATION = "Confirm verification code"
+    LOGGED_IN = "🎉 You have successfully logged in! Loading user information..."
     PAGE_TITLE = "שער האריות"
     BASIC_TITLE = "ברוך הבא לשער האריות"
 
+
 class COLORS(Enum):
     MAIN_COLOR = ft.colors.BLUE_ACCENT_700
-    BACKGROUND_COLOR = ft.colors.GREY_300
+    BACKGROUND_COLOR = ft.colors.WHITE

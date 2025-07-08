@@ -4,7 +4,7 @@ from classes.file_picker import FilePicker
 from classes.column import Column
 from utils.basic_function import show_message
 from process.department_dropdown import dropdown
-from config.const import TEXTS, Run_Type, COLORS
+from config.const import TEXTS, Run_Type, COLORS,VALIDATION_MESSAGES, ERROR_MESSAGES
 import flet as ft
 
 
@@ -21,9 +21,7 @@ def upload_files(page: ft.Page, run_type: Run_Type)-> Column:
             #TODO: handle selected bucket and folder
             page.update()
         except ValueError:
-            page.snack_bar = ft.SnackBar(Text(TEXTS.INVALID_FOLDER.value))
-            page.snack_bar.open = True
-            page.update()
+            show_message(page, TEXTS.INVALID_FOLDER.value, ft.colors.RED)
 
     department_dropdown = dropdown(page, handle_folder_selection, run_type=run_type)
 
@@ -44,7 +42,7 @@ def upload_files(page: ft.Page, run_type: Run_Type)-> Column:
         
     def reset_file_selection() -> None:
         selected_files["files"] = []
-        file_label.value = TEXTS.NO_FILES_ALERT.value
+        file_label.value = VALIDATION_MESSAGES.NO_FILES_ALERT.value
         page.update()
 
     def upload_file(e) -> None:
@@ -55,9 +53,9 @@ def upload_files(page: ft.Page, run_type: Run_Type)-> Column:
                 # upload_page(page, selected_files["files"])
                 page.update()
             else:
-                show_alert()
+                show_alert_not_found()
         except Exception as ex:
-            error_message = f"Error during upload: {str(ex)}"
+            error_message = ERROR_MESSAGES.ERROR_DURING_UPLOAD.format(ex)
             show_message(page, error_message, ft.colors.RED)
         
 
@@ -65,8 +63,8 @@ def upload_files(page: ft.Page, run_type: Run_Type)-> Column:
     def validate_upload() -> bool:
         return bool(selected_files["files"]) and bucket and folder
 
-    def show_alert() -> None:
-        alert_message = TEXTS.NO_FOLDER_OR_BUCKET.value if not bucket or not folder else TEXTS.NO_FILES_ALERT.value
+    def show_alert_not_found() -> None:
+        alert_message = VALIDATION_MESSAGES.NO_FOLDER_OR_BUCKET.value if not bucket or not folder else VALIDATION_MESSAGES.NO_FILES_ALERT.value
         show_message(page, alert_message, ft.colors.ORANGE)
             
     upload_icon_button=IconButton(
@@ -78,7 +76,7 @@ def upload_files(page: ft.Page, run_type: Run_Type)-> Column:
         border_radius=5
     )
 
-    file_label = Text(TEXTS.CHOOSE_FILES.value, size=30)
+    file_label = Text(TEXTS.CHOOSE_FILES.value, size=30, color=COLORS.MAIN_COLOR.value)
 
     upload_button = ElevatedButton(
         text=TEXTS.UPLOAD_BUTTON.value ,
