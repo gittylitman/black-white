@@ -18,7 +18,7 @@ class Dropdown(ft.Dropdown):
             color=COLORS.MAIN_COLOR.value,
             bgcolor=COLORS.BACKGROUND_COLOR.value,
             border_color=COLORS.MAIN_COLOR.value,
-            border_width=1,
+            border_width=2,
             border_radius=8,
             filled=True
         )
