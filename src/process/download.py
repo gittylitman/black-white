@@ -97,7 +97,7 @@ def download_files(page: ft.Page, run_type: Run_Type)-> Column:
         size=70,
     )
 
-    file_label = Text(TEXTS.CHOOSE_FILES.value, size=30)
+    file_label = Text(TEXTS.CHOOSE_FILES.value, size=30, color=COLORS.MAIN_COLOR.value)
 
     download_button = ElevatedButton(
         text=TEXTS.DOWNLOAD_BUTTON.value ,
