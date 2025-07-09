@@ -1,6 +1,6 @@
 from typing import Any
 
-from utils.gcloud_calls import set_gcloud_project
+from utils.gcloud_calls import get_folders_and_files_from_bucket
 from utils.basic_function import show_message
 from modules.set_system_variable import get_env_instance
 from classes.column import Column
@@ -43,12 +43,32 @@ def dropdown(
     selected_folder_text = Text("")
     selected_folder = ""
 
-    def get_folders_list(bucket: str):
-        # result = set_gcloud_project(bucket, page)
-        # if result != []:
-        #     return result
-        # TODO: implement actual fetching
-        return  ['folder a', 'folder b', 'folder c', 'folder d']
+    def get_folders_list(bucket: str) -> object:
+        result = get_folders_and_files_from_bucket(page, "dig-drn-dev-t-lgupld-1", bucket)
+        try:
+            return get_folders_from_folders_and_files(result)
+        except Exception:
+            show_message(page, ERROR_MESSAGES.ERROR_FETCHING_FOLDERS.value, ft.colors.RED)
+            return {}
+    
+    def get_folders_from_folders_and_files(folders_and_files: str):
+        list_folders_and_files = folders_and_files.split('\n')
+        list_folders = [file[file.index("gs://")+5:-2].split('/') for file in list_folders_and_files if file.endswith(':')]
+        list_folders = [folder[1:] for folder in list_folders]
+        list_folders = [folder for folder in list_folders if len(folder)]
+        folders = {}
+        for folder in list_folders:
+            folders['/'.join(folder)] = []
+        for folder in list_folders:
+            name_folder = folder.pop()
+            if not len(folder):
+                if not folders.get(""):
+                    folders[""] = []
+                folders[""].append(name_folder)
+            else:
+                path_folder = '/'.join(folder)
+                folders[path_folder].append(name_folder)
+        return folders
 
     def on_change_folder(e: ft.ControlEvent, selected_bucket: str):
         nonlocal selected_folder

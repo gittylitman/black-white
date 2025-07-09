@@ -10,8 +10,8 @@ class Run_Type(Enum):
     
 class DepartmentsBucketsUploadDev(Enum):
     WHITENING = ("הלבנה 9900", "sky-geo-dig-dev-t-lgupld-1")
-    DRONES = ("רחפנים", "dig-drn-dev-t-lgupld")
-    MAPPING = ("מיפוי", "dig-geo-dev-t-lgupld")
+    DRONES = ("רחפנים", "example-download-upload")
+    MAPPING = ("מיפוי", "empty-bucket-example")
     SATELLITES = ("לווינות", "dig-sat-dev-t-lgupld")
         
     def __init__(self, department, bucket) -> None:
