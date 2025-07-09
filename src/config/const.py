@@ -9,7 +9,6 @@ class Run_Type(Enum):
     
     
 class DepartmentsBucketsUploadDev(Enum):
-    WHITENING = ("הלבנה 9900", "sky-geo-dig-dev-t-lgupld-1")
     DRONES = ("רחפנים", "example-download-upload")
     MAPPING = ("מיפוי", "empty-bucket-example")
     SATELLITES = ("לווינות", "dig-sat-dev-t-lgupld")
@@ -20,7 +19,6 @@ class DepartmentsBucketsUploadDev(Enum):
         
         
 class DepartmentsBucketsUploadProd(Enum):
-    WHITENING = ("הלבנה 9900", "sky-geo-dig-prd-t-lgupld-1")
     DRONES = ("רחפנים", "dig-drn-prd-t-lgupld")
     MAPPING = ("מיפוי", "dig-geo-prd-t-lgupld")
     SATELLITES = ("לווינות", "dig-sat-prd-t-lgupld")
@@ -31,7 +29,6 @@ class DepartmentsBucketsUploadProd(Enum):
     
     
 class DepartmentsBucketsDownloadDev(Enum):
-    WHITENING = ("הלבנה 9900", "sky-geo-dig-dev-t-lgdnld-1")
     DRONES = ("רחפנים", "dig-drn-dev-t-lgdnld")
     MAPPING = ("מיפוי", "dig-geo-dev-t-lgdnld")
     SATELLITES = ("לווינות", "dig-sat-dev-t-lgdnld")
@@ -42,7 +39,6 @@ class DepartmentsBucketsDownloadDev(Enum):
     
     
 class DepartmentsBucketsDownloadProd(Enum):
-    WHITENING = ("הלבנה 9900", "sky-geo-dig-prd-t-lgdnld-1")
     DRONES = ("רחפנים", "dig-drn-prd-t-lgdnld")
     MAPPING = ("מיפוי", "dig-geo-prd-t-lgdnld")
     SATELLITES = ("לווינות", "dig-sat-prd-t-lgdnld")
@@ -53,15 +49,16 @@ class DepartmentsBucketsDownloadProd(Enum):
         
         
 class Departments(Enum):
-    BLACK_PROD = (DepartmentsBucketsDownloadProd, "PROD", Run_Type.DOWNLOAD)
-    BLACK_DEV = (DepartmentsBucketsDownloadDev, "DEV", Run_Type.DOWNLOAD)
-    WHITE_DEV = (DepartmentsBucketsUploadDev, "DEV", Run_Type.UPLOAD)
-    WHITE_PROD = (DepartmentsBucketsUploadProd, "PROD", Run_Type.UPLOAD)
+    BLACK_PROD = (DepartmentsBucketsDownloadProd, "PROD", Run_Type.DOWNLOAD, "sky-geo-dig-prd-t-lgdnld-1")
+    BLACK_DEV = (DepartmentsBucketsDownloadDev, "DEV", Run_Type.DOWNLOAD, "sky-geo-dig-dev-t-lgdnld-1")
+    WHITE_DEV = (DepartmentsBucketsUploadDev, "DEV", Run_Type.UPLOAD, "sky-geo-dig-dev-t-lgupld-1")
+    WHITE_PROD = (DepartmentsBucketsUploadProd, "PROD", Run_Type.UPLOAD, "sky-geo-dig-prd-t-lgupld-1")
     
-    def __init__(self, department_bucket, env, run_type) -> None:
+    def __init__(self, department_bucket, env, run_type, project_id) -> None:
         self.department_bucket = department_bucket
         self.env = env
         self.run_type = run_type
+        self.project_id = project_id
        
        
 class ERROR_MESSAGES(Enum):
@@ -75,10 +72,6 @@ class ERROR_MESSAGES(Enum):
     GCLOUD_PROCESS_NOT_AVAILABLE = "The gcloud process is no longer available.😢"
     INVALID_BUCKET = "No such bucket in gcloud"
     INVALID_FOLDER = "Invalid folder or bucket"
-    # NO_FOLDERS_ALERT = "No folders available."
-    # NO_FILES_ALERT = "No file selected."
-    # NO_FOLDER_OR_BUCKET = "No bucket or folder selected."
-    # MISSING_VERIFICATION_CODE = "Verification code must be entered."
     
     def format(self, *args, **kwargs):
         return self.value.format(*args, **kwargs)
@@ -99,13 +92,17 @@ class TEXTS(Enum):
     CHOOSE_DEPARTMENT = "Choose Department:"
     CHOOSE_FOLDER = "Choose Folder:"
     CHOOSE_FILES = "Choose files:"
+    CHOSEN_FOLDER = "Chosen folder: "
+    NONE = "None"
     UPLOAD_BUTTON = "Upload"
     DOWNLOAD_BUTTON = "Download"
     BACK_TO_MAIN = "Back"
     INSTRUCTIONS = "1. Sign in with Google\n2. Copy the verification code that appears in the browser\n3. Paste it here and click 'Next'"
     VERIFICATION_CODE = "Paste the verification code here"
     CONFIRM_VERIFICATION = "Confirm verification code"
+    CURRENT_PATH = "Current path: /"
     LOGGED_IN = "🎉 You have successfully logged in! Loading user information..."
+    NO_SUBFOLDER = "📂 No subfolders found"
     PAGE_TITLE = "שער האריות"
     BASIC_TITLE = "ברוך הבא לשער האריות"
 
