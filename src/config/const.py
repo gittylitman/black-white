@@ -29,8 +29,8 @@ class DepartmentsBucketsUploadProd(Enum):
     
     
 class DepartmentsBucketsDownloadDev(Enum):
-    DRONES = ("רחפנים", "dig-drn-dev-t-lgdnld")
-    MAPPING = ("מיפוי", "dig-geo-dev-t-lgdnld")
+    DRONES = ("רחפנים", "example-download-upload")
+    MAPPING = ("מיפוי", "empty-bucket-example")
     SATELLITES = ("לווינות", "dig-sat-dev-t-lgdnld")
         
     def __init__(self, department, bucket) -> None:
