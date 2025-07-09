@@ -21,7 +21,7 @@ def upload_files(page: ft.Page, run_type: Run_Type)-> Column:
             #TODO: handle selected bucket and folder
             page.update()
         except ValueError:
-            show_message(page, TEXTS.INVALID_FOLDER.value, ft.colors.RED)
+            show_message(page, ERROR_MESSAGES.INVALID_FOLDER.value, ft.colors.RED)
 
     department_dropdown = dropdown(page, handle_folder_selection, run_type=run_type)
 
@@ -76,7 +76,7 @@ def upload_files(page: ft.Page, run_type: Run_Type)-> Column:
         border_radius=5
     )
 
-    file_label = Text(TEXTS.CHOOSE_FILES.value, size=30, color=COLORS.MAIN_COLOR.value)
+    file_label = Text(TEXTS.CHOOSE_FOLDER.value, size=30, color=COLORS.MAIN_COLOR.value)
 
     upload_button = ElevatedButton(
         text=TEXTS.UPLOAD_BUTTON.value ,

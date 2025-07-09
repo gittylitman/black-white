@@ -35,7 +35,7 @@ def download_files(page: ft.Page, run_type: Run_Type)-> Column:
                 page.update()
             page.update()
         except ValueError:
-            show_message(page, TEXTS.INVALID_FOLDER.value, ft.colors.ORANGE)
+            show_message(page, ERROR_MESSAGES.INVALID_FOLDER.value, ft.colors.ORANGE)
 
     def update_checkboxes() -> None:
         """Updates the checkbox container with the list of files."""
