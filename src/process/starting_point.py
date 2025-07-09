@@ -1,3 +1,4 @@
+from modules.set_system_variable import get_env_instance
 from classes.text import Text
 from classes.column import Column
 from classes.column import Column
@@ -34,6 +35,8 @@ def display_download_page(page: ft.Page, run_type: Run_Type):
 
 
 def starting_point(page: ft.Page)-> Column:
+    ACTION_TYPE = get_env_instance().ACTION_TYPE
+
     page.controls.clear()
 
     background_container = ft.Container(
@@ -69,8 +72,8 @@ def starting_point(page: ft.Page)-> Column:
     main_column = ft.Column(
             controls=[
                 title,
-                upload_button,
-                download_button
+                upload_button if ACTION_TYPE == 'Upload' else download_button
+
             ],
             spacing=20,
             alignment=ft.MainAxisAlignment.CENTER,
