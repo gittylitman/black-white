@@ -6,6 +6,8 @@ class _SetupEnv:
     def init_settings(self):
         try:
             self.ENVIRONMENT_TYPE: str = os.environ["ENVIRONMENT_TYPE"]
+            self.ACTION_TYPE: str = os.environ["ACTION_TYPE"]
+            
            
         except KeyError as e:
             raise ValueError(f"Missing key in env file: {e}")

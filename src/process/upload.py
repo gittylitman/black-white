@@ -35,11 +35,11 @@ def upload_files(page: ft.Page, run_type: Run_Type)-> Column:
             update_file_label(len(selected_files["files"]))
         else:
             reset_file_selection()
-        
+
     def update_file_label(file_count: int) -> None:
         file_label.value = f"Selected {file_count} files."
-        page.update()    
-        
+        page.update()
+
     def reset_file_selection() -> None:
         selected_files["files"] = []
         file_label.value = VALIDATION_MESSAGES.NO_FILES_ALERT.value
@@ -57,16 +57,15 @@ def upload_files(page: ft.Page, run_type: Run_Type)-> Column:
         except Exception as ex:
             error_message = ERROR_MESSAGES.ERROR_DURING_UPLOAD.format(ex)
             show_message(page, error_message, ft.colors.RED)
-        
 
-        
+
     def validate_upload() -> bool:
         return bool(selected_files["files"]) and bucket and folder
 
     def show_alert_not_found() -> None:
         alert_message = VALIDATION_MESSAGES.NO_FOLDER_OR_BUCKET.value if not bucket or not folder else VALIDATION_MESSAGES.NO_FILES_ALERT.value
         show_message(page, alert_message, ft.colors.ORANGE)
-            
+
     upload_icon_button=IconButton(
         icon=ft.icons.CLOUD_UPLOAD_OUTLINED,
         icon_color = COLORS.MAIN_COLOR.value,
@@ -83,7 +82,7 @@ def upload_files(page: ft.Page, run_type: Run_Type)-> Column:
         on_click=upload_file,
         width=200
     )
-    
+
     from process.starting_point import starting_point
 
     back_button = ElevatedButton(
