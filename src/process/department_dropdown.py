@@ -2,7 +2,7 @@ from typing import Any
 
 from process.folder_selector import hierarchical_folder_selector
 
-from utils.gcloud_calls import set_gcloud_project
+from utils.gcloud_calls import get_folders_and_files
 from utils.basic_function import show_message
 from modules.set_system_variable import get_env_instance
 from classes.column import Column
@@ -25,8 +25,7 @@ def get_bucket_by_run_type(run_type):
     ENVIRONMENT_TYPE = get_env_instance().ENVIRONMENT_TYPE
     department = get_department(ENVIRONMENT_TYPE, run_type)
     bucket = department.department_bucket
-    project_id = department.project_id
-    return bucket, project_id
+    return bucket
 
 
 def dropdown(
@@ -36,7 +35,7 @@ def dropdown(
 ) -> Container:
     
     try:
-        bucket, project_id = get_bucket_by_run_type(run_type)
+        bucket = get_bucket_by_run_type(run_type)
     except ValueError as e:
         error_message = ERROR_MESSAGES.BASIC_ERROR_MESSAGE.format(str(e))
         show_message(page, error_message, ft.colors.RED)
@@ -46,30 +45,41 @@ def dropdown(
     selected_folder_text = Text("")
     selected_folder = ""
 
-    def get_folders_list(bucket: str, project_id: str):
-        return {
-        "": [project_id,"project1", "project2", "project3", "project4", "project5", "project6", "project7"],
-        "project1": ["data", "images"],
-        "project1/data": ["archive"],
-        "project1/data/archive": [],
-        "project1/images": [],
-        "project2": [],
-        "project3": [],
-        "project4": [],
-        "project5": [],
-        "project6": [],
-        "project7": [],
-        project_id : [],
-    }
+    def get_folders_list(bucket: str) -> object:
+        result = get_folders_and_files(page, bucket)
+        try:
+            return get_folders_from_folders_and_files(result)
+        except Exception:
+            show_message(page, ERROR_MESSAGES.ERROR_FETCHING_FOLDERS.value, ft.colors.RED)
+            return {}
+    
+    def get_folders_from_folders_and_files(folders_and_files: str):
+        list_folders_and_files = folders_and_files.split('\n')
+        list_folders = [file[file.index("gs://")+5:-2].split('/') for file in list_folders_and_files if file.endswith(':')]
+        list_folders = [folder[1:] for folder in list_folders]
+        list_folders = [folder for folder in list_folders if len(folder)]
+        folders = {}
+        for folder in list_folders:
+            folders['/'.join(folder)] = []
+        for folder in list_folders:
+            name_folder = folder.pop()
+            if not len(folder):
+                if not folders.get(""):
+                    folders[""] = []
+                folders[""].append(name_folder)
+            else:
+                path_folder = '/'.join(folder)
+                folders[path_folder].append(name_folder)
+        return folders
 
 
     def on_change_dropdown(e: ft.ControlEvent):
-        nonlocal selected_folder, project_id
+        nonlocal selected_folder
         selected_folder = ""
         selected_bucket = e.control.value
         on_folder_selected(f"{selected_bucket}/{selected_folder}")
         try:
-            folders = get_folders_list(selected_bucket, project_id)
+            folders = get_folders_list(selected_bucket)
             if not folders:
                 selected_folder_text.value = VALIDATION_MESSAGES.NO_FOLDERS_ALERT.value
                 result_container.content = None

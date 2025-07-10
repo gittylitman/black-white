@@ -8,10 +8,10 @@ class Run_Type(Enum):
     DOWNLOAD = "Download"
 
 class DepartmentsBucketsUploadDev(Enum):
-    DRONES = ("רחפנים", "dig-drn-dev-t-lgupld")
-    MAPPING = ("מיפוי", "dig-geo-dev-t-lgupld")
-    SATELLITES = ("לווינות", "dig-sat-dev-t-lgupld")
-
+    DRONES = ("רחפנים", "example-download-upload")
+    MAPPING = ("מיפוי", "empty-bucket-example")
+    SATELLITES = ("לווינות", "empty-bucket-example")
+        
     def __init__(self, department, bucket) -> None:
         self.department = department
         self.bucket = bucket
@@ -28,10 +28,10 @@ class DepartmentsBucketsUploadProd(Enum):
 
 
 class DepartmentsBucketsDownloadDev(Enum):
-    DRONES = ("רחפנים", "dig-drn-dev-t-lgdnld")
-    MAPPING = ("מיפוי", "dig-geo-dev-t-lgdnld")
-    SATELLITES = ("לווינות", "dig-sat-dev-t-lgdnld")
-
+    DRONES = ("רחפנים", "example-download-upload")
+    MAPPING = ("מיפוי", "empty-bucket-example")
+    SATELLITES = ("לווינות", "empty-bucket-example")
+        
     def __init__(self, department, bucket) -> None:
         self.department = department
         self.bucket = bucket
@@ -47,17 +47,17 @@ class DepartmentsBucketsDownloadProd(Enum):
         self.bucket = bucket
 
 class Departments(Enum):
-    BLACK_PROD = (DepartmentsBucketsDownloadProd, "PROD", Run_Type.DOWNLOAD, "sky-geo-dig-prd-t-lgdnld-1")
-    BLACK_DEV = (DepartmentsBucketsDownloadDev, "DEV", Run_Type.DOWNLOAD, "sky-geo-dig-dev-t-lgdnld-1")
-    WHITE_DEV = (DepartmentsBucketsUploadDev, "DEV", Run_Type.UPLOAD, "sky-geo-dig-dev-t-lgupld-1")
-    WHITE_PROD = (DepartmentsBucketsUploadProd, "PROD", Run_Type.UPLOAD, "sky-geo-dig-prd-t-lgupld-1")
-
-    def __init__(self, department_bucket, env, run_type, project_id) -> None:
+    BLACK_PROD = (DepartmentsBucketsDownloadProd, "PROD", Run_Type.DOWNLOAD)
+    BLACK_DEV = (DepartmentsBucketsDownloadDev, "DEV", Run_Type.DOWNLOAD)
+    WHITE_DEV = (DepartmentsBucketsUploadDev, "DEV", Run_Type.UPLOAD)
+    WHITE_PROD = (DepartmentsBucketsUploadProd, "PROD", Run_Type.UPLOAD)
+    
+    def __init__(self, department_bucket, env, run_type) -> None:
         self.department_bucket = department_bucket
         self.env = env
         self.run_type = run_type
-        self.project_id = project_id
-
+       
+       
 class ERROR_MESSAGES(Enum):
     BASIC_ERROR_MESSAGE = "Error: {}"
     DEPARTMENT_NOT_FOUND = "Department not found"
