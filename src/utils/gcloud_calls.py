@@ -13,11 +13,11 @@ def get_folders_and_files(page, bucket_name: str):
         )
         if result.returncode != 0:
             show_message(page, ERROR_MESSAGES.ERROR_FETCHING_FOLDERS.value, ft.colors.ORANGE)
-            return {}
+            return ""
         return result.stdout
     except Exception as e:
         show_message(page, ERROR_MESSAGES.ERROR_FETCHING_FOLDERS.value, ft.colors.RED)
-        return {}
+        return ""
 
 def get_files_from_folder(page, bucket_name: str, folder: str):
     try:
@@ -28,8 +28,23 @@ def get_files_from_folder(page, bucket_name: str, folder: str):
         )
         if result.returncode != 0:
             show_message(page, ERROR_MESSAGES.INVALID_FOLDER.value, ft.colors.ORANGE)
-            return {}
+            return ""
         return result.stdout
     except Exception:
         show_message(page, ERROR_MESSAGES.INVALID_FOLDER.value, ft.colors.RED)
-        return {}
+        return ""
+
+def download(page, bucket_name: str, folder_path: str, file_name: str):
+    try:
+        result = subprocess.run(
+            ["gsutil", "cp", f"gs://{bucket_name}/{folder_path}/{file_name}", "."],
+            capture_output=True,
+            text=True
+        )
+        if result.returncode != 0:
+            show_message(page, ERROR_MESSAGES.ERROR_FETCHING_FOLDERS.value, ft.colors.ORANGE)
+            raise result.stderr
+        return result.stdout
+    except Exception as e:
+        show_message(page, ERROR_MESSAGES.ERROR_FETCHING_FOLDERS.value, ft.colors.RED)
+        raise result.stderr

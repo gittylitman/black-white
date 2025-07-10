@@ -8,7 +8,7 @@ from classes.column import Column
 from classes.buttons import ElevatedButton
 from config.const import TEXTS, Run_Type, COLORS, ERROR_MESSAGES, VALIDATION_MESSAGES
 from utils.basic_function import show_message
-from utils.gcloud_calls import get_files_from_folder
+from utils.gcloud_calls import get_files_from_folder, download
 import flet as ft
 
 
@@ -76,7 +76,7 @@ def download_files(page: ft.Page, run_type: Run_Type)-> Column:
         """Handles the file download action."""
         try:
             if validate_download():
-                 # TODO: Implement the file download logic here
+                download(page, bucket, folder, selected_files[0])
                 page.update()
             else:
                 show_alert_not_found()
