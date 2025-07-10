@@ -19,7 +19,6 @@ def display_upload_page(page: ft.Page, run_type: Run_Type):
     background_container.content = upload_files(page, run_type)
     page.add(background_container)
     page.update()
-
 def display_download_page(page: ft.Page, run_type: Run_Type):
     from process.download import download_files
     page.controls.clear()
@@ -34,9 +33,12 @@ def display_download_page(page: ft.Page, run_type: Run_Type):
     page.update()
 
 
+
+
+
+
 def starting_point(page: ft.Page)-> Column:
     ACTION_TYPE = get_env_instance().ACTION_TYPE
-
     page.controls.clear()
 
     background_container = ft.Container(
@@ -45,7 +47,6 @@ def starting_point(page: ft.Page)-> Column:
         width=page.width,
         height=page.height,
     )
-
     title = Text(
         TEXTS.BASIC_TITLE.value, 
         size=50,
@@ -60,7 +61,6 @@ def starting_point(page: ft.Page)-> Column:
         icon = ft.icons.CLOUD_UPLOAD_OUTLINED,
         on_click = lambda e: display_upload_page(page, Run_Type.UPLOAD), 
         width=200,
-
     )
     download_button = ElevatedButton(
         text=TEXTS.DOWNLOAD_BUTTON.value,

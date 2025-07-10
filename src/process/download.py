@@ -20,7 +20,7 @@ def download_files(page: ft.Page, run_type: Run_Type)-> Column:
     files = []
     checkboxes = {}
     checkbox_container = Container(width=300, height=200)
-    
+
     def handle_folder_selection(selected_folder: str)-> None:
         """Handles the selection of a folder and updates the file list."""
         nonlocal bucket, folder, files,  checkboxes
@@ -28,7 +28,7 @@ def download_files(page: ft.Page, run_type: Run_Type)-> Column:
             bucket, folder = selected_folder.split("/", 1)
             checkboxes.clear()
             checkbox_container.content = Row(controls=[])
-            
+
             if bucket and folder:
                 files = get_files(bucket, folder)
                 update_checkboxes()
@@ -46,9 +46,9 @@ def download_files(page: ft.Page, run_type: Run_Type)-> Column:
                         alignment=ft.MainAxisAlignment.START,
                         scroll=ft.ScrollMode.AUTO,
                         ),
-                    ],   
+                    ],
                     alignment=ft.MainAxisAlignment.START,
-                    width=300,    
+                    width=300,
                     scroll=ft.ScrollMode.AUTO)
 
     def get_files(bucket: str, folder: str) -> list[str]:
@@ -63,12 +63,11 @@ def download_files(page: ft.Page, run_type: Run_Type)-> Column:
         nonlocal selected_files
         selected_files = [file for file in files if checkboxes[file].value]
         update_file_label(len(selected_files))
-        
+
     def update_file_label(file_count: int) -> None:
         """Updates the label showing the number of selected files."""
         file_label.value = f"Selected {file_count} files."
-        page.update()    
-        
+        page.update()
 
     def download_file(e) -> None:
         """Handles the file download action."""
@@ -81,7 +80,7 @@ def download_files(page: ft.Page, run_type: Run_Type)-> Column:
         except Exception as ex:
             error_message = ERROR_MESSAGES.ERROR_DURING_DOWNLOAD.format(str(ex))
             show_message(page, error_message, ft.colors.RED)
-    
+
     def validate_download() -> bool:
         """Validates the download action."""
         return len(selected_files)>0 and bucket and folder
@@ -90,7 +89,7 @@ def download_files(page: ft.Page, run_type: Run_Type)-> Column:
         """Shows an alert if the download validation fails."""
         alert_message = VALIDATION_MESSAGES.NO_FOLDER_OR_BUCKET.value if not bucket or not folder else VALIDATION_MESSAGES.NO_FILES_ALERT.value
         show_message(page, alert_message, ft.colors.ORANGE)
-            
+
     download_icon=ft.Icon(
         color = COLORS.MAIN_COLOR.value,
         name=ft.icons.CLOUD_DOWNLOAD_OUTLINED,
@@ -104,7 +103,7 @@ def download_files(page: ft.Page, run_type: Run_Type)-> Column:
         on_click=download_file,
         width=200
     )
-    
+
     from process.starting_point import starting_point
 
     back_button = ElevatedButton(
@@ -112,7 +111,7 @@ def download_files(page: ft.Page, run_type: Run_Type)-> Column:
         on_click=lambda e: starting_point(page),
         width=200
     )
-    
+
     column = Column(
         controls=[
             download_icon,
@@ -125,5 +124,5 @@ def download_files(page: ft.Page, run_type: Run_Type)-> Column:
         spacing=20,
         alignment=ft.MainAxisAlignment.CENTER,
         horizontal_alignment=ft.CrossAxisAlignment.CENTER
-    )    
+    )
     return column

@@ -28,6 +28,8 @@ class Dropdown(ft.Dropdown):
         self.width = width
         self.on_change = on_change
         self.on_click = on_click
+        self.border_width = 2
+        self.border_color = COLORS.MAIN_COLOR.value
         self.elevation=5
         self.icon_enabled_color = COLORS.MAIN_COLOR.value
 
