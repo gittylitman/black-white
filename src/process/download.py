@@ -8,6 +8,7 @@ from classes.column import Column
 from classes.buttons import ElevatedButton
 from config.const import TEXTS, Run_Type, COLORS, ERROR_MESSAGES, VALIDATION_MESSAGES
 from utils.basic_function import show_message
+from utils.gcloud_calls import get_files_from_folder
 import flet as ft
 
 
@@ -53,8 +54,10 @@ def download_files(page: ft.Page, run_type: Run_Type)-> Column:
 
     def get_files(bucket: str, folder: str) -> list[str]:
         """Fetches files from the specified bucket and folder."""
-        #TODO fetch files from bucket and folder.
-        return ["filewwwwwwwwwwwwwwwwwwwwwwwww1.txt", "file2.txt", "file3.txt", "file4.txt", "file5.txt", "file6.txt"]
+        files_result = get_files_from_folder(page, bucket, folder)
+        list_folders_and_files = files_result.split('\n')
+        list_files = [file.split('/').pop() for file in list_folders_and_files if not file.endswith('/') and not file.endswith(':') and file]
+        return list_files
 
     department_dropdown = dropdown(page, handle_folder_selection, run_type=run_type)
 
