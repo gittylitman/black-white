@@ -6,7 +6,7 @@ from utils.basic_function import show_message
 from process.department_dropdown import dropdown
 from config.const import TEXTS, Run_Type, COLORS,VALIDATION_MESSAGES, ERROR_MESSAGES
 import flet as ft
-
+from utils.gcloud_calls  import upload_files_to_gcp
 
 
 def upload_files(page: ft.Page, run_type: Run_Type)-> Column:
@@ -18,7 +18,6 @@ def upload_files(page: ft.Page, run_type: Run_Type)-> Column:
         nonlocal bucket, folder
         try:
             bucket, folder = selected_folder.split("/", 1)
-            #TODO: handle selected bucket and folder
             page.update()
         except ValueError:
             show_message(page, ERROR_MESSAGES.INVALID_FOLDER.value, ft.colors.RED)
@@ -48,9 +47,9 @@ def upload_files(page: ft.Page, run_type: Run_Type)-> Column:
     def upload_file(e) -> None:
         try:
             if validate_upload():
-                # TODO: please add here code to upload files.
-                # TODO: Implement the file upload logic here
-                # upload_page(page, selected_files["files"])
+                file_paths = [file.path for file in selected_files["files"]]
+                file_paths = ['/app/dockerfile']
+                upload_files_to_gcp(f"{bucket}/{folder}", file_paths)
                 page.update()
             else:
                 show_alert_not_found()

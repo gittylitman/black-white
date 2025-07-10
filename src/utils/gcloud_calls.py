@@ -3,7 +3,7 @@ import subprocess
 import flet as ft
 from config.const import ERROR_MESSAGES
 from utils.basic_function import show_message
-    
+
 def get_folders_and_files(page, bucket_name: str):
     try:
         result = subprocess.run(
@@ -18,3 +18,15 @@ def get_folders_and_files(page, bucket_name: str):
     except Exception as e:
         show_message(page, ERROR_MESSAGES.ERROR_FETCHING_FOLDERS.value, ft.colors.RED)
         return {}
+
+def upload_files_to_gcp(bucket_name: str, files: list):
+    try:
+        command = ["gsutil", "cp"] + files + [f"gs://{bucket_name}/"]
+        result = subprocess.run(command, capture_output=True, text=True, timeout=30)
+
+        if result.returncode != 0:
+            return False
+        return True
+
+    except Exception as e:
+        return False
