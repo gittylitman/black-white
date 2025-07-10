@@ -11,7 +11,7 @@ class Run_Type(Enum):
 class DepartmentsBucketsUploadDev(Enum):
     DRONES = ("רחפנים", "example-download-upload")
     MAPPING = ("מיפוי", "empty-bucket-example")
-    SATELLITES = ("לווינות", "dig-sat-dev-t-lgupld")
+    SATELLITES = ("לווינות", "empty-bucket-example")
         
     def __init__(self, department, bucket) -> None:
         self.department = department
@@ -31,7 +31,7 @@ class DepartmentsBucketsUploadProd(Enum):
 class DepartmentsBucketsDownloadDev(Enum):
     DRONES = ("רחפנים", "example-download-upload")
     MAPPING = ("מיפוי", "empty-bucket-example")
-    SATELLITES = ("לווינות", "dig-sat-dev-t-lgdnld")
+    SATELLITES = ("לווינות", "empty-bucket-example")
         
     def __init__(self, department, bucket) -> None:
         self.department = department
@@ -49,16 +49,15 @@ class DepartmentsBucketsDownloadProd(Enum):
         
         
 class Departments(Enum):
-    BLACK_PROD = (DepartmentsBucketsDownloadProd, "PROD", Run_Type.DOWNLOAD, "sky-geo-dig-prd-t-lgdnld-1")
-    BLACK_DEV = (DepartmentsBucketsDownloadDev, "DEV", Run_Type.DOWNLOAD, "sky-geo-dig-dev-t-lgdnld-1")
-    WHITE_DEV = (DepartmentsBucketsUploadDev, "DEV", Run_Type.UPLOAD, "sky-geo-dig-dev-t-lgupld-1")
-    WHITE_PROD = (DepartmentsBucketsUploadProd, "PROD", Run_Type.UPLOAD, "sky-geo-dig-prd-t-lgupld-1")
+    BLACK_PROD = (DepartmentsBucketsDownloadProd, "PROD", Run_Type.DOWNLOAD)
+    BLACK_DEV = (DepartmentsBucketsDownloadDev, "DEV", Run_Type.DOWNLOAD)
+    WHITE_DEV = (DepartmentsBucketsUploadDev, "DEV", Run_Type.UPLOAD)
+    WHITE_PROD = (DepartmentsBucketsUploadProd, "PROD", Run_Type.UPLOAD)
     
-    def __init__(self, department_bucket, env, run_type, project_id) -> None:
+    def __init__(self, department_bucket, env, run_type) -> None:
         self.department_bucket = department_bucket
         self.env = env
         self.run_type = run_type
-        self.project_id = project_id
        
        
 class ERROR_MESSAGES(Enum):

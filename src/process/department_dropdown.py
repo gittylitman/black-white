@@ -2,7 +2,7 @@ from typing import Any
 
 from process.folder_selector import hierarchical_folder_selector
 
-from utils.gcloud_calls import get_folders_and_files_from_bucket
+from utils.gcloud_calls import get_folders_and_files
 from utils.basic_function import show_message
 from modules.set_system_variable import get_env_instance
 from classes.column import Column
@@ -25,8 +25,7 @@ def get_bucket_by_run_type(run_type):
     ENVIRONMENT_TYPE = get_env_instance().ENVIRONMENT_TYPE
     department = get_department(ENVIRONMENT_TYPE, run_type)
     bucket = department.department_bucket
-    project_id = department.project_id
-    return bucket, project_id
+    return bucket
 
 
 def dropdown(
@@ -36,7 +35,7 @@ def dropdown(
 ) -> Container:
     
     try:
-        bucket, project_id = get_bucket_by_run_type(run_type)
+        bucket = get_bucket_by_run_type(run_type)
     except ValueError as e:
         error_message = ERROR_MESSAGES.BASIC_ERROR_MESSAGE.format(str(e))
         show_message(page, error_message, ft.colors.RED)
@@ -46,8 +45,8 @@ def dropdown(
     selected_folder_text = Text("")
     selected_folder = ""
 
-    def get_folders_list(bucket: str, project_id: str) -> object:
-        result = get_folders_and_files_from_bucket(page, project_id, bucket)
+    def get_folders_list(bucket: str) -> object:
+        result = get_folders_and_files(page, bucket)
         try:
             return get_folders_from_folders_and_files(result)
         except Exception:
@@ -75,12 +74,12 @@ def dropdown(
 
 
     def on_change_dropdown(e: ft.ControlEvent):
-        nonlocal selected_folder, project_id
+        nonlocal selected_folder
         selected_folder = ""
         selected_bucket = e.control.value
         on_folder_selected(f"{selected_bucket}/{selected_folder}")
         try:
-            folders = get_folders_list(selected_bucket, project_id)
+            folders = get_folders_list(selected_bucket)
             if not folders:
                 selected_folder_text.value = VALIDATION_MESSAGES.NO_FOLDERS_ALERT.value
                 result_container.content = None
