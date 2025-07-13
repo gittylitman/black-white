@@ -1,5 +1,7 @@
 import flet as ft
+import os
 import threading
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from classes.progress_bar import ProgressBar
 from classes.text import Text
 from classes.row import Row
@@ -8,12 +10,12 @@ from classes.column import Column
 from modules.set_system_variable import get_env_instance
 from utils.basic_function import show_message
 
-def show_progress_popup(page, file_paths: list, bucket: str, folder:str,action_func):
+def show_progress_popup(page, file_paths: list, bucket: str, folder: str, action_func):
     action_type = get_env_instance().ACTION_TYPE
     progress_controls = []
 
     for file_path in file_paths:
-        file_name = file_path.split("/")[-1]
+        file_name = os.path.splitext(os.path.basename(file_path))[0]
         progress_bar = ProgressBar(width=150)
         status_text = Text(f"{action_type}...", color=COLORS.PROCESS_COLOR, size=14, weight=ft.FontWeight.BOLD)
 
@@ -27,7 +29,8 @@ def show_progress_popup(page, file_paths: list, bucket: str, folder:str,action_f
         progress_controls.append({
             "row": progress_row,
             "progress_bar": progress_bar,
-            "status_text": status_text
+            "status_text": status_text,
+            "file_path": file_path
         })
 
     summary_text = Text(
@@ -57,38 +60,50 @@ def show_progress_popup(page, file_paths: list, bucket: str, folder:str,action_f
     progress_dialog.open = True
     page.update()
 
+    def process_file(pc):
+        """Function to process a single file."""
+        file_path = pc["file_path"]
+        progress_bar = pc["progress_bar"]
+        status_text = pc["status_text"]
+
+        try:
+            status_text.value = f"{action_type}..."
+            status_text.color = COLORS.PROCESS_COLOR
+            page.update()
+
+            action_func(bucket, folder, file_path)
+            progress_bar.value = 1.0
+            progress_bar.color = COLORS.SUCCESS_COLOR.value
+            status_text.value = "Success"
+            status_text.color = COLORS.SUCCESS_COLOR.value
+
+            return True
+        except Exception as e:
+            progress_bar.value = 1.0
+            progress_bar.color = COLORS.FAILED_COLOR.value
+            status_text.value = "Failed"
+            status_text.color = COLORS.FAILED_COLOR.value
+
+            return False
+        finally:
+            page.update()
+
     def worker():
         success_count = 0
         failure_count = 0
 
-        for index, (pc, file_path) in enumerate(zip(progress_controls, file_paths), start=1):
-            progress_bar = pc["progress_bar"]
-            status_text = pc["status_text"]
+        with ThreadPoolExecutor(max_workers=5) as executor:
+            futures = [executor.submit(process_file, pc) for pc in progress_controls]
 
-            summary_text.value = f"{action_type} file {index} of {len(file_paths)}..."
-            page.update()
+            for index, future in enumerate(as_completed(futures), start=1):
+                result = future.result()
+                if result:
+                    success_count += 1
+                else:
+                    failure_count += 1
 
-            try:
-                status_text.value = f"{action_type}..."
-                status_text.color = COLORS.PROCESS_COLOR
+                summary_text.value = f"{success_count} succeeded, {failure_count} failed"
                 page.update()
-                action_func(bucket, folder, file_path)
-                progress_bar.value = 1.0
-                progress_bar.color = COLORS.SUCCESS_COLOR.value
-                status_text.value = "Success"
-                status_text.color = COLORS.SUCCESS_COLOR.value
-                page.update()
-                success_count += 1
-            except Exception as e:
-                progress_bar.value = 1.0
-                progress_bar.color = COLORS.FAILED_COLOR.value
-                status_text.value = "Failed"
-                status_text.color = COLORS.FAILED_COLOR.value
-                page.update()
-                failure_count += 1
-
-            summary_text.value = f"{success_count} succeeded, {failure_count} failed"
-            page.update()
 
         summary_text.value = f"{action_type} completed: {success_count} succeeded, {failure_count} failed"
         page.update()
