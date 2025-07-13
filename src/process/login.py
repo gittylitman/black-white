@@ -60,7 +60,7 @@ def perform_gcloud_login(page: ft.Page, column: Column, login_button: ElevatedBu
 
     try:
         gcloud_process = subprocess.Popen(
-            ["gcloud", "auth", "login", "--no-launch-browser"],
+            ["cmd", "/c", "gcloud", "auth", "login", "--no-launch-browser"],
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             stdin=subprocess.PIPE,

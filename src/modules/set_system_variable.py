@@ -7,6 +7,7 @@ class _SetupEnv:
         try:
             self.ENVIRONMENT_TYPE: str = os.environ["ENVIRONMENT_TYPE"]
             self.ACTION_TYPE: str = os.environ["ACTION_TYPE"]
+            self.GCLOUD_PATH: str = os.environ["GCLOUD_PATH"]
             
            
         except KeyError as e:
