@@ -4,12 +4,12 @@ from classes.file_picker import FilePicker
 from classes.column import Column
 from utils.basic_function import show_message
 from process.department_dropdown import dropdown
-from config.const import TEXTS, Run_Type, COLORS,VALIDATION_MESSAGES, ERROR_MESSAGES
+from config.const import TEXTS, Run_Type, COLORS, VALIDATION_MESSAGES, ERROR_MESSAGES
 import flet as ft
-from utils.gcloud_calls  import upload_files_to_gcp
+from process.progress_popup import show_progress_popup
+from utils.gcloud_calls import upload_files_to_gcp
 
-
-def upload_files(page: ft.Page, run_type: Run_Type)-> Column:
+def upload_files(page: ft.Page, run_type: Run_Type) -> Column:
     selected_files = {"files": []}
     bucket = ""
     folder = ""
@@ -48,15 +48,12 @@ def upload_files(page: ft.Page, run_type: Run_Type)-> Column:
         try:
             if validate_upload():
                 file_paths = [file.path for file in selected_files["files"]]
-                file_paths = ['/app/dockerfile']
-                upload_files_to_gcp(f"{bucket}/{folder}", file_paths)
-                page.update()
+                show_progress_popup(page,file_paths,bucket,folder, action_func=lambda bucket, folder, file_path: upload_files_to_gcp(bucket,folder, file_path))
             else:
                 show_alert_not_found()
         except Exception as ex:
             error_message = ERROR_MESSAGES.ERROR_DURING_UPLOAD.format(ex)
             show_message(page, error_message, ft.colors.RED)
-
 
     def validate_upload() -> bool:
         return bool(selected_files["files"]) and bucket and folder
@@ -65,19 +62,20 @@ def upload_files(page: ft.Page, run_type: Run_Type)-> Column:
         alert_message = VALIDATION_MESSAGES.NO_FOLDER_OR_BUCKET.value if not bucket or not folder else VALIDATION_MESSAGES.NO_FILES_ALERT.value
         show_message(page, alert_message, ft.colors.ORANGE)
 
-    upload_icon_button=IconButton(
+  
+    upload_icon_button = IconButton(
         icon=ft.icons.CLOUD_UPLOAD_OUTLINED,
-        icon_color = COLORS.MAIN_COLOR.value,
+        icon_color=COLORS.MAIN_COLOR.value,
         icon_size=70,
         tooltip=TEXTS.CHOOSE_FILES.value,
-        on_click=lambda e: file_picker.pick_files(allow_multiple = True),
+        on_click=lambda e: file_picker.pick_files(allow_multiple=True),
         border_radius=5
     )
 
     file_label = Text(TEXTS.CHOOSE_FOLDER.value, size=30, color=COLORS.MAIN_COLOR.value)
 
     upload_button = ElevatedButton(
-        text=TEXTS.UPLOAD_BUTTON.value ,
+        text=TEXTS.UPLOAD_BUTTON.value,
         on_click=upload_file,
         width=200
     )
@@ -103,3 +101,5 @@ def upload_files(page: ft.Page, run_type: Run_Type)-> Column:
         alignment=ft.MainAxisAlignment.CENTER,
         horizontal_alignment=ft.CrossAxisAlignment.CENTER
     )
+
+

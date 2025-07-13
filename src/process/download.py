@@ -8,10 +8,13 @@ from classes.column import Column
 from classes.buttons import ElevatedButton
 from config.const import TEXTS, Run_Type, COLORS, ERROR_MESSAGES, VALIDATION_MESSAGES
 from utils.basic_function import show_message
-from utils.gcloud_calls import get_files_from_folder, download
+from utils.gcloud_calls import get_files_from_folder, download_files_from_gcp
+from process.progress_popup import show_progress_popup
+
 import flet as ft
 
-
+import logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def download_files(page: ft.Page, run_type: Run_Type)-> Column:
     """Creates a UI for downloading files from a specified bucket and folder."""
@@ -20,7 +23,7 @@ def download_files(page: ft.Page, run_type: Run_Type)-> Column:
     folder = ""
     files = []
     checkboxes = {}
-    checkbox_container = Container(width=300, height=200)
+    checkbox_container = Container(width=300, height=100)
 
     def handle_folder_selection(selected_folder: str)-> None:
         """Handles the selection of a folder and updates the file list."""
@@ -76,13 +79,15 @@ def download_files(page: ft.Page, run_type: Run_Type)-> Column:
         """Handles the file download action."""
         try:
             if validate_download():
-                download(page, bucket, folder, selected_files[0])
+                show_progress_popup(page,selected_files,bucket,folder,action_func=lambda bucket, folder, file_path: download_files_from_gcp(page, bucket, folder, file_path))
+                show_message(page, f"✅ Downloaded {len(selected_files)} files successfully!", COLORS.SUCCESS_COLOR)
                 page.update()
             else:
                 show_alert_not_found()
         except Exception as ex:
             error_message = ERROR_MESSAGES.ERROR_DURING_DOWNLOAD.format(str(ex))
             show_message(page, error_message, ft.colors.RED)
+
 
     def validate_download() -> bool:
         """Validates the download action."""
@@ -124,7 +129,7 @@ def download_files(page: ft.Page, run_type: Run_Type)-> Column:
             download_button,
             back_button
         ],
-        spacing=20,
+        spacing=10,
         alignment=ft.MainAxisAlignment.CENTER,
         horizontal_alignment=ft.CrossAxisAlignment.CENTER
     )

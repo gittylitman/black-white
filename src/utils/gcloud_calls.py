@@ -17,19 +17,17 @@ def get_folders_and_files(page, bucket_name: str):
         return result.stdout
     except Exception as e:
         show_message(page, ERROR_MESSAGES.ERROR_FETCHING_FOLDERS.value, ft.colors.RED)
-        return ""
-
-def upload_files_to_gcp(bucket_name: str, files: list):
+        return {}
+    
+def upload_files_to_gcp(bucket_name: str,folder_name:str, file_path: str) -> None:
     try:
-        command = ["gsutil", "cp"] + files + [f"gs://{bucket_name}/"]
-        result = subprocess.run(command, capture_output=True, text=True, timeout=30)
-
+        command = ["gsutil", "cp", file_path, f"gs://{bucket_name}/{folder_name}"]
+        result = subprocess.run(command, capture_output=True, text=True, timeout=60)
         if result.returncode != 0:
-            return False
-        return True
-
+            raise Exception(f"Failed to upload {file_path}: {result.stderr}")
     except Exception as e:
-        return False
+        raise str(e)
+
 def get_files_from_folder(page, bucket_name: str, folder: str):
     try:
         result = subprocess.run(
@@ -45,7 +43,7 @@ def get_files_from_folder(page, bucket_name: str, folder: str):
         show_message(page, ERROR_MESSAGES.INVALID_FOLDER.value, ft.colors.RED)
         return ""
 
-def download(page, bucket_name: str, folder_path: str, file_name: str):
+def download_files_from_gcp(page, bucket_name: str, folder_path: str, file_name: str):
     try:
         result = subprocess.run(
             ["gsutil", "cp", f"gs://{bucket_name}/{folder_path}/{file_name}", "."],
