@@ -51,6 +51,8 @@ def download_files(page: ft.Page, run_type: Run_Type)-> Column:
                         scroll=ft.ScrollMode.AUTO,
                         ),
                     ],
+                                         
+                    vertical_alignment = ft.CrossAxisAlignment.START,
                     alignment=ft.MainAxisAlignment.START,
                     width=300,
                     scroll=ft.ScrollMode.AUTO)

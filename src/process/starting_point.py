@@ -33,10 +33,6 @@ def display_download_page(page: ft.Page, run_type: Run_Type):
     page.update()
 
 
-
-
-
-
 def starting_point(page: ft.Page)-> Column:
     ACTION_TYPE = get_env_instance().ACTION_TYPE
     page.controls.clear()
@@ -47,14 +43,6 @@ def starting_point(page: ft.Page)-> Column:
         width=page.width,
         height=page.height,
     )
-    title = Text(
-        TEXTS.BASIC_TITLE.value, 
-        size=50,
-        elevation=5,
-        weight=ft.FontWeight.BOLD, 
-        color=COLORS.MAIN_COLOR.value,
-        text_align=ft.TextAlign.CENTER,
-        )
 
     upload_button = ElevatedButton(
         text=TEXTS.UPLOAD_BUTTON.value,
@@ -71,7 +59,6 @@ def starting_point(page: ft.Page)-> Column:
 
     main_column = ft.Column(
             controls=[
-                title,
                 upload_button if ACTION_TYPE == 'Upload' else download_button
             ],
             spacing=20,
