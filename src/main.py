@@ -9,7 +9,7 @@ def main(page: ft.Page):
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
     page.title = TEXTS.PAGE_TITLE.value
-    page.scroll = "adaptive"
+    page.scroll = ft.ScrollMode.AUTO
     setup_ui(page)
 
 ft.app(target=main)
