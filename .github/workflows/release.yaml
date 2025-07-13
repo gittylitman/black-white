@@ -34,4 +34,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: my-executable
-          path: dist/my-executable.exe
+          path: D:\a\black-white\black-white\dist
