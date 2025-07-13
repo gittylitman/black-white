@@ -7,9 +7,8 @@ from config.const import COLORS
 from classes.column import Column
 from modules.set_system_variable import get_env_instance
 from utils.basic_function import show_message
-from utils.gcloud_calls import upload_files_to_gcp
 
-def show_progress_popup(page, file_paths: list, bucket: str):
+def show_progress_popup(page, file_paths: list, bucket: str, folder:str,action_func):
     action_type = get_env_instance().ACTION_TYPE
     progress_controls = []
 
@@ -73,11 +72,7 @@ def show_progress_popup(page, file_paths: list, bucket: str):
                 status_text.value = f"{action_type}..."
                 status_text.color = COLORS.PROCESS_COLOR
                 page.update()
-                if action_type == "Upload":
-                    upload_files_to_gcp(bucket, file_path)
-                else:
-                    print("download")
-                    #TODO download
+                action_func(bucket, folder, file_path)
                 progress_bar.value = 1.0
                 progress_bar.color = COLORS.SUCCESS_COLOR.value
                 status_text.value = "Success"
