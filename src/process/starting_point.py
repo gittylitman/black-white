@@ -60,7 +60,6 @@ def starting_point(page: ft.Page)-> Column:
     main_column = ft.Column(
             controls=[
                 upload_button if ACTION_TYPE == 'Upload' else download_button
-
             ],
             spacing=20,
             alignment=ft.MainAxisAlignment.CENTER,
