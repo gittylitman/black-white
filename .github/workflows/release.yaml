@@ -29,3 +29,9 @@ jobs:
         run: |
           pip install .
           python -m PyInstaller --onefile --hidden-import "flet"  src/main.py
+
+      - name: Upload Executable
+        uses: actions/upload-artifact@v2
+        with:
+          name: my-executable
+          path: dist/my-executable.exe
