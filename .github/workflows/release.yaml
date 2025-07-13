@@ -23,4 +23,5 @@ jobs:
       - name: ⏬ Install Dependencies
         run: |
           pip install pyinstaller==6.14.2
+          pip install flet==0.28.3
 
