@@ -20,7 +20,7 @@ def download_files(page: ft.Page, run_type: Run_Type)-> Column:
     folder = ""
     files = []
     checkboxes = {}
-    checkbox_container = Container(width=300, height=200)
+    checkbox_container = Container(width=300, height=100,bgcolor=ft.colors.ORANGE)
 
     def handle_folder_selection(selected_folder: str)-> None:
         """Handles the selection of a folder and updates the file list."""
@@ -124,7 +124,7 @@ def download_files(page: ft.Page, run_type: Run_Type)-> Column:
             download_button,
             back_button
         ],
-        spacing=20,
+        spacing=10,
         alignment=ft.MainAxisAlignment.CENTER,
         horizontal_alignment=ft.CrossAxisAlignment.CENTER
     )

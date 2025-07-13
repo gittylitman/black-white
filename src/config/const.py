@@ -108,6 +108,10 @@ class TEXTS(Enum):
 class COLORS(Enum):
     MAIN_COLOR = ft.colors.BLUE_ACCENT_700
     BACKGROUND_COLOR = ft.colors.WHITE
+    GRAY_COLOR=ft.colors.GREY
+    FAILED_COLOR= ft.colors.RED
+    SUCCESS_COLOR=ft.colors.GREEN
+    PROCESS_COLOR=ft.colors.BLUE
 
 
 
