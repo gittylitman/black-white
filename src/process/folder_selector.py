@@ -2,23 +2,26 @@ import flet as ft
 from typing import Callable
 
 from classes.text import Text
-from classes.buttons import ElevatedButton, IconButton
+from classes.buttons import IconButton
 from classes.column import Column
 from classes.row import Row
 from classes.container import Container
-from config.const import COLORS, TEXTS, ERROR_MESSAGES
+from config.const import COLORS, TEXTS
 
 
-def get_folders_in_path(bucket: str, folders, path: str = ""):
+def get_folders_in_path(folders, path: str = ""):
+    """Get a folders in path."""
     return folders.get(path.strip("/"), [])
 
 
 def hierarchical_folder_selector(
+    
     page: ft.Page,
     bucket: str,
     on_folder_selected: Callable[[str], None],
     folders,
 ) -> Container:
+    """"Hierarchical folder selector. """
     current_path = ""
     path_stack = []
     folder_column = Column(spacing=10, scroll=ft.ScrollMode.AUTO, controls=[])
@@ -33,6 +36,7 @@ def hierarchical_folder_selector(
     )
 
     def update_folder_list():
+        """"Update folder list."""
         nonlocal folders
         folders_chosen = get_folders_in_path(bucket, folders, current_path)
         folder_column.controls.clear()
@@ -70,12 +74,14 @@ def hierarchical_folder_selector(
         page.update()
 
     def enter_folder(folder: str):
+        """Enter folder"""
         nonlocal current_path
         path_stack.append(current_path)
         current_path = f"{current_path}/{folder}".strip("/")
         update_folder_list()
 
     def go_back(e):
+        """Go back. """
         nonlocal current_path
         if path_stack:
             current_path = path_stack.pop()
@@ -84,6 +90,7 @@ def hierarchical_folder_selector(
         on_folder_selected(f"{bucket}/")
 
     def choose_this_folder(e):
+        """Choose folder"""
         full_path = f"{bucket}/{current_path}".strip("/")
         chosen_folder.value = TEXTS.CHOSEN_FOLDER.value + current_path
         on_folder_selected(full_path)

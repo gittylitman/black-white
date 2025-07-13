@@ -6,7 +6,7 @@ from utils.basic_function import show_message
 from process.department_dropdown import dropdown
 from config.const import TEXTS, Run_Type, COLORS, VALIDATION_MESSAGES, ERROR_MESSAGES
 import flet as ft
-from process.progress_popup import progress_popup
+from process.progress_popup import show_progress_popup
 from utils.gcloud_calls import upload_files_to_gcp
 
 
@@ -47,7 +47,7 @@ def upload_files(page: ft.Page, run_type: Run_Type) -> Column:
         try:
             if validate_upload():
                 file_paths = [file.path for file in selected_files["files"]]
-                progress_popup(
+                show_progress_popup(
                     page,
                     file_paths,
                     bucket,

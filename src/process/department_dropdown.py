@@ -16,6 +16,8 @@ from config.const import Run_Type, Departments, TEXTS,COLORS
 
 
 def get_department(env: str, run_type: Run_Type) -> Departments:
+    """Get department."""
+
     for dept in Departments:
         if dept.env == env and dept.run_type == run_type:
             return dept
@@ -23,6 +25,7 @@ def get_department(env: str, run_type: Run_Type) -> Departments:
 
 
 def get_bucket_by_run_type(run_type):
+    """Get bucket that matches the department."""
     ENVIRONMENT_TYPE = get_env_instance().ENVIRONMENT_TYPE
     department = get_department(ENVIRONMENT_TYPE, run_type)
     bucket = department.department_bucket
@@ -30,6 +33,7 @@ def get_bucket_by_run_type(run_type):
 
 
 def dropdown(page: ft.Page, on_folder_selected: Any, run_type: Run_Type) -> Container:
+    """Show a drop-down menu with the list of folders in the bucket"""
     try:
         bucket = get_bucket_by_run_type(run_type)
     except ValueError as e:
@@ -42,6 +46,7 @@ def dropdown(page: ft.Page, on_folder_selected: Any, run_type: Run_Type) -> Cont
     selected_folder = ""
 
     def get_folders_list(bucket: str) -> object:
+        """Get a folder list."""
         result = get_folders_and_files(page, bucket)
         try:
             return get_folders_from_folders_and_files(result)
@@ -52,6 +57,7 @@ def dropdown(page: ft.Page, on_folder_selected: Any, run_type: Run_Type) -> Cont
             return {}
 
     def get_folders_from_folders_and_files(folders_and_files: str):
+        """Get folder hierarchy. """
         list_folders_and_files = folders_and_files.split("\n")
         list_folders = [
             file[file.index("gs://") + 5 : -2].split("/")
@@ -75,6 +81,7 @@ def dropdown(page: ft.Page, on_folder_selected: Any, run_type: Run_Type) -> Cont
         return folders
 
     def on_change_dropdown(e: ft.ControlEvent):
+        """On change drop-down. """
         nonlocal selected_folder
         selected_folder = ""
         selected_bucket = e.control.value

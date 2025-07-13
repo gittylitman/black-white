@@ -9,7 +9,7 @@ from classes.buttons import ElevatedButton
 from config.const import TEXTS, Run_Type, COLORS, ERROR_MESSAGES, VALIDATION_MESSAGES
 from utils.basic_function import show_message
 from utils.gcloud_calls import get_files_from_folder, download_files_from_gcp
-from process.progress_popup import progress_popup
+from process.progress_popup import show_progress_popup
 
 import flet as ft
 
@@ -90,7 +90,7 @@ def download_files(page: ft.Page, run_type: Run_Type) -> Column:
         """Handles the file download action."""
         try:
             if validate_download():
-                progress_popup(
+                show_progress_popup(
                     page,
                     selected_files,
                     bucket,
@@ -102,14 +102,14 @@ def download_files(page: ft.Page, run_type: Run_Type) -> Column:
                 show_message(
                     page,
                     f"✅ Downloaded {len(selected_files)} files successfully!",
-                    COLORS.SUCCESS_COLOR,
+                    COLORS.SUCCESS_COLOR.value,
                 )
                 page.update()
             else:
                 show_alert_not_found()
         except Exception as ex:
             error_message = ERROR_MESSAGES.ERROR_DURING_DOWNLOAD.format(str(ex))
-            show_message(page, error_message, COLORS.ERROR_MESSAGES_COLORS)
+            show_message(page, error_message, COLORS.ERROR_MESSAGES_COLORS.value)
 
     def validate_download() -> bool:
         """Validates the download action."""

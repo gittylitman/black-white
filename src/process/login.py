@@ -136,7 +136,6 @@ def reset_ui(page: ft.Page, column: Column, login_button: ElevatedButton) -> Non
     page.update()
 
 
-# --- Helpers ---
 
 
 def _create_title() -> Text:
