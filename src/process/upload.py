@@ -6,8 +6,8 @@ from utils.basic_function import show_message
 from process.department_dropdown import dropdown
 from config.const import TEXTS, Run_Type, COLORS, VALIDATION_MESSAGES, ERROR_MESSAGES
 import flet as ft
-from utils.gcloud_calls import upload_files_to_gcp
 from process.progress_popup import show_progress_popup
+from utils.gcloud_calls import upload_files_to_gcp
 
 def upload_files(page: ft.Page, run_type: Run_Type) -> Column:
     selected_files = {"files": []}
@@ -48,8 +48,7 @@ def upload_files(page: ft.Page, run_type: Run_Type) -> Column:
         try:
             if validate_upload():
                 file_paths = [file.path for file in selected_files["files"]]
-                file_paths = ["/app/try1.txt","ff","/app/try2.txt","/app/try3"]
-                show_progress_popup(page,file_paths,f"{bucket}/{folder}")
+                show_progress_popup(page,file_paths,bucket,folder, action_func=lambda bucket, folder, file_path: upload_files_to_gcp(bucket,folder, file_path))
             else:
                 show_alert_not_found()
         except Exception as ex:
