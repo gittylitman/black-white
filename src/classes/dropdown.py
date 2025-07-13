@@ -20,7 +20,7 @@ class Dropdown(ft.Dropdown):
             border_color=COLORS.MAIN_COLOR.value,
             border_width=2,
             border_radius=8,
-            filled=True
+            filled=True,
         )
         self.value = value
         self.options = options
@@ -30,7 +30,7 @@ class Dropdown(ft.Dropdown):
         self.on_click = on_click
         self.border_width = 2
         self.border_color = COLORS.MAIN_COLOR.value
-        self.elevation=5
+        self.elevation = 5
         self.icon_enabled_color = COLORS.MAIN_COLOR.value
 
     def add_option(self, value: str) -> None:

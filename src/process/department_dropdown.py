@@ -12,7 +12,8 @@ from classes.dropdown import Dropdown
 from config.const import TEXTS, VALIDATION_MESSAGES, ERROR_MESSAGES
 
 import flet as ft
-from config.const import Run_Type, Departments, TEXTS
+from config.const import Run_Type, Departments, TEXTS,COLORS
+
 
 def get_department(env: str, run_type: Run_Type) -> Departments:
     for dept in Departments:
@@ -28,19 +29,14 @@ def get_bucket_by_run_type(run_type):
     return bucket
 
 
-def dropdown(
-    page: ft.Page,
-    on_folder_selected: Any,
-    run_type: Run_Type
-) -> Container:
-    
+def dropdown(page: ft.Page, on_folder_selected: Any, run_type: Run_Type) -> Container:
     try:
         bucket = get_bucket_by_run_type(run_type)
     except ValueError as e:
         error_message = ERROR_MESSAGES.BASIC_ERROR_MESSAGE.format(str(e))
-        show_message(page, error_message, ft.colors.RED)
+        show_message(page, error_message, COLORS)
         return Container()
-    
+
     result_container = Container()
     selected_folder_text = Text("")
     selected_folder = ""
@@ -50,17 +46,23 @@ def dropdown(
         try:
             return get_folders_from_folders_and_files(result)
         except Exception:
-            show_message(page, ERROR_MESSAGES.ERROR_FETCHING_FOLDERS.value, ft.colors.RED)
+            show_message(
+                page, ERROR_MESSAGES.ERROR_FETCHING_FOLDERS.value, COLORS.FAILED_COLOR.value
+            )
             return {}
-    
+
     def get_folders_from_folders_and_files(folders_and_files: str):
-        list_folders_and_files = folders_and_files.split('\n')
-        list_folders = [file[file.index("gs://")+5:-2].split('/') for file in list_folders_and_files if file.endswith(':')]
+        list_folders_and_files = folders_and_files.split("\n")
+        list_folders = [
+            file[file.index("gs://") + 5 : -2].split("/")
+            for file in list_folders_and_files
+            if file.endswith(":")
+        ]
         list_folders = [folder[1:] for folder in list_folders]
         list_folders = [folder for folder in list_folders if len(folder)]
         folders = {}
         for folder in list_folders:
-            folders['/'.join(folder)] = []
+            folders["/".join(folder)] = []
         for folder in list_folders:
             name_folder = folder.pop()
             if not len(folder):
@@ -68,10 +70,9 @@ def dropdown(
                     folders[""] = []
                 folders[""].append(name_folder)
             else:
-                path_folder = '/'.join(folder)
+                path_folder = "/".join(folder)
                 folders[path_folder].append(name_folder)
         return folders
-
 
     def on_change_dropdown(e: ft.ControlEvent):
         nonlocal selected_folder
@@ -85,34 +86,31 @@ def dropdown(
                 result_container.content = None
                 page.update()
                 return
-            folder_selector = hierarchical_folder_selector(page, selected_bucket, on_folder_selected, folders)
+            folder_selector = hierarchical_folder_selector(
+                page, selected_bucket, on_folder_selected, folders
+            )
             result_container.content = folder_selector
             page.update()
         except Exception as ex:
-            error_message =  ERROR_MESSAGES.ERROR_FETCHING_FOLDERS.format(str(ex))
-            show_message(page, error_message, ft.colors.RED)
+            error_message = ERROR_MESSAGES.ERROR_FETCHING_FOLDERS.format(str(ex))
+            show_message(page, error_message, COLORS.FAILED_COLOR.value)
 
     department_dropdown = Dropdown(
         label=TEXTS.CHOOSE_DEPARTMENT.value,
         options=[
-            ft.dropdown.Option(text=item.department, key=item.bucket)
-            for item in bucket
+            ft.dropdown.Option(text=item.department, key=item.bucket) for item in bucket
         ],
         width=300,
-        on_change=on_change_dropdown
+        on_change=on_change_dropdown,
     )
 
     return Container(
         content=Column(
-            controls=[
-                department_dropdown,
-                result_container,
-                selected_folder_text
-            ],
+            controls=[department_dropdown, result_container, selected_folder_text],
             spacing=20,
             alignment=ft.MainAxisAlignment.START,
             horizontal_alignment=ft.CrossAxisAlignment.CENTER,
         ),
         alignment=ft.alignment.center,
-        height=320
+        height=320,
     )

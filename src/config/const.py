@@ -2,16 +2,16 @@ from enum import Enum
 import flet as ft
 
 
-
 class Run_Type(Enum):
     UPLOAD = "Upload"
     DOWNLOAD = "Download"
+
 
 class DepartmentsBucketsUploadDev(Enum):
     DRONES = ("רחפנים", "example-download-upload")
     MAPPING = ("מיפוי", "empty-bucket-example")
     SATELLITES = ("לווינות", "empty-bucket-example")
-        
+
     def __init__(self, department, bucket) -> None:
         self.department = department
         self.bucket = bucket
@@ -31,7 +31,7 @@ class DepartmentsBucketsDownloadDev(Enum):
     DRONES = ("רחפנים", "example-download-upload")
     MAPPING = ("מיפוי", "empty-bucket-example")
     SATELLITES = ("לווינות", "empty-bucket-example")
-        
+
     def __init__(self, department, bucket) -> None:
         self.department = department
         self.bucket = bucket
@@ -46,18 +46,19 @@ class DepartmentsBucketsDownloadProd(Enum):
         self.department = department
         self.bucket = bucket
 
+
 class Departments(Enum):
     BLACK_PROD = (DepartmentsBucketsDownloadProd, "PROD", Run_Type.DOWNLOAD)
     BLACK_DEV = (DepartmentsBucketsDownloadDev, "DEV", Run_Type.DOWNLOAD)
     WHITE_DEV = (DepartmentsBucketsUploadDev, "DEV", Run_Type.UPLOAD)
     WHITE_PROD = (DepartmentsBucketsUploadProd, "PROD", Run_Type.UPLOAD)
-    
+
     def __init__(self, department_bucket, env, run_type) -> None:
         self.department_bucket = department_bucket
         self.env = env
         self.run_type = run_type
-       
-       
+
+
 class ERROR_MESSAGES(Enum):
     BASIC_ERROR_MESSAGE = "Error: {}"
     DEPARTMENT_NOT_FOUND = "Department not found"
@@ -83,6 +84,7 @@ class VALIDATION_MESSAGES(Enum):
     def format(self, *args, **kwargs):
         return self.value.format(*args, **kwargs)
 
+
 class TEXTS(Enum):
     SIGN_IN = "Sign in with Google"
     CHOOSE_DEPARTMENT = "Choose Department:"
@@ -104,14 +106,11 @@ class TEXTS(Enum):
     INVALID_FOLDER = "Invalid folder or bucket"
 
 
-
 class COLORS(Enum):
     MAIN_COLOR = ft.colors.BLUE_ACCENT_700
     BACKGROUND_COLOR = ft.colors.WHITE
-    GRAY_COLOR=ft.colors.GREY
-    FAILED_COLOR= ft.colors.RED
-    SUCCESS_COLOR=ft.colors.GREEN
-    PROCESS_COLOR=ft.colors.BLUE
-
-
-
+    GRAY_COLOR = ft.colors.GREY
+    FAILED_COLOR = ft.colors.RED
+    SUCCESS_COLOR = ft.colors.GREEN
+    PROCESS_COLOR = ft.colors.BLUE
+    ERROR_MESSAGES_COLORS=ft.colors.ORANGE

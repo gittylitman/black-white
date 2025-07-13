@@ -6,8 +6,9 @@ from utils.basic_function import show_message
 from process.department_dropdown import dropdown
 from config.const import TEXTS, Run_Type, COLORS, VALIDATION_MESSAGES, ERROR_MESSAGES
 import flet as ft
-from process.progress_popup import show_progress_popup
+from process.progress_popup import progress_popup
 from utils.gcloud_calls import upload_files_to_gcp
+
 
 def upload_files(page: ft.Page, run_type: Run_Type) -> Column:
     selected_files = {"files": []}
@@ -20,13 +21,11 @@ def upload_files(page: ft.Page, run_type: Run_Type) -> Column:
             bucket, folder = selected_folder.split("/", 1)
             page.update()
         except ValueError:
-            show_message(page, ERROR_MESSAGES.INVALID_FOLDER.value, ft.colors.RED)
+            show_message(page, ERROR_MESSAGES.INVALID_FOLDER.value, COLORS.FAILED_COLOR.value)
 
     department_dropdown = dropdown(page, handle_folder_selection, run_type=run_type)
 
-    file_picker = FilePicker(
-        on_result=lambda e: select_file(e)
-    )
+    file_picker = FilePicker(on_result=lambda e: select_file(e))
 
     def select_file(e):
         if e.files:
@@ -48,36 +47,45 @@ def upload_files(page: ft.Page, run_type: Run_Type) -> Column:
         try:
             if validate_upload():
                 file_paths = [file.path for file in selected_files["files"]]
-                show_progress_popup(page,file_paths,bucket,folder, action_func=lambda bucket, folder, file_path: upload_files_to_gcp(bucket,folder, file_path))
+                progress_popup(
+                    page,
+                    file_paths,
+                    bucket,
+                    folder,
+                    action_func=lambda bucket, folder, file_path: upload_files_to_gcp(
+                        bucket, folder, file_path
+                    ),
+                )
             else:
                 show_alert_not_found()
         except Exception as ex:
             error_message = ERROR_MESSAGES.ERROR_DURING_UPLOAD.format(ex)
-            show_message(page, error_message, ft.colors.RED)
+            show_message(page, error_message, COLORS.FAILED_COLOR.value)
 
     def validate_upload() -> bool:
         return bool(selected_files["files"]) and bucket and folder
 
     def show_alert_not_found() -> None:
-        alert_message = VALIDATION_MESSAGES.NO_FOLDER_OR_BUCKET.value if not bucket or not folder else VALIDATION_MESSAGES.NO_FILES_ALERT.value
-        show_message(page, alert_message, ft.colors.ORANGE)
+        alert_message = (
+            VALIDATION_MESSAGES.NO_FOLDER_OR_BUCKET.value
+            if not bucket or not folder
+            else VALIDATION_MESSAGES.NO_FILES_ALERT.value
+        )
+        show_message(page, alert_message, COLORS.ERROR_MESSAGES_COLORS.value)
 
-  
     upload_icon_button = IconButton(
         icon=ft.icons.CLOUD_UPLOAD_OUTLINED,
         icon_color=COLORS.MAIN_COLOR.value,
         icon_size=70,
         tooltip=TEXTS.CHOOSE_FILES.value,
         on_click=lambda e: file_picker.pick_files(allow_multiple=True),
-        border_radius=5
+        border_radius=5,
     )
 
     file_label = Text(TEXTS.CHOOSE_FOLDER.value, size=30, color=COLORS.MAIN_COLOR.value)
 
     upload_button = ElevatedButton(
-        text=TEXTS.UPLOAD_BUTTON.value,
-        on_click=upload_file,
-        width=200
+        text=TEXTS.UPLOAD_BUTTON.value, on_click=upload_file, width=200
     )
 
     from process.starting_point import starting_point
@@ -85,7 +93,7 @@ def upload_files(page: ft.Page, run_type: Run_Type) -> Column:
     back_button = ElevatedButton(
         text=TEXTS.BACK_TO_MAIN.value,
         on_click=lambda e: starting_point(page),
-        width=200
+        width=200,
     )
 
     return Column(
@@ -95,11 +103,9 @@ def upload_files(page: ft.Page, run_type: Run_Type) -> Column:
             file_picker,
             department_dropdown,
             upload_button,
-            back_button
+            back_button,
         ],
         spacing=20,
         alignment=ft.MainAxisAlignment.CENTER,
-        horizontal_alignment=ft.CrossAxisAlignment.CENTER
+        horizontal_alignment=ft.CrossAxisAlignment.CENTER,
     )
-
-

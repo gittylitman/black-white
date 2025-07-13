@@ -15,12 +15,9 @@ class ElevatedButton(ft.ElevatedButton):
         height: float = DEFAULT_HEIGHT,
         disabled: bool = False,
         visible: bool = True,
-        icon: str = ""
+        icon: str = "",
     ) -> None:
-        super().__init__(
-            bgcolor=COLORS.MAIN_COLOR.value,
-            color=ft.colors.WHITE
-        )
+        super().__init__(bgcolor=COLORS.MAIN_COLOR.value, color=ft.colors.WHITE)
         self.text = text
         self.on_click = on_click
         self.width = width
@@ -28,10 +25,11 @@ class ElevatedButton(ft.ElevatedButton):
         self.disabled = disabled
         self.visible = visible
         self.icon = icon
-        self.style=ft.ButtonStyle(
+        self.style = ft.ButtonStyle(
             shape=ft.RoundedRectangleBorder(radius=10),
             elevation=5,
-            )
+        )
+
 
 class Button(ft.CupertinoFilledButton):
     DEFAULT_WIDTH = 300
@@ -57,7 +55,8 @@ class Button(ft.CupertinoFilledButton):
         self.visible = visible
         self.icon = icon
         self.border_radius = border_radius
-        
+
+
 class IconButton(ft.IconButton):
     def __init__(
         self,
@@ -69,7 +68,7 @@ class IconButton(ft.IconButton):
         visible: Optional[bool] = True,
         data: Any = None,
         icon_size: Optional[int] = None,
-        border_radius: ft.BorderRadius = None
+        border_radius: ft.BorderRadius = None,
     ) -> None:
         super().__init__()
         self.icon = icon
