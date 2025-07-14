@@ -9,10 +9,6 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./src
-        
     steps:
       - name: 📁 Checkout
         uses: actions/checkout@v4
