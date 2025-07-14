@@ -1,9 +1,9 @@
-from modules.set_system_variable import get_env_instance
-from classes.column import Column
-from classes.column import Column
-from classes.buttons import ElevatedButton
-from config.const import TEXTS, Run_Type, COLORS
 import flet as ft
+
+from classes.buttons import ElevatedButton
+from classes.column import Column
+from config.const import COLORS, TEXTS, Run_Type
+from modules.set_system_variable import get_env_instance
 
 
 def display_upload_page(page: ft.Page, run_type: Run_Type):

@@ -1,12 +1,13 @@
-from classes.text import Text
-from classes.buttons import IconButton, ElevatedButton
-from classes.file_picker import FilePicker
-from classes.column import Column
-from utils.basic_function import show_message
-from process.department_dropdown import dropdown
-from config.const import TEXTS, Run_Type, COLORS, VALIDATION_MESSAGES, ERROR_MESSAGES
 import flet as ft
+
+from classes.buttons import ElevatedButton, IconButton
+from classes.column import Column
+from classes.file_picker import FilePicker
+from classes.text import Text
+from config.const import COLORS, ERROR_MESSAGES, TEXTS, VALIDATION_MESSAGES, Run_Type
+from process.department_dropdown import dropdown
 from process.progress_popup import show_progress_popup
+from utils.basic_function import show_message
 from utils.gcloud_calls import upload_files_to_gcp
 
 
@@ -40,7 +41,7 @@ def upload_files(page: ft.Page, run_type: Run_Type) -> Column:
             reset_file_selection()
 
     def update_file_label(file_count: int) -> None:
-        """ "Update the tag showing the number of files selected for upload."""
+        """Update the tag showing the number of files selected for upload."""
         file_label.value = f"Selected {file_count} files."
         page.update()
 
@@ -70,7 +71,7 @@ def upload_files(page: ft.Page, run_type: Run_Type) -> Column:
             show_message(page, error_message, COLORS.FAILED_COLOR.value)
 
     def validate_upload() -> bool:
-        """ "Checking the integrity of uploaded files."""
+        """Checking the integrity of uploaded files."""
         return bool(selected_files["files"]) and bucket and folder
 
     def show_alert_not_found() -> None:

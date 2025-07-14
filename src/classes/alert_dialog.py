@@ -1,6 +1,8 @@
-import flet as ft
-from classes.text import Text
 from typing import Any
+
+import flet as ft
+
+from classes.text import Text
 
 
 class AlertDialog(ft.AlertDialog):

@@ -1,0 +1,38 @@
+name: 🧹 Lint black white
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+    branches:
+      - '**'
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./src
+        
+    steps:
+      - name: 📁 Checkout
+        uses: actions/checkout@v4
+
+      - name: 🐍 Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: ⏬ Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install .[dev]
+
+      - name: 💄 Run Ruff
+        run: |
+          ruff check --output-format=github .
+          ruff format --check .
+          ruff check --select I --fix .
+
+      - name: 💄 Run Pre-commit
+        run: |
+          pre-commit run --all-files

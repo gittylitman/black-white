@@ -18,5 +18,11 @@ dependencies = [
     "flet==0.24.1",
     "python-dotenv"
 ]
+[project.optional-dependencies]
+dev = [
+    "pytest==8.2.2",
+    "ruff==0.8.6",
+    "pre-commit==4.0.1",
+]
 [tool.setuptools.packages.find]
 where = ["src"]

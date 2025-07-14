@@ -1,23 +1,16 @@
-from classes.text import Text
-from process.department_dropdown import dropdown
-from classes.container import Container
-from classes.checkbox import Checkbox
-from classes.row import Row
-from classes.column import Column
-from classes.column import Column
-from classes.buttons import ElevatedButton
-from config.const import TEXTS, Run_Type, COLORS, ERROR_MESSAGES, VALIDATION_MESSAGES
-from utils.basic_function import show_message
-from utils.gcloud_calls import get_files_from_folder, download_files_from_gcp
-from process.progress_popup import show_progress_popup
-
 import flet as ft
 
-import logging
-
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
-)
+from classes.buttons import ElevatedButton
+from classes.checkbox import Checkbox
+from classes.column import Column
+from classes.container import Container
+from classes.row import Row
+from classes.text import Text
+from config.const import COLORS, ERROR_MESSAGES, TEXTS, VALIDATION_MESSAGES, Run_Type
+from process.department_dropdown import dropdown
+from process.progress_popup import show_progress_popup
+from utils.basic_function import show_message
+from utils.gcloud_calls import download_files_from_gcp, get_files_from_folder
 
 
 def download_files(page: ft.Page, run_type: Run_Type) -> Column:

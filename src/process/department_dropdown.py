@@ -1,18 +1,23 @@
 from typing import Any
 
-from process.folder_selector import hierarchical_folder_selector
+import flet as ft
 
-from utils.gcloud_calls import get_folders_and_files
-from utils.basic_function import show_message
-from modules.set_system_variable import get_env_instance
 from classes.column import Column
-from classes.text import Text
 from classes.container import Container
 from classes.dropdown import Dropdown
-from config.const import TEXTS, VALIDATION_MESSAGES, ERROR_MESSAGES
-
-import flet as ft
-from config.const import Run_Type, Departments, TEXTS, COLORS
+from classes.text import Text
+from config.const import (
+    COLORS,
+    ERROR_MESSAGES,
+    TEXTS,
+    VALIDATION_MESSAGES,
+    Departments,
+    Run_Type,
+)
+from modules.set_system_variable import get_env_instance
+from process.folder_selector import hierarchical_folder_selector
+from utils.basic_function import show_message
+from utils.gcloud_calls import get_folders_and_files
 
 
 def get_department(env: str, run_type: Run_Type) -> Departments:
@@ -24,7 +29,7 @@ def get_department(env: str, run_type: Run_Type) -> Departments:
     raise ValueError(ERROR_MESSAGES.DEPARTMENT_NOT_FOUND.value)
 
 
-def get_bucket_by_run_type(run_type):
+def get_bucket_by_run_type(run_type: Run_Type) -> Any:
     """Get bucket that matches the department."""
     ENVIRONMENT_TYPE = get_env_instance().ENVIRONMENT_TYPE
     department = get_department(ENVIRONMENT_TYPE, run_type)

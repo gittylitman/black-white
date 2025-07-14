@@ -1,8 +1,10 @@
-from process.login import setup_ui
+import os
+
+import flet as ft
+
 from config.const import TEXTS
 from modules.set_system_variable import get_env_instance
-import flet as ft
-import os
+from process.login import setup_ui
 
 gcloud_path = get_env_instance().GCLOUD_PATH
 

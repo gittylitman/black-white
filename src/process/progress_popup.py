@@ -4,11 +4,12 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Callable
 
 import flet as ft
-from classes.progress_bar import ProgressBar
+
 from classes.alert_dialog import AlertDialog
-from classes.text import Text
-from classes.row import Row
 from classes.column import Column
+from classes.progress_bar import ProgressBar
+from classes.row import Row
+from classes.text import Text
 from config.const import COLORS
 from modules.set_system_variable import get_env_instance
 from utils.basic_function import show_message
