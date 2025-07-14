@@ -12,7 +12,7 @@ from utils.gcloud_calls import upload_files_to_gcp
 
 
 def upload_files(page: ft.Page, run_type: Run_Type) -> Column:
-    """Uplooad files to GCP."""
+    """Upload files to GCP."""
     selected_files = {"files": []}
     bucket = ""
     folder = ""
