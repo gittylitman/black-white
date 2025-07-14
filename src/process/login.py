@@ -57,6 +57,9 @@ def perform_gcloud_login(page: ft.Page, column: Column, login_button: ElevatedBu
     
     column.controls = [auth_code_field, confirm_button, back_button]
     page.update()
+    
+    startupinfo = subprocess.STARTUPINFO()
+    startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
 
     try:
         gcloud_process = subprocess.Popen(
@@ -64,7 +67,8 @@ def perform_gcloud_login(page: ft.Page, column: Column, login_button: ElevatedBu
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             stdin=subprocess.PIPE,
-            text=True
+            text=True,
+            startupinfo=startupinfo
         )
         for line in iter(gcloud_process.stdout.readline, ""):
             if "https://accounts.google.com/o/oauth2/auth?" in line:
