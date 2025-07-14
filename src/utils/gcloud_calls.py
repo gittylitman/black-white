@@ -1,4 +1,5 @@
 import subprocess
+import os
 
 from config.const import ERROR_MESSAGES
 from utils.basic_function import show_message
@@ -37,22 +38,41 @@ def get_folders_and_files(page, bucket_name: str):
         return {}
 
 
+# def upload_files_to_gcp(bucket_name: str, folder_name: str, file_path: str) -> None:
+#     """Upload files to GCP"""
+#     try:
+#         command = [
+#             "cmd",
+#             "/c",
+#             "gsutil",
+#             "cp",
+#             file_path,
+#             f"gs://{bucket_name}/{folder_name}",
+#         ]
+#         result = subprocess.run(command, capture_output=True, text=True, timeout=60)
+#         if result.returncode != 0:
+#             raise Exception(f"Failed to upload {file_path}: {result.stderr}")
+#     except Exception as e:
+#         raise str(e)
+
 def upload_files_to_gcp(bucket_name: str, folder_name: str, file_path: str) -> None:
-    """Upload files to GCP"""
+    """Upload a file or directory to GCP using gsutil."""
     try:
-        command = [
-            "cmd",
-            "/c",
-            "gsutil",
-            "cp",
-            file_path,
-            f"gs://{bucket_name}/{folder_name}",
-        ]
-        result = subprocess.run(command, capture_output=True, text=True, timeout=60)
+        is_dir = os.path.isdir(file_path)
+
+        command = ["gsutil", "cp"]
+        if is_dir:
+            command.append("-r") 
+
+        command.extend([file_path, f"gs://{bucket_name}/{folder_name}/"])
+
+        result = subprocess.run(command, capture_output=True, text=True, timeout=300)
+
         if result.returncode != 0:
-            raise Exception(f"Failed to upload {file_path}: {result.stderr}")
+            raise Exception(f"Failed to upload {file_path}: {result.stderr.strip()}")
+
     except Exception as e:
-        raise str(e)
+        raise e
 
 
 def get_files_from_folder(page, bucket_name: str, folder: str):

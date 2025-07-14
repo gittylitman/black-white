@@ -37,7 +37,7 @@ def hierarchical_folder_selector(
     def update_folder_list():
         """ "Update folder list."""
         nonlocal folders
-        folders_chosen = get_folders_in_path(bucket, folders, current_path)
+        folders_chosen = get_folders_in_path(folders, current_path)
         folder_column.controls.clear()
 
         if folders_chosen:
