@@ -1,7 +1,7 @@
-import os
-from dotenv import load_dotenv
+# import os
+# from dotenv import load_dotenv
 
-load_dotenv()
+# load_dotenv()
 from config_variables import ACTION_TYPE, ENVIRONMENT_TYPE, GCLOUD_PATH
 
 class _SetupEnv:
