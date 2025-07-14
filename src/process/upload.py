@@ -4,12 +4,12 @@ from classes.file_picker import FilePicker
 from classes.column import Column
 from utils.basic_function import show_message
 from process.department_dropdown import dropdown
-from config.const import TEXTS, Run_Type, COLORS, VALIDATION_MESSAGES, ERROR_MESSAGES
+from config.const import TEXTS, Run_Type, COLORS, VALIDATION_MESSAGES, ERROR_MESSAGES, Env_Type
 import flet as ft
 from process.progress_popup import show_progress_popup
 from utils.gcloud_calls import upload_files_to_gcp
 
-def upload_files(page: ft.Page, run_type: Run_Type) -> Column:
+def upload_files(page: ft.Page, run_type: Run_Type, env_type: Env_Type) -> Column:
     selected_files = {"files": []}
     bucket = ""
     folder = ""
@@ -22,7 +22,7 @@ def upload_files(page: ft.Page, run_type: Run_Type) -> Column:
         except ValueError:
             show_message(page, ERROR_MESSAGES.INVALID_FOLDER.value, ft.colors.RED)
 
-    department_dropdown = dropdown(page, handle_folder_selection, run_type=run_type)
+    department_dropdown = dropdown(page, handle_folder_selection, run_type=run_type, env_type=env_type)
 
     file_picker = FilePicker(
         on_result=lambda e: select_file(e)

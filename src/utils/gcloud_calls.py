@@ -1,5 +1,4 @@
 import subprocess
-import os
 
 import flet as ft
 from config.const import ERROR_MESSAGES
