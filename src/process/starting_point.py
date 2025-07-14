@@ -1,5 +1,4 @@
 from modules.set_system_variable import get_env_instance
-from classes.text import Text
 from classes.column import Column
 from classes.column import Column
 from classes.buttons import ElevatedButton
@@ -38,6 +37,7 @@ def display_download_page(page: ft.Page, run_type: Run_Type):
 
 
 def starting_point(page: ft.Page) -> Column:
+    """Display the splash screen according to the type of operation."""
     ACTION_TYPE = get_env_instance().ACTION_TYPE
     page.controls.clear()
 

@@ -1,13 +1,12 @@
 import subprocess
-import os
 
-import flet as ft
 from config.const import ERROR_MESSAGES
 from utils.basic_function import show_message
 from config.const import COLORS
 
 
 def get_folders_and_files(page, bucket_name: str):
+    """Bringing the files and folders from GCP. """
     try:
         result = subprocess.run(
             ["cmd", "/c", "gcloud", "storage", "ls", "--recursive", "--format=gsutil", f"gs://{bucket_name}/"],
@@ -26,6 +25,7 @@ def get_folders_and_files(page, bucket_name: str):
 
 
 def upload_files_to_gcp(bucket_name: str, folder_name: str, file_path: str) -> None:
+    """Upload files to GCP"""
     try:
         command = ["cmd", "/c", "gsutil", "cp", file_path, f"gs://{bucket_name}/{folder_name}"]
         result = subprocess.run(command, capture_output=True, text=True, timeout=60)
@@ -36,6 +36,7 @@ def upload_files_to_gcp(bucket_name: str, folder_name: str, file_path: str) -> N
 
 
 def get_files_from_folder(page, bucket_name: str, folder: str):
+    """Get files from folder"""
     try:
         result = subprocess.run(
             ["cmd", "/c", "gcloud", "storage", "ls", f"gs://{bucket_name}/{folder}/"],
@@ -52,6 +53,7 @@ def get_files_from_folder(page, bucket_name: str, folder: str):
 
 
 def download_files_from_gcp(page, bucket_name: str, folder_path: str, file_name: str):
+    """Download files from GCP"""
     try:
         result = subprocess.run(
             ["cmd", "/c", "gsutil", "cp", f"gs://{bucket_name}/{folder_path}/{file_name}", "."],
