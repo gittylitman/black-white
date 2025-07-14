@@ -1,3 +1,3 @@
-ENVIRONMENT_TYPE=DEV
-ACTION_TYPE=Upload
+ENVIRONMENT_TYPE="DEV"
+ACTION_TYPE="Upload"
 GCLOUD_PATH="C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin"
