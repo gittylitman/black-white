@@ -81,7 +81,7 @@ def upload_files(page: ft.Page, run_type: Run_Type) -> Column:
             if not bucket or not folder
             else VALIDATION_MESSAGES.NO_FILES_ALERT.value
         )
-        show_message(page, alert_message, COLORS.ERROR_MESSAGES_COLORS.value)
+        show_message(page, alert_message, COLORS.VALID_MESSAGES_COLORS.value)
 
     upload_icon_button = IconButton(
         icon=ft.icons.CLOUD_UPLOAD_OUTLINED,

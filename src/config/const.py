@@ -71,6 +71,7 @@ class ERROR_MESSAGES(Enum):
     GCLOUD_PROCESS_NOT_AVAILABLE = "The gcloud process is no longer available.😢"
     INVALID_BUCKET = "No such bucket in gcloud"
     INVALID_FOLDER = "Invalid folder or bucket"
+    FILES_FILED = "⚠️ Some files failed: "
 
     def format(self, *args, **kwargs):
         return self.value.format(*args, **kwargs)
@@ -105,6 +106,7 @@ class TEXTS(Enum):
     PAGE_TITLE = "שער האריות"
     BASIC_TITLE = "ברוך הבא לשער האריות"
     INVALID_FOLDER = "Invalid folder or bucket"
+    SUCCESSFUL = "completed successfully."
 
 
 class COLORS(Enum):
@@ -114,4 +116,4 @@ class COLORS(Enum):
     FAILED_COLOR = ft.colors.RED
     SUCCESS_COLOR = ft.colors.GREEN
     PROCESS_COLOR = ft.colors.BLUE
-    ERROR_MESSAGES_COLORS = ft.colors.ORANGE
+    VALID_MESSAGES_COLORS = ft.colors.ORANGE

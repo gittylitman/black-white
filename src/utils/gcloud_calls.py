@@ -25,7 +25,7 @@ def get_folders_and_files(page, bucket_name: str):
             show_message(
                 page,
                 ERROR_MESSAGES.ERROR_FETCHING_FOLDERS.value,
-                COLORS.ERROR_MESSAGES_COLORS.value,
+                COLORS.VALID_MESSAGES_COLORS.value,
             )
             return ""
         return result.stdout
@@ -66,7 +66,7 @@ def get_files_from_folder(page, bucket_name: str, folder: str):
             show_message(
                 page,
                 ERROR_MESSAGES.INVALID_FOLDER.value,
-                COLORS.ERROR_MESSAGES_COLORS.value,
+                COLORS.VALID_MESSAGES_COLORS.value,
             )
             return ""
         return result.stdout
@@ -96,7 +96,7 @@ def download_files_from_gcp(page, bucket_name: str, folder_path: str, file_name:
             show_message(
                 page,
                 ERROR_MESSAGES.ERROR_FETCHING_FOLDERS.value,
-                COLORS.ERROR_MESSAGES_COLORS.value,
+                COLORS.VALID_MESSAGES_COLORS.value,
             )
             raise result.stderr
         return result.stdout

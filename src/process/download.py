@@ -38,7 +38,7 @@ def download_files(page: ft.Page, run_type: Run_Type) -> Column:
             show_message(
                 page,
                 ERROR_MESSAGES.INVALID_FOLDER.value,
-                COLORS.ERROR_MESSAGES_COLORS.value,
+                COLORS.VALID_MESSAGES_COLORS.value,
             )
 
     def update_checkboxes() -> None:
@@ -106,7 +106,7 @@ def download_files(page: ft.Page, run_type: Run_Type) -> Column:
                 show_alert_not_found()
         except Exception as ex:
             error_message = ERROR_MESSAGES.ERROR_DURING_DOWNLOAD.format(str(ex))
-            show_message(page, error_message, COLORS.ERROR_MESSAGES_COLORS.value)
+            show_message(page, error_message, COLORS.VALID_MESSAGES_COLORS.value)
 
     def validate_download() -> bool:
         """Validates the download action."""
@@ -119,7 +119,7 @@ def download_files(page: ft.Page, run_type: Run_Type) -> Column:
             if not bucket or not folder
             else VALIDATION_MESSAGES.NO_FILES_ALERT.value
         )
-        show_message(page, alert_message, COLORS.ERROR_MESSAGES_COLORS.value)
+        show_message(page, alert_message, COLORS.VALID_MESSAGES_COLORS.value)
 
     download_icon = ft.Icon(
         color=COLORS.MAIN_COLOR.value,

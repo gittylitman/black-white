@@ -72,11 +72,11 @@ def perform_gcloud_login(
             stdin=subprocess.PIPE,
             text=True,
         )
+        google_account = "https://accounts.google.com/o/oauth2/auth?"
+        rgx = r"(https://accounts\.google\.com/o/oauth2/auth\?[^ \n]+)"
         for line in iter(gcloud_process.stdout.readline, ""):
-            if "https://accounts.google.com/o/oauth2/auth?" in line:
-                match = re.search(
-                    r"(https://accounts\.google\.com/o/oauth2/auth\?[^ \n]+)", line
-                )
+            if google_account in line:
+                match = re.search(rgx, line)
                 if match:
                     page.launch_url(match.group(1))
                     break
@@ -98,7 +98,7 @@ def handle_auth_code_submission(
         show_message(
             page,
             VALIDATION_MESSAGES.MISSING_VERIFICATION_CODE.value,
-            COLORS.ERROR_MESSAGES_COLORS.value,
+            COLORS.VALID_MESSAGES_COLORS.value,
         )
         return
 
@@ -106,7 +106,7 @@ def handle_auth_code_submission(
         show_message(
             page,
             ERROR_MESSAGES.GCLOUD_PROCESS_NOT_AVAILABLE.value,
-            COLORS.ERROR_MESSAGES_COLORS.value,
+            COLORS.VALID_MESSAGES_COLORS.value,
         )
         return
 
