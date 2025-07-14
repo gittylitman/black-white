@@ -3,9 +3,9 @@ import os
 class _SetupEnv:
     def init_settings(self):
         try:
-            self.ENVIRONMENT_TYPE: str = os.environ["ENVIRONMENT_TYPE"]
-            self.ACTION_TYPE: str = os.environ["ACTION_TYPE"]
-            self.GCLOUD_PATH: str = os.environ["GCLOUD_PATH"]
+            self.ENVIRONMENT_TYPE: str = os.getenv("ENVIRONMENT_TYPE")
+            self.ACTION_TYPE: str = os.getenv("ACTION_TYPE")
+            self.GCLOUD_PATH: str = os.getenv["GCLOUD_PATH"]
             
            
         except KeyError as e:
