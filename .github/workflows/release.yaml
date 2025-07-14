@@ -27,7 +27,6 @@ jobs:
 
       - name: 🔧 Build exe file
         run: |
-          ls -Force
           pip install .
           python -m PyInstaller --onefile --hidden-import "flet" --add-data ".env;src/" src/main.py
 
