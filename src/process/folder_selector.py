@@ -1,17 +1,20 @@
-import flet as ft
-from typing import Callable
+from typing import Callable, Dict, List
 
-from classes.text import Text
+import flet as ft
+
 from classes.buttons import IconButton
 from classes.column import Column
-from classes.row import Row
 from classes.container import Container
+from classes.row import Row
+from classes.text import Text
 from config.const import COLORS, TEXTS
 
 
-def get_folders_in_path(folders, path: str = ""):
-    """Get a folders in path."""
-    return folders.get(path.strip("/"), [])
+def get_folders_in_path(folders: Dict[str, List[str]], path: str = "") -> List[str]:
+    """Get the list of folders in a given path."""
+
+    normalized_path = path.strip("/")
+    return folders.get(normalized_path, [])
 
 
 def hierarchical_folder_selector(
@@ -20,7 +23,7 @@ def hierarchical_folder_selector(
     on_folder_selected: Callable[[str], None],
     folders,
 ) -> Container:
-    """ "Hierarchical folder selector."""
+    """Hierarchical folder selector."""
     current_path = ""
     path_stack = []
     folder_column = Column(spacing=10, scroll=ft.ScrollMode.AUTO, controls=[])

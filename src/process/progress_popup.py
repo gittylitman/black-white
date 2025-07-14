@@ -4,12 +4,13 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Callable
 
 import flet as ft
-from classes.progress_bar import ProgressBar
+
 from classes.alert_dialog import AlertDialog
-from classes.text import Text
-from classes.row import Row
 from classes.column import Column
-from config.const import COLORS
+from classes.progress_bar import ProgressBar
+from classes.row import Row
+from classes.text import Text
+from config.const import COLORS, ERROR_MESSAGES, TEXTS
 from modules.set_system_variable import get_env_instance
 from utils.basic_function import show_message
 
@@ -142,14 +143,14 @@ def show_progress_popup(
         if failure_count == 0:
             show_message(
                 page,
-                f"✅ All files {action_type} successfully!",
+                f"✅ {action_type} {TEXTS.SUCCESSFUL.value}",
                 COLORS.SUCCESS_COLOR.value,
             )
         else:
             show_message(
                 page,
-                f"⚠️ Some files failed: {failure_count} failed.",
-                COLORS.ERROR_MESSAGES_COLORS.value,
+                f"{ERROR_MESSAGES.FILES_FILED.value}{failure_count} ",
+                COLORS.VALID_MESSAGES_COLORS.value,
             )
 
     threading.Thread(target=worker, daemon=True).start()

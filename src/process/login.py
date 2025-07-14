@@ -1,16 +1,17 @@
-from classes.container import Container
-from config.const import ERROR_MESSAGES
-import flet as ft
-import subprocess
 import re
+import subprocess
 import threading
+
+import flet as ft
+
 from classes.buttons import ElevatedButton
 from classes.column import Column
+from classes.container import Container
 from classes.input import Input
 from classes.text import Text
-from config.const import TEXTS, COLORS, VALIDATION_MESSAGES
-from utils.basic_function import show_message
+from config.const import COLORS, ERROR_MESSAGES, TEXTS, VALIDATION_MESSAGES
 from process.starting_point import starting_point
+from utils.basic_function import show_message
 
 gcloud_process = None
 
@@ -75,11 +76,11 @@ def perform_gcloud_login(
             text=True,
             startupinfo=startupinfo
         )
+        google_account = "https://accounts.google.com/o/oauth2/auth?"
+        rgx = r"(https://accounts\.google\.com/o/oauth2/auth\?[^ \n]+)"
         for line in iter(gcloud_process.stdout.readline, ""):
-            if "https://accounts.google.com/o/oauth2/auth?" in line:
-                match = re.search(
-                    r"(https://accounts\.google\.com/o/oauth2/auth\?[^ \n]+)", line
-                )
+            if google_account in line:
+                match = re.search(rgx, line)
                 if match:
                     page.launch_url(match.group(1))
                     break
@@ -101,7 +102,7 @@ def handle_auth_code_submission(
         show_message(
             page,
             VALIDATION_MESSAGES.MISSING_VERIFICATION_CODE.value,
-            COLORS.ERROR_MESSAGES_COLORS.value,
+            COLORS.VALID_MESSAGES_COLORS.value,
         )
         return
 
@@ -109,7 +110,7 @@ def handle_auth_code_submission(
         show_message(
             page,
             ERROR_MESSAGES.GCLOUD_PROCESS_NOT_AVAILABLE.value,
-            COLORS.ERROR_MESSAGES_COLORS.value,
+            COLORS.VALID_MESSAGES_COLORS.value,
         )
         return
 

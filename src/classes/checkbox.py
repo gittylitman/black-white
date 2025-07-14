@@ -1,7 +1,8 @@
 from typing import Callable
-from config.const import COLORS
 
 import flet as ft
+
+from config.const import COLORS
 
 
 class Checkbox(ft.Checkbox):

@@ -1,4 +1,5 @@
 import flet as ft
+
 from classes.text import Text
 
 

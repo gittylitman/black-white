@@ -1,6 +1,8 @@
 from typing import Any, Callable, Optional
-from config.const import COLORS
+
 import flet as ft
+
+from config.const import COLORS
 
 
 class ElevatedButton(ft.ElevatedButton):
