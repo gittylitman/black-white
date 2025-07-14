@@ -15,13 +15,12 @@ def get_folders_in_path(folders, path: str = ""):
 
 
 def hierarchical_folder_selector(
-    
     page: ft.Page,
     bucket: str,
     on_folder_selected: Callable[[str], None],
     folders,
 ) -> Container:
-    """"Hierarchical folder selector. """
+    """ "Hierarchical folder selector."""
     current_path = ""
     path_stack = []
     folder_column = Column(spacing=10, scroll=ft.ScrollMode.AUTO, controls=[])
@@ -36,7 +35,7 @@ def hierarchical_folder_selector(
     )
 
     def update_folder_list():
-        """"Update folder list."""
+        """ "Update folder list."""
         nonlocal folders
         folders_chosen = get_folders_in_path(bucket, folders, current_path)
         folder_column.controls.clear()
@@ -81,7 +80,7 @@ def hierarchical_folder_selector(
         update_folder_list()
 
     def go_back(e):
-        """Go back. """
+        """Go back."""
         nonlocal current_path
         if path_stack:
             current_path = path_stack.pop()

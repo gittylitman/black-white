@@ -11,26 +11,28 @@ from utils.gcloud_calls import upload_files_to_gcp
 
 
 def upload_files(page: ft.Page, run_type: Run_Type) -> Column:
-    """Uplooad files to GCP. """
+    """Uplooad files to GCP."""
     selected_files = {"files": []}
     bucket = ""
     folder = ""
 
     def handle_folder_selection(selected_folder: str):
-        """Select a folder where the files will be uploaded. """
+        """Select a folder where the files will be uploaded."""
         nonlocal bucket, folder
         try:
             bucket, folder = selected_folder.split("/", 1)
             page.update()
         except ValueError:
-            show_message(page, ERROR_MESSAGES.INVALID_FOLDER.value, COLORS.FAILED_COLOR.value)
+            show_message(
+                page, ERROR_MESSAGES.INVALID_FOLDER.value, COLORS.FAILED_COLOR.value
+            )
 
     department_dropdown = dropdown(page, handle_folder_selection, run_type=run_type)
 
     file_picker = FilePicker(on_result=lambda e: select_file(e))
 
     def select_file(e):
-        """Selecting files to upload. """
+        """Selecting files to upload."""
         if e.files:
             selected_files["files"] = e.files
             update_file_label(len(selected_files["files"]))
@@ -38,7 +40,7 @@ def upload_files(page: ft.Page, run_type: Run_Type) -> Column:
             reset_file_selection()
 
     def update_file_label(file_count: int) -> None:
-        """"Update the tag showing the number of files selected for upload. """
+        """ "Update the tag showing the number of files selected for upload."""
         file_label.value = f"Selected {file_count} files."
         page.update()
 
@@ -68,7 +70,7 @@ def upload_files(page: ft.Page, run_type: Run_Type) -> Column:
             show_message(page, error_message, COLORS.FAILED_COLOR.value)
 
     def validate_upload() -> bool:
-        """"Checking the integrity of uploaded files. """
+        """ "Checking the integrity of uploaded files."""
         return bool(selected_files["files"]) and bucket and folder
 
     def show_alert_not_found() -> None:

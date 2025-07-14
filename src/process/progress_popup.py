@@ -74,7 +74,11 @@ def process_file(
 
 
 def show_progress_popup(
-    page, file_paths: list, bucket: str, folder: str, action_func: Callable[[str, str, str], None]
+    page,
+    file_paths: list,
+    bucket: str,
+    folder: str,
+    action_func: Callable[[str, str, str], None],
 ) -> None:
     """Show the popup display with the running progress"""
     action_type = get_env_instance().ACTION_TYPE
@@ -100,7 +104,11 @@ def show_progress_popup(
             spacing=15,
             scroll=ft.ScrollMode.ALWAYS,
         ),
-        actions=[ft.TextButton("Close", on_click=lambda e: progress_dialog.close_dialog(page))],
+        actions=[
+            ft.TextButton(
+                "Close", on_click=lambda e: progress_dialog.close_dialog(page)
+            )
+        ],
     )
 
     progress_dialog.open_dialog(page)
@@ -133,12 +141,15 @@ def show_progress_popup(
 
         if failure_count == 0:
             show_message(
-                page, f"✅ All files {action_type} successfully!", COLORS.SUCCESS_COLOR.value
+                page,
+                f"✅ All files {action_type} successfully!",
+                COLORS.SUCCESS_COLOR.value,
             )
         else:
             show_message(
-                page, f"⚠️ Some files failed: {failure_count} failed.", COLORS.ERROR_MESSAGES_COLORS.value
+                page,
+                f"⚠️ Some files failed: {failure_count} failed.",
+                COLORS.ERROR_MESSAGES_COLORS.value,
             )
 
     threading.Thread(target=worker, daemon=True).start()
-    

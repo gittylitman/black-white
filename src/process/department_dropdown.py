@@ -12,7 +12,7 @@ from classes.dropdown import Dropdown
 from config.const import TEXTS, VALIDATION_MESSAGES, ERROR_MESSAGES
 
 import flet as ft
-from config.const import Run_Type, Departments, TEXTS,COLORS
+from config.const import Run_Type, Departments, TEXTS, COLORS
 
 
 def get_department(env: str, run_type: Run_Type) -> Departments:
@@ -52,12 +52,14 @@ def dropdown(page: ft.Page, on_folder_selected: Any, run_type: Run_Type) -> Cont
             return get_folders_from_folders_and_files(result)
         except Exception:
             show_message(
-                page, ERROR_MESSAGES.ERROR_FETCHING_FOLDERS.value, COLORS.FAILED_COLOR.value
+                page,
+                ERROR_MESSAGES.ERROR_FETCHING_FOLDERS.value,
+                COLORS.FAILED_COLOR.value,
             )
             return {}
 
     def get_folders_from_folders_and_files(folders_and_files: str):
-        """Get folder hierarchy. """
+        """Get folder hierarchy."""
         list_folders_and_files = folders_and_files.split("\n")
         list_folders = [
             file[file.index("gs://") + 5 : -2].split("/")
@@ -81,7 +83,7 @@ def dropdown(page: ft.Page, on_folder_selected: Any, run_type: Run_Type) -> Cont
         return folders
 
     def on_change_dropdown(e: ft.ControlEvent):
-        """On change drop-down. """
+        """On change drop-down."""
         nonlocal selected_folder
         selected_folder = ""
         selected_bucket = e.control.value

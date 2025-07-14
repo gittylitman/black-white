@@ -113,4 +113,4 @@ class COLORS(Enum):
     FAILED_COLOR = ft.colors.RED
     SUCCESS_COLOR = ft.colors.GREEN
     PROCESS_COLOR = ft.colors.BLUE
-    ERROR_MESSAGES_COLORS=ft.colors.ORANGE
+    ERROR_MESSAGES_COLORS = ft.colors.ORANGE

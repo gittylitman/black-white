@@ -95,13 +95,17 @@ def handle_auth_code_submission(
     code = code.strip()
     if not code:
         show_message(
-            page, VALIDATION_MESSAGES.MISSING_VERIFICATION_CODE.value, COLORS.ERROR_MESSAGES_COLORS.value
+            page,
+            VALIDATION_MESSAGES.MISSING_VERIFICATION_CODE.value,
+            COLORS.ERROR_MESSAGES_COLORS.value,
         )
         return
 
     if not gcloud_process:
         show_message(
-            page, ERROR_MESSAGES.GCLOUD_PROCESS_NOT_AVAILABLE.value, COLORS.ERROR_MESSAGES_COLORS.value
+            page,
+            ERROR_MESSAGES.GCLOUD_PROCESS_NOT_AVAILABLE.value,
+            COLORS.ERROR_MESSAGES_COLORS.value,
         )
         return
 
@@ -134,8 +138,6 @@ def reset_ui(page: ft.Page, column: Column, login_button: ElevatedButton) -> Non
     instructions = Text(TEXTS.INSTRUCTIONS.value, color=COLORS.MAIN_COLOR.value)
     column.controls = [title, instructions, login_button]
     page.update()
-
-
 
 
 def _create_title() -> Text:
