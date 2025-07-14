@@ -6,21 +6,16 @@ from classes.row import Row
 from classes.column import Column
 from classes.column import Column
 from classes.buttons import ElevatedButton
-from config.const import TEXTS, Run_Type, COLORS, ERROR_MESSAGES, VALIDATION_MESSAGES
+from config.const import TEXTS, Run_Type, COLORS, ERROR_MESSAGES, VALIDATION_MESSAGES, Env_Type
 from utils.basic_function import show_message
 from utils.gcloud_calls import get_files_from_folder, download_files_from_gcp
 from process.progress_popup import show_progress_popup
 
 import flet as ft
 
-import logging
 
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
-)
-
-
-def download_files(page: ft.Page, run_type: Run_Type) -> Column:
+def download_files(page: ft.Page, run_type: Run_Type, env_type: Env_Type)-> Column:
+    """Creates a UI for downloading files from a specified bucket and folder."""
     selected_files = []
     bucket = ""
     folder = ""
@@ -77,7 +72,7 @@ def download_files(page: ft.Page, run_type: Run_Type) -> Column:
         ]
         return list_files
 
-    department_dropdown = dropdown(page, handle_folder_selection, run_type=run_type)
+    department_dropdown = dropdown(page, handle_folder_selection, run_type=run_type, env_type=env_type)
 
     def select_file(e) -> None:
         """Updates the list of selected files based on checkbox states."""

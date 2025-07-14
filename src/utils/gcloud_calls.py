@@ -1,5 +1,4 @@
 import subprocess
-import os
 
 from config.const import ERROR_MESSAGES
 from utils.basic_function import show_message
@@ -9,6 +8,8 @@ from config.const import COLORS
 def get_folders_and_files(page, bucket_name: str):
     """Bringing the files and folders from GCP."""
     try:
+        startupinfo = subprocess.STARTUPINFO()
+        startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
         result = subprocess.run(
             [
                 "cmd",
@@ -22,6 +23,7 @@ def get_folders_and_files(page, bucket_name: str):
             ],
             capture_output=True,
             text=True,
+            startupinfo=startupinfo
         )
         if result.returncode != 0:
             show_message(
@@ -38,36 +40,14 @@ def get_folders_and_files(page, bucket_name: str):
         return {}
 
 
-# def upload_files_to_gcp(bucket_name: str, folder_name: str, file_path: str) -> None:
-#     """Upload files to GCP"""
-#     try:
-#         command = [
-#             "cmd",
-#             "/c",
-#             "gsutil",
-#             "cp",
-#             file_path,
-#             f"gs://{bucket_name}/{folder_name}",
-#         ]
-#         result = subprocess.run(command, capture_output=True, text=True, timeout=60)
-#         if result.returncode != 0:
-#             raise Exception(f"Failed to upload {file_path}: {result.stderr}")
-#     except Exception as e:
-#         raise str(e)
 
 def upload_files_to_gcp(bucket_name: str, folder_name: str, file_path: str) -> None:
     """Upload a file or directory to GCP using gsutil."""
     try:
-        is_dir = os.path.isdir(file_path)
-
-        command = ["gsutil", "cp"]
-        if is_dir:
-            command.append("-r") 
-
-        command.extend([file_path, f"gs://{bucket_name}/{folder_name}/"])
-
-        result = subprocess.run(command, capture_output=True, text=True, timeout=300)
-
+        startupinfo = subprocess.STARTUPINFO()
+        startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+        command = ["cmd", "/c", "gsutil", "cp", file_path, f"gs://{bucket_name}/{folder_name}"]
+        result = subprocess.run(command, capture_output=True, text=True, timeout=60,  startupinfo=startupinfo)
         if result.returncode != 0:
             raise Exception(f"Failed to upload {file_path}: {result.stderr.strip()}")
 
@@ -78,10 +58,13 @@ def upload_files_to_gcp(bucket_name: str, folder_name: str, file_path: str) -> N
 def get_files_from_folder(page, bucket_name: str, folder: str):
     """Get files from folder"""
     try:
+        startupinfo = subprocess.STARTUPINFO()
+        startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
         result = subprocess.run(
             ["cmd", "/c", "gcloud", "storage", "ls", f"gs://{bucket_name}/{folder}/"],
             capture_output=True,
             text=True,
+            startupinfo=startupinfo
         )
         if result.returncode != 0:
             show_message(
@@ -101,6 +84,8 @@ def get_files_from_folder(page, bucket_name: str, folder: str):
 def download_files_from_gcp(page, bucket_name: str, folder_path: str, file_name: str):
     """Download files from GCP"""
     try:
+        startupinfo = subprocess.STARTUPINFO()
+        startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
         result = subprocess.run(
             [
                 "cmd",
@@ -112,6 +97,7 @@ def download_files_from_gcp(page, bucket_name: str, folder_path: str, file_name:
             ],
             capture_output=True,
             text=True,
+            startupinfo=startupinfo
         )
         if result.returncode != 0:
             show_message(
