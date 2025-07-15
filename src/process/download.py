@@ -102,9 +102,9 @@ def download_files(page: ft.Page, run_type: Run_Type, env_type: Env_Type) -> Col
                     selected_files,
                     bucket,
                     folder,
-                    action_func=lambda bucket, folder, file_path: download_files_from_gcp(
-                        page, bucket, folder, file_path
-                    ),
+                    action_func=lambda bucket,
+                    folder,
+                    file_path: download_files_from_gcp(page, bucket, folder, file_path),
                 )
                 show_message(
                     page,
