@@ -63,7 +63,7 @@ def perform_gcloud_login(
 
     column.controls = [auth_code_field, confirm_button, back_button]
     page.update()
-    
+
     startupinfo = subprocess.STARTUPINFO()
     startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
 
@@ -74,7 +74,7 @@ def perform_gcloud_login(
             stderr=subprocess.STDOUT,
             stdin=subprocess.PIPE,
             text=True,
-            startupinfo=startupinfo
+            startupinfo=startupinfo,
         )
         google_account = "https://accounts.google.com/o/oauth2/auth?"
         rgx = r"(https://accounts\.google\.com/o/oauth2/auth\?[^ \n]+)"

@@ -15,7 +15,7 @@ from config.const import (
     VALIDATION_MESSAGES,
     Departments,
     Run_Type,
-    Env_Type
+    Env_Type,
 )
 from process.folder_selector import hierarchical_folder_selector
 
@@ -29,7 +29,7 @@ def get_department(env: str, run_type: Run_Type) -> Departments:
     raise ValueError(ERROR_MESSAGES.DEPARTMENT_NOT_FOUND.value)
 
 
-def get_bucket_by_run_type(env_type:Env_Type, run_type:Run_Type) -> Any:
+def get_bucket_by_run_type(env_type: Env_Type, run_type: Run_Type) -> Any:
     """Get bucket that matches the department."""
     department = get_department(env_type, run_type)
     bucket = department.department_bucket
@@ -37,10 +37,7 @@ def get_bucket_by_run_type(env_type:Env_Type, run_type:Run_Type) -> Any:
 
 
 def dropdown(
-    page: ft.Page,
-    on_folder_selected: Any,
-    run_type: Run_Type,
-    env_type: Env_Type
+    page: ft.Page, on_folder_selected: Any, run_type: Run_Type, env_type: Env_Type
 ) -> Container:
     """Show a drop-down menu with the list of folders in the bucket"""
     try:
