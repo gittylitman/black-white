@@ -7,6 +7,12 @@ class Run_Type(Enum):
     UPLOAD = "Upload"
     DOWNLOAD = "Download"
 
+
+class Env_Type(Enum):
+    DEV = "DEV"
+    PROD = "PROD"
+
+
 class DepartmentsBucketsUploadDev(Enum):
     DRONES = ("רחפנים", "example-download-upload")
     MAPPING = ("מיפוי", "empty-bucket-example")
