@@ -1,0 +1,33 @@
+name: 🐍 Release
+
+on: push
+
+jobs:
+  release:
+    name: 🐍 Release
+    runs-on: windows-latest
+
+    steps:
+      - name: 📂 Checkout code
+        uses: actions/checkout@v2
+
+      - name: 🔵 Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'
+      
+      - name: ⏬ Install Dependencies
+        run: |
+          pip install pyinstaller==6.14.2
+          # pip install flet==0.28.3
+
+      - name: 🔧 Build exe file
+        run: |
+          pip install .
+          python -m PyInstaller --onefile --hidden-import "flet" --hidden-import "dotenv" --noconfirm main.py
+
+      - name: ⬆️ Upload Executable
+        uses: actions/upload-artifact@v4
+        with:
+          name: my-executable
+          path: ./dist
