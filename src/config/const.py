@@ -1,6 +1,6 @@
 from enum import Enum
-import flet as ft
 
+import flet as ft
 
 
 class Run_Type(Enum):
@@ -17,7 +17,7 @@ class DepartmentsBucketsUploadDev(Enum):
     DRONES = ("רחפנים", "example-download-upload")
     MAPPING = ("מיפוי", "empty-bucket-example")
     SATELLITES = ("לווינות", "empty-bucket-example")
-        
+
     def __init__(self, department, bucket) -> None:
         self.department = department
         self.bucket = bucket
@@ -37,7 +37,7 @@ class DepartmentsBucketsDownloadDev(Enum):
     DRONES = ("רחפנים", "example-download-upload")
     MAPPING = ("מיפוי", "empty-bucket-example")
     SATELLITES = ("לווינות", "empty-bucket-example")
-        
+
     def __init__(self, department, bucket) -> None:
         self.department = department
         self.bucket = bucket
@@ -52,18 +52,19 @@ class DepartmentsBucketsDownloadProd(Enum):
         self.department = department
         self.bucket = bucket
 
+
 class Departments(Enum):
     BLACK_PROD = (DepartmentsBucketsDownloadProd, "PROD", Run_Type.DOWNLOAD)
     BLACK_DEV = (DepartmentsBucketsDownloadDev, "DEV", Run_Type.DOWNLOAD)
     WHITE_DEV = (DepartmentsBucketsUploadDev, "DEV", Run_Type.UPLOAD)
     WHITE_PROD = (DepartmentsBucketsUploadProd, "PROD", Run_Type.UPLOAD)
-    
+
     def __init__(self, department_bucket, env, run_type) -> None:
         self.department_bucket = department_bucket
         self.env = env
         self.run_type = run_type
-       
-       
+
+
 class ERROR_MESSAGES(Enum):
     BASIC_ERROR_MESSAGE = "Error: {}"
     DEPARTMENT_NOT_FOUND = "Department not found"
@@ -75,6 +76,7 @@ class ERROR_MESSAGES(Enum):
     GCLOUD_PROCESS_NOT_AVAILABLE = "The gcloud process is no longer available.😢"
     INVALID_BUCKET = "No such bucket in gcloud"
     INVALID_FOLDER = "Invalid folder or bucket"
+    FILES_FILED = "⚠️ Some files failed: "
 
     def format(self, *args, **kwargs):
         return self.value.format(*args, **kwargs)
@@ -88,6 +90,7 @@ class VALIDATION_MESSAGES(Enum):
 
     def format(self, *args, **kwargs):
         return self.value.format(*args, **kwargs)
+
 
 class TEXTS(Enum):
     SIGN_IN = "Sign in with Google"
@@ -108,16 +111,14 @@ class TEXTS(Enum):
     PAGE_TITLE = "שער האריות"
     BASIC_TITLE = "ברוך הבא לשער האריות"
     INVALID_FOLDER = "Invalid folder or bucket"
-
+    SUCCESSFUL = "completed successfully."
 
 
 class COLORS(Enum):
     MAIN_COLOR = ft.colors.BLUE_ACCENT_700
     BACKGROUND_COLOR = ft.colors.WHITE
-    GRAY_COLOR=ft.colors.GREY
-    FAILED_COLOR= ft.colors.RED
-    SUCCESS_COLOR=ft.colors.GREEN
-    PROCESS_COLOR=ft.colors.BLUE
-
-
-
+    GRAY_COLOR = ft.colors.GREY
+    FAILED_COLOR = ft.colors.RED
+    SUCCESS_COLOR = ft.colors.GREEN
+    PROCESS_COLOR = ft.colors.BLUE
+    VALID_MESSAGES_COLORS = ft.colors.ORANGE

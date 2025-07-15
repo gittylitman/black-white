@@ -1,11 +1,12 @@
 import flet as ft
+
 from config.const import COLORS
 
+
 class Input(ft.TextField):
-    
     DEFAULT_WIDTH = 300
     DEFAULT_HEIGHT = 47
-    
+
     def __init__(
         self,
         label: str,
