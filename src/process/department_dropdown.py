@@ -18,8 +18,6 @@ from config.const import (
     Env_Type
 )
 from process.folder_selector import hierarchical_folder_selector
-from utils.basic_function import show_message
-from utils.gcloud_calls import get_folders_and_files
 
 
 def get_department(env: str, run_type: Run_Type) -> Departments:

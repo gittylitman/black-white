@@ -4,7 +4,6 @@ from classes.container import Container
 from classes.checkbox import Checkbox
 from classes.row import Row
 from classes.column import Column
-from classes.column import Column
 from classes.buttons import ElevatedButton
 from config.const import TEXTS, Run_Type, COLORS, ERROR_MESSAGES, VALIDATION_MESSAGES, Env_Type
 from utils.basic_function import show_message
