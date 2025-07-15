@@ -99,6 +99,7 @@ class TEXTS(Enum):
     UPLOAD_BUTTON = "Upload"
     DOWNLOAD_BUTTON = "Download"
     BACK_TO_MAIN = "Back to Main"
+    BACK = "Back"
     INSTRUCTIONS = "1. Sign in with Google\n2. Copy the verification code that appears in the browser\n3. Paste it here and click 'Next'"
     VERIFICATION_CODE = "Paste the verification code here"
     CONFIRM_VERIFICATION = "Confirm verification code"

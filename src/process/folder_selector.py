@@ -23,7 +23,7 @@ def hierarchical_folder_selector(
     folder_column = Column(spacing=10, scroll=ft.ScrollMode.AUTO, controls=[])
     folder_scroll_container = Container(
         content=folder_column,
-        height=130,
+        height=200,
         width=300,
         alignment=ft.alignment.center
     )
@@ -80,20 +80,19 @@ def hierarchical_folder_selector(
         icon_color = COLORS.MAIN_COLOR.value,
         on_click=go_back, 
         icon_size=20,
-        tooltip=TEXTS.BACK_TO_MAIN.value
+        tooltip=TEXTS.BACK.value
         )
-    choose_button = IconButton(
-        icon = ft.icons.CHECK_BOX_OUTLINED, 
-        icon_color = COLORS.MAIN_COLOR.value, 
+    choose_button = ElevatedButton(
+        text=TEXTS.CHOOSE_FOLDER.value,
+        icon = ft.icons.CHECK_ROUNDED, 
+        width = 180,
         on_click=choose_this_folder, 
-        icon_size=20,
-        tooltip=TEXTS.CHOOSE_FOLDER.value
     )
 
     buttons_row = Row([
         back_button,
         choose_button
-    ], spacing=10, alignment=ft.MainAxisAlignment.CENTER)
+    ], spacing=10, alignment=ft.MainAxisAlignment.SPACE_BETWEEN)
 
 
     chosen_folder_column = Column(scroll=ft.ScrollMode.AUTO, controls=[chosen_folder], height=17)

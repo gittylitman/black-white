@@ -1,5 +1,5 @@
 from process.login import setup_ui
-from config.const import TEXTS
+from config.const import TEXTS, COLORS
 from modules.set_system_variable import get_env_instance
 import flet as ft
 import os
@@ -15,6 +15,7 @@ def main(page: ft.Page):
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
     page.title = TEXTS.PAGE_TITLE.value
+    page.bgcolor = COLORS.BACKGROUND_COLOR.value
     page.scroll = ft.ScrollMode.AUTO
     setup_ui(page)
 

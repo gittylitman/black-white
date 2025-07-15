@@ -113,5 +113,5 @@ def dropdown(
             horizontal_alignment=ft.CrossAxisAlignment.CENTER,
         ),
         alignment=ft.alignment.center,
-        height=320
+        height=380
     )
