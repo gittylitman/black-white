@@ -1,10 +1,9 @@
-from config.config_variables import ACTION_TYPE, ENVIRONMENT_TYPE, GCLOUD_PATH
+from config.config_variables import ACTION_TYPE, GCLOUD_PATH
 
 
 class _SetupEnv:
     def init_settings(self):
         try:
-            self.ENVIRONMENT_TYPE: str = ENVIRONMENT_TYPE
             self.ACTION_TYPE: str = ACTION_TYPE
             self.GCLOUD_PATH: str = GCLOUD_PATH
 
