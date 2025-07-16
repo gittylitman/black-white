@@ -29,6 +29,7 @@ def get_folders_and_files(bucket_name: str):
 
 
 def upload_files_to_gcp(bucket_name: str, folder_name: str, file_path: str) -> None:
+    """Upload a file or directory to GCP using gsutil."""
     try:
         startupinfo = subprocess.STARTUPINFO()
         startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
