@@ -112,7 +112,7 @@ class TEXTS(Enum):
     BASIC_TITLE = "Welcome"
     INVALID_FOLDER = "Invalid folder or bucket"
     SUCCESSFUL = "completed successfully."
-    ERROR_UPLOAD_FOLDER = ("Error while upload folder",)
+    ERROR_UPLOAD_FOLDER = "Error while upload folder"
     ITEM_SELECTED = "Selected item:"
 
 
