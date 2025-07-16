@@ -37,19 +37,12 @@ def upload_files(page: ft.Page, run_type: Run_Type, env_type: Env_Type) -> Colum
         page, handle_folder_selection, run_type=run_type, env_type=env_type
     )
 
-    file_picker = FilePicker(on_result=lambda e: select_files(e))
-    folder_picker = FilePicker(on_result=lambda e: select_folder(e))
+    file_picker = FilePicker(on_result=lambda e: handle_selection(e, is_folder=False))
+    folder_picker = FilePicker(on_result=lambda e: handle_selection(e, is_folder=True))
     page.overlay.extend([file_picker, folder_picker])
 
-    def select_files(e):
-        if e.files:
-            selected_files["files"] = e.files
-            update_file_label(len(selected_files["files"]))
-        else:
-            reset_file_selection()
-
-    def select_folder(e):
-        if e.path:
+    def handle_selection(e, is_folder=False):
+        if is_folder and e.path:
             try:
                 original_folder_name = os.path.basename(e.path)
                 temp_dir = tempfile.gettempdir()
@@ -69,6 +62,9 @@ def upload_files(page: ft.Page, run_type: Run_Type, env_type: Env_Type) -> Colum
                 show_message(
                     page, TEXTS.ERROR_UPLOAD_FOLDER.value, COLORS.FAILED_COLOR.value
                 )
+        elif not is_folder and e.files:
+            selected_files["files"] = e.files
+            update_file_label(len(e.files))
         else:
             reset_file_selection()
 

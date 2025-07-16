@@ -41,6 +41,7 @@ def get_folders_and_files(page, bucket_name: str):
 
 
 def upload_files_to_gcp(bucket_name: str, folder_name: str, file_path: str) -> None:
+    """Upload a file or directory to GCP using gsutil."""
     try:
         if not os.path.exists(file_path):
             raise Exception(f"File not found: {file_path}")
@@ -56,7 +57,6 @@ def upload_files_to_gcp(bucket_name: str, folder_name: str, file_path: str) -> N
             full_command,
             capture_output=True,
             text=True,
-            shell=True,
             startupinfo=startupinfo,
             timeout=60,
         )
@@ -65,7 +65,7 @@ def upload_files_to_gcp(bucket_name: str, folder_name: str, file_path: str) -> N
             raise Exception(f"Failed to upload {file_path}: {result.stderr}")
 
     except Exception as e:
-        raise Exception(str(e))
+        raise e
 
 
 def get_files_from_folder(page, bucket_name: str, folder: str):
