@@ -14,7 +14,7 @@ class Text(ft.Text):
         color: ft.colors = None,
         rtl: bool = False,
         elevation: Optional[int] = None,
-        expand: bool = False
+        expand: bool = False,
     ):
         super().__init__()
         self.value = text
