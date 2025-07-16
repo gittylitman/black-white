@@ -1,4 +1,5 @@
 import subprocess
+import os
 
 from config.const import COLORS, ERROR_MESSAGES
 from utils.basic_function import show_message
@@ -69,6 +70,8 @@ def get_files_from_folder(bucket_name: str, folder: str):
 def download_files_from_gcp(page, bucket_name: str, folder_path: str, file_name: str):
     """Download files from GCP"""
     try:
+        downloads_folder = os.path.join(os.path.expanduser("~"), "Downloads")
+
         startupinfo = subprocess.STARTUPINFO()
         startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
         result = subprocess.run(
@@ -78,7 +81,7 @@ def download_files_from_gcp(page, bucket_name: str, folder_path: str, file_name:
                 "gsutil",
                 "cp",
                 f"gs://{bucket_name}/{folder_path}/{file_name}",
-                ".",
+                f"{downloads_folder}",
             ],
             capture_output=True,
             text=True,
@@ -94,6 +97,8 @@ def download_files_from_gcp(page, bucket_name: str, folder_path: str, file_name:
         return result.stdout
     except Exception as e:
         show_message(
-            page, ERROR_MESSAGES.ERROR_FETCHING_FOLDERS.value, COLORS.FAILED_COLOR.value
+            page,
+            ERROR_MESSAGES.ERROR_FETCHING_FOLDERS.value,
+            COLORS.FAILED_COLOR.value,
         )
         raise e
