@@ -128,7 +128,7 @@ def upload_files(page: ft.Page, run_type: Run_Type, env_type: Env_Type) -> Colum
         border_radius=5,
     )
 
-    file_label = Text(TEXTS.CHOOSE_FOLDER.value, size=30)
+    file_label = Text(" ", size=30)
 
     upload_button = ElevatedButton(
         text=TEXTS.UPLOAD_BUTTON.value, on_click=upload_file, width=200
