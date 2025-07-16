@@ -112,6 +112,7 @@ class TEXTS(Enum):
     BASIC_TITLE = "ברוך הבא לשער האריות"
     INVALID_FOLDER = "Invalid folder or bucket"
     SUCCESSFUL = "completed successfully."
+    ERROR_UPLOAD_FOLDER = "Error while upload folder"
 
 
 class COLORS(Enum):
