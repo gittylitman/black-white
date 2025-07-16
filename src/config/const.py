@@ -109,9 +109,11 @@ class TEXTS(Enum):
     LOGGED_IN = "🎉 You have successfully logged in! Loading user information..."
     NO_SUBFOLDER = "📂 No subfolders found"
     PAGE_TITLE = "שער האריות"
-    BASIC_TITLE = "ברוך הבא לשער האריות"
+    BASIC_TITLE = "Welcome"
     INVALID_FOLDER = "Invalid folder or bucket"
     SUCCESSFUL = "completed successfully."
+    ERROR_UPLOAD_FOLDER = "Error while upload folder"
+    ITEM_SELECTED = "Selected item:"
 
 
 class COLORS(Enum):
