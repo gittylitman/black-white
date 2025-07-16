@@ -52,6 +52,7 @@ def dropdown(
     selected_folder = ""
 
     def get_folders_list(bucket: str) -> object:
+        """Get a folder list."""
         try:
             result = get_folders_and_files(bucket)
             return get_folders_from_folders_and_files(result)
