@@ -32,21 +32,26 @@ def get_folders_and_files(bucket_name: str):
 def upload_files_to_gcp(bucket_name: str, folder_name: str, file_path: str) -> None:
     """Upload a file or directory to GCP using gsutil."""
     try:
+        if not os.path.exists(file_path):
+            raise Exception(f"File not found: {file_path}")
+
         startupinfo = subprocess.STARTUPINFO()
         startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-        command = [
-            "cmd",
-            "/c",
-            "gsutil",
-            "cp",
-            file_path,
-            f"gs://{bucket_name}/{folder_name}",
-        ]
+
+        gs_path = f"gs://{bucket_name}/{folder_name}/"
+        command = ["cmd", "/c", "gsutil", "cp", "-r", f'"{file_path}"', gs_path]
+        full_command = " ".join(command)
+
         result = subprocess.run(
-            command, capture_output=True, text=True, timeout=60, startupinfo=startupinfo
+            full_command,
+            capture_output=True,
+            text=True,
+            startupinfo=startupinfo,
+            timeout=60,
         )
+
         if result.returncode != 0:
-            raise Exception(f"Failed to upload {file_path}: {result.stderr.strip()}")
+            raise Exception(f"Failed to upload {file_path}: {result.stderr}")
 
     except Exception as e:
         raise e
