@@ -93,7 +93,6 @@ def download_files_from_gcp(page, bucket_name: str, folder_path: str, file_name:
     """Download files from GCP"""
     try:
         downloads_folder = os.path.join(os.path.expanduser("~"), "Downloads")
-        download_path = os.path.join(downloads_folder, file_name)
 
         startupinfo = subprocess.STARTUPINFO()
         startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
@@ -104,7 +103,7 @@ def download_files_from_gcp(page, bucket_name: str, folder_path: str, file_name:
                 "gsutil",
                 "cp",
                 f"gs://{bucket_name}/{folder_path}/{file_name}",
-                f"{download_path}",
+                f"{downloads_folder}",
             ],
             capture_output=True,
             text=True,
