@@ -3,6 +3,7 @@ import subprocess
 from config.const import COLORS, ERROR_MESSAGES
 from utils.basic_function import show_message
 
+
 def get_folders_and_files(bucket_name: str):
     """Bringing the files and folders from GCP."""
     startupinfo = subprocess.STARTUPINFO()
@@ -20,14 +21,14 @@ def get_folders_and_files(bucket_name: str):
         ],
         capture_output=True,
         text=True,
-        startupinfo=startupinfo
+        startupinfo=startupinfo,
     )
     if result.returncode != 0:
         raise Exception(result.stderr)
     return result.stdout
 
-  
-def upload_files_to_gcp(bucket_name: str,folder_name:str, file_path: str) -> None:
+
+def upload_files_to_gcp(bucket_name: str, folder_name: str, file_path: str) -> None:
     try:
         startupinfo = subprocess.STARTUPINFO()
         startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW

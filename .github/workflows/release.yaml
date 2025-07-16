@@ -1,9 +1,7 @@
 name: 🐍 Release
 
 on:
-  push:
-    branches:
-      - feature/build-exe
+  workflow_dispatch:
 
 
 jobs:

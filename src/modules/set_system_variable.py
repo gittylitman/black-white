@@ -7,8 +7,7 @@ class _SetupEnv:
             self.ENVIRONMENT_TYPE: str = ENVIRONMENT_TYPE
             self.ACTION_TYPE: str = ACTION_TYPE
             self.GCLOUD_PATH: str = GCLOUD_PATH
-            
-           
+
         except KeyError as e:
             raise ValueError(f"Missing key in env file: {e}")
         return self
