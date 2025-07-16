@@ -2,7 +2,7 @@ from typing import Callable, Dict, List
 
 import flet as ft
 
-from classes.buttons import IconButton
+from classes.buttons import IconButton, ElevatedButton
 from classes.column import Column
 from classes.container import Container
 from classes.row import Row
@@ -30,11 +30,10 @@ def hierarchical_folder_selector(
     folder_scroll_container = Container(
         content=folder_column, height=130, width=300, alignment=ft.alignment.center
     )
-    current_path_text = Text(text="", size=20, color=COLORS.MAIN_COLOR.value, width=500)
+    current_path_text = Text(text="", size=20, width=500)
     chosen_folder = Text(
         text=TEXTS.CHOSEN_FOLDER.value + TEXTS.NONE.value,
         size=12,
-        color=COLORS.MAIN_COLOR.value,
     )
 
     def update_folder_list():
@@ -53,7 +52,7 @@ def hierarchical_folder_selector(
                             on_click=lambda e, f=folder: enter_folder(f),
                             style=ft.ButtonStyle(
                                 color={
-                                    ft.ControlState.DEFAULT: COLORS.MAIN_COLOR.value
+                                    ft.ControlState.DEFAULT: COLORS.BLACK_COLOR.value
                                 },
                             ),
                         )
@@ -63,9 +62,7 @@ def hierarchical_folder_selector(
                 )
                 folder_column.controls.append(row)
         else:
-            folder_column.controls.append(
-                Text(TEXTS.NO_SUBFOLDER.value, color=COLORS.MAIN_COLOR.value)
-            )
+            folder_column.controls.append(Text(TEXTS.NO_SUBFOLDER.value))
 
         current_path_display = (
             TEXTS.CURRENT_PATH.value + current_path
@@ -105,12 +102,8 @@ def hierarchical_folder_selector(
         icon_size=20,
         tooltip=TEXTS.BACK_TO_MAIN.value,
     )
-    choose_button = IconButton(
-        icon=ft.icons.CHECK_BOX_OUTLINED,
-        icon_color=COLORS.MAIN_COLOR.value,
-        on_click=choose_this_folder,
-        icon_size=20,
-        tooltip=TEXTS.CHOOSE_FOLDER.value,
+    choose_button = ElevatedButton(
+        text=TEXTS.APPLY.value, on_click=choose_this_folder, width=150
     )
 
     buttons_row = Row(
