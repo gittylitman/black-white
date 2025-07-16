@@ -69,7 +69,7 @@ def upload_files(page: ft.Page, run_type: Run_Type, env_type: Env_Type) -> Colum
             reset_file_selection()
 
     def update_file_label(file_count: int) -> None:
-        file_label.value = f"{TEXTS.CHOOSE_FILES.value}{file_count}"
+        file_label.value = f"{TEXTS.ITEM_SELECTED.value}{file_count}"
         page.update()
 
     def reset_file_selection() -> None:
