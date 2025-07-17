@@ -78,7 +78,6 @@ def set_env_type(page: ft.Page, env_type: Env_Type):
     try:
         ACTION_TYPE = get_env_instance().ACTION_TYPE
         project_id = get_department(env_type, Run_Type.UPLOAD if ACTION_TYPE == Run_Type.UPLOAD.value else Run_Type.DOWNLOAD).project_id
-        raise Exception(f"After get_department {project_id}")
         set_project_id(project_id)
         if ACTION_TYPE == Run_Type.UPLOAD.value:
             display_upload_page(page, Run_Type.UPLOAD, env_type)
