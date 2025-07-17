@@ -14,7 +14,7 @@ def set_project_id(project_id: str):
             "cmd",
             "/c",
             "gcloud",
-            "config"
+            "config",
             "set",
             "project",
             project_id,
