@@ -5,6 +5,29 @@ from config.const import COLORS, ERROR_MESSAGES
 from utils.basic_function import show_message
 
 
+def set_project_id(project_id: str):
+    """Set Project Id."""
+    startupinfo = subprocess.STARTUPINFO()
+    startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+    result = subprocess.run(
+        [
+            "cmd",
+            "/c",
+            "gcloud",
+            "config",
+            "set",
+            "project",
+            project_id,
+        ],
+        capture_output=True,
+        text=True,
+        startupinfo=startupinfo,
+    )
+    if result.returncode != 0:
+        raise Exception(result.stderr)
+    return result.stdout
+
+
 def get_folders_and_files(bucket_name: str):
     """Bringing the files and folders from GCP."""
     startupinfo = subprocess.STARTUPINFO()
