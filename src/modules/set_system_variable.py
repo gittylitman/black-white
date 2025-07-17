@@ -1,11 +1,10 @@
-from config.config_variables import ACTION_TYPE, GCLOUD_PATH
-
+import os
 
 class _SetupEnv:
     def init_settings(self):
         try:
-            self.ACTION_TYPE: str = ACTION_TYPE
-            self.GCLOUD_PATH: str = GCLOUD_PATH
+            self.ACTION_TYPE: str = os.environ["ACTION_TYPE"]
+            self.GCLOUD_PATH: str = os.environ["GCLOUD_PATH"]
 
         except KeyError as e:
             raise ValueError(f"Missing key in env file: {e}")

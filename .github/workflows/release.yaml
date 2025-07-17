@@ -26,6 +26,11 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: 🔧 Set Environment Variables
+        env:
+          ACTION_TYPE: ${{ inputs.action_type }}
+          GCLOUD_PATH: ${{ vars.GCLOUD_PATH }}
+
       - name: ⏬ Install Dependencies
         run: |
           pip install pyinstaller==6.14.2
