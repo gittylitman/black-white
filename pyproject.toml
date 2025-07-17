@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=42"]
+build-backend = "setuptools.build_meta"
+[project]
+name = "flet-app-drones"
+version = "1.0.0"
+description = "add description"
+readme = {file = "README.md", content-type = "markdown"}
+requires-python = ">=3.8"
+license = {file = "LICENSE.md"}
+classifiers = [
+    "Programming Language :: Python",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Private :: Do Not Upload"
+]
+dependencies = [
+    "flet==0.24.1",
+]
+[project.optional-dependencies]
+dev = [
+    "pytest==8.2.2",
+    "ruff==0.8.6",
+    "pre-commit==4.0.1",
+]
+[tool.setuptools.packages.find]
+where = ["src"]
