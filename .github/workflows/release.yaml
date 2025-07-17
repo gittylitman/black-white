@@ -26,11 +26,10 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: 🔧 Set Environment Variables
-        env:
-          ACTION_TYPE: ${{ inputs.action_type }}
-          GCLOUD_PATH: ${{ vars.GCLOUD_PATH }}
-        run: echo "Environment variable set."
+      - name: 📄 Generate config_variables.py
+        run: |
+          echo "ACTION_TYPE = '${{ inputs.action_type }}'" > src/config/config_variables.py
+          echo "GCLOUD_PATH = '${{ env.GCLOUD_PATH }}'" >> src/config/config_variables.py
 
       - name: ⏬ Install Dependencies
         run: |
@@ -41,9 +40,6 @@ jobs:
         run: |
           pip install .
           python -m PyInstaller --onefile --hidden-import "flet" --noconfirm src/main.py
-        env:
-          ACTION_TYPE: ${{ inputs.action_type }}
-          GCLOUD_PATH: ${{ vars.GCLOUD_PATH }}
 
       - name: ⬆️ Upload Executable
         uses: actions/upload-artifact@v4
