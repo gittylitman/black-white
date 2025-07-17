@@ -2,7 +2,15 @@ name: 🐍 Release
 
 on:
   workflow_dispatch:
-
+    inputs:
+      action_type:
+        description: "Action Type"
+        required: true
+        default: "Download"
+        type: choice
+        options:
+          - Download
+          - Upload
 
 jobs:
   release:
@@ -31,5 +39,5 @@ jobs:
       - name: ⬆️ Upload Executable
         uses: actions/upload-artifact@v4
         with:
-          name: upload
+          name: ${{ inputs.action_type }}
           path: ./dist
