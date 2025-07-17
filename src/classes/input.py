@@ -16,7 +16,9 @@ class Input(ft.TextField):
         color: str = COLORS.MAIN_COLOR.value,
         border_color: str = COLORS.MAIN_COLOR.value,
     ):
-        super().__init__()
+        super().__init__(
+            label=label, label_style=ft.TextStyle(color=COLORS.MAIN_COLOR.value)
+        )
         self.label = label
         self.value = value
         self.width = width

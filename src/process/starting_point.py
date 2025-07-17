@@ -51,11 +51,13 @@ def starting_point(page: ft.Page) -> Column:
         text=Env_Type.DEV.value,
         on_click=lambda e: set_env_type(page, Env_Type.DEV.value),
         width=200,
+        icon=ft.icons.DEVELOPER_MODE,
     )
     prod_button = ElevatedButton(
         text=Env_Type.PROD.value,
         on_click=lambda e: set_env_type(page, Env_Type.PROD.value),
         width=200,
+        icon=ft.icons.CLOUD_DONE,
     )
 
     main_column = ft.Column(

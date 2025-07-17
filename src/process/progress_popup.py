@@ -107,7 +107,12 @@ def show_progress_popup(
         ),
         actions=[
             ft.TextButton(
-                "Close", on_click=lambda e: progress_dialog.close_dialog(page)
+                "Close",
+                on_click=lambda e: progress_dialog.close_dialog(page),
+                style=ft.ButtonStyle(
+                    color=COLORS.BLACK_COLOR.value,
+                    overlay_color=COLORS.GRAY_COLOR.value,
+                ),
             )
         ],
     )
