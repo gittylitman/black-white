@@ -24,7 +24,7 @@ def set_project_id(project_id: str):
         startupinfo=startupinfo,
     )
     if result.returncode != 0:
-        raise Exception("not return code")
+        raise result.stderr
     return result.stdout
 
 
