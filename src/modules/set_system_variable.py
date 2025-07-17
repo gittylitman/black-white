@@ -7,7 +7,7 @@ class _SetupEnv:
             self.GCLOUD_PATH: str = os.environ["GCLOUD_PATH"]
 
         except KeyError as e:
-            raise ValueError(f"Missing key in env file: {e}")
+            raise ValueError(f"Missing key in env: {e}")
         return self
 
 
