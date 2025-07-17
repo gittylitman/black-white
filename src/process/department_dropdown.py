@@ -3,7 +3,7 @@ from typing import Any
 import flet as ft
 
 from utils.gcloud_calls import get_folders_and_files
-from utils.basic_function import show_message
+from utils.basic_function import show_message, get_department
 from classes.column import Column
 from classes.container import Container
 from classes.dropdown import Dropdown
@@ -13,20 +13,10 @@ from config.const import (
     ERROR_MESSAGES,
     TEXTS,
     VALIDATION_MESSAGES,
-    Departments,
     Run_Type,
     Env_Type,
 )
 from process.folder_selector import hierarchical_folder_selector
-
-
-def get_department(env: str, run_type: Run_Type) -> Departments:
-    """Get department."""
-
-    for dept in Departments:
-        if dept.env == env and dept.run_type == run_type:
-            return dept
-    raise ValueError(ERROR_MESSAGES.DEPARTMENT_NOT_FOUND.value)
 
 
 def get_bucket_by_run_type(env_type: Env_Type, run_type: Run_Type) -> Any:

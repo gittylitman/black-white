@@ -8,6 +8,13 @@ class Run_Type(Enum):
     DOWNLOAD = "Download"
 
 
+class Project_id(Enum):
+    UPLOAD_PROD = "dig-drn-dev-t-lgupld-1"
+    UPLOAD_DEV = "dig-drn-dev-t-lgupld-1"
+    DOWNLOAD_DEV = "dig-drn-dev-t-lgupld-1"
+    DOWNLOAD_PROD = "dig-drn-dev-t-lgupld-1"
+
+
 class Env_Type(Enum):
     DEV = "DEV"
     PROD = "PROD"
@@ -54,15 +61,36 @@ class DepartmentsBucketsDownloadProd(Enum):
 
 
 class Departments(Enum):
-    BLACK_PROD = (DepartmentsBucketsDownloadProd, "PROD", Run_Type.DOWNLOAD)
-    BLACK_DEV = (DepartmentsBucketsDownloadDev, "DEV", Run_Type.DOWNLOAD)
-    WHITE_DEV = (DepartmentsBucketsUploadDev, "DEV", Run_Type.UPLOAD)
-    WHITE_PROD = (DepartmentsBucketsUploadProd, "PROD", Run_Type.UPLOAD)
+    BLACK_PROD = (
+        DepartmentsBucketsDownloadProd,
+        Env_Type.PROD.value,
+        Run_Type.DOWNLOAD,
+        Project_id.DOWNLOAD_PROD.value,
+    )
+    BLACK_DEV = (
+        DepartmentsBucketsDownloadDev,
+        Env_Type.DEV.value,
+        Run_Type.DOWNLOAD,
+        Project_id.DOWNLOAD_DEV.value,
+    )
+    WHITE_DEV = (
+        DepartmentsBucketsUploadDev,
+        Env_Type.DEV.value,
+        Run_Type.UPLOAD,
+        Project_id.UPLOAD_DEV.value,
+    )
+    WHITE_PROD = (
+        DepartmentsBucketsUploadProd,
+        Env_Type.PROD.value,
+        Run_Type.UPLOAD,
+        Project_id.UPLOAD_PROD.value,
+    )
 
-    def __init__(self, department_bucket, env, run_type) -> None:
+    def __init__(self, department_bucket, env, run_type, project_id) -> None:
         self.department_bucket = department_bucket
         self.env = env
         self.run_type = run_type
+        self.project_id = project_id
 
 
 class ERROR_MESSAGES(Enum):
