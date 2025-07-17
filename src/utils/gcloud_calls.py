@@ -118,7 +118,7 @@ def download_files_from_gcp(page, bucket_name: str, folder_path: str, file_name:
         if result.returncode != 0:
             show_message(
                 page,
-                ERROR_MESSAGES.ERROR_FETCHING_FOLDERS.value,
+                "B",
                 COLORS.VALID_MESSAGES_COLORS.value,
             )
             raise Exception(result.stderr)
@@ -126,7 +126,7 @@ def download_files_from_gcp(page, bucket_name: str, folder_path: str, file_name:
     except Exception as e:
         show_message(
             page,
-            ERROR_MESSAGES.ERROR_FETCHING_FOLDERS.value,
+            "C",
             COLORS.FAILED_COLOR.value,
         )
         raise e

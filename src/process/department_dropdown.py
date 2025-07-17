@@ -46,10 +46,10 @@ def dropdown(
         try:
             result = get_folders_and_files(bucket)
             return get_folders_from_folders_and_files(result)
-        except Exception:
+        except Exception as e:
             show_message(
                 page,
-                ERROR_MESSAGES.ERROR_FETCHING_FOLDERS.value,
+                str(e),
                 COLORS.FAILED_COLOR.value,
             )
             return {}

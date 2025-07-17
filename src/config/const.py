@@ -9,10 +9,10 @@ class Run_Type(Enum):
 
 
 class Project_id(Enum):
-    UPLOAD_PROD = "dig-drn-dev-t-lgupld-1"
-    UPLOAD_DEV = "dig-drn-dev-t-lgupld-1"
-    DOWNLOAD_DEV = "dig-drn-dev-t-lgupld-1"
-    DOWNLOAD_PROD = "dig-drn-dev-t-lgupld-1"
+    UPLOAD_PROD = "sky-geo-dig-prd-t-lgupld-1"
+    UPLOAD_DEV = "sky-geo-dig-dev-t-lgupld-1"
+    DOWNLOAD_DEV = "sky-geo-dig-dev-t-lgdnld-1"
+    DOWNLOAD_PROD = "sky-geo-dig-prd-t-lgdnld-1"
 
 
 class Env_Type(Enum):
@@ -21,9 +21,9 @@ class Env_Type(Enum):
 
 
 class DepartmentsBucketsUploadDev(Enum):
-    DRONES = ("רחפנים", "example-download-upload")
-    MAPPING = ("מיפוי", "empty-bucket-example")
-    SATELLITES = ("לווינות", "empty-bucket-example")
+    DRONES = ("רחפנים", "dig-drn-dev-t-lgupld")
+    MAPPING = ("מיפוי", "dig-geo-dev-t-lgupld")
+    SATELLITES = ("לווינות", "dig-sat-dev-t-lgupld")
 
     def __init__(self, department, bucket) -> None:
         self.department = department
@@ -41,9 +41,9 @@ class DepartmentsBucketsUploadProd(Enum):
 
 
 class DepartmentsBucketsDownloadDev(Enum):
-    DRONES = ("רחפנים", "example-download-upload")
-    MAPPING = ("מיפוי", "empty-bucket-example")
-    SATELLITES = ("לווינות", "empty-bucket-example")
+    DRONES = ("רחפנים", "dig-drn-dev-t-lgdnld")
+    MAPPING = ("מיפוי", "dig-geo-dev-t-lgdnld")
+    SATELLITES = ("לווינות", "dig-sat-dev-t-lgdnld")
 
     def __init__(self, department, bucket) -> None:
         self.department = department
