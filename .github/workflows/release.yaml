@@ -30,6 +30,7 @@ jobs:
         env:
           ACTION_TYPE: ${{ inputs.action_type }}
           GCLOUD_PATH: ${{ vars.GCLOUD_PATH }}
+        run: echo "Environment variable set."
 
       - name: ⏬ Install Dependencies
         run: |
