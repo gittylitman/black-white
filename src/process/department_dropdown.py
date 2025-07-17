@@ -43,8 +43,8 @@ def dropdown(
 
     def get_folders_list(bucket: str) -> object:
         """Get a folder list."""
-        result = get_folders_and_files(page, bucket)
         try:
+            result = get_folders_and_files(bucket)
             return get_folders_from_folders_and_files(result)
         except Exception:
             show_message(

@@ -16,7 +16,6 @@ classifiers = [
 ]
 dependencies = [
     "flet==0.24.1",
-    "python-dotenv"
 ]
 [project.optional-dependencies]
 dev = [

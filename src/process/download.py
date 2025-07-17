@@ -107,7 +107,7 @@ def download_files(page: ft.Page, run_type: Run_Type, env_type: Env_Type) -> Col
 
     def get_files(bucket: str, folder: str) -> list[str]:
         """Fetches files from the specified bucket and folder."""
-        files_result = get_files_from_folder(page, bucket, folder)
+        files_result = get_files_from_folder(bucket, folder)
         list_folders_and_files = files_result.split("\n")
         return [
             file.split("/").pop()

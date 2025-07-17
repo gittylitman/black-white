@@ -8,7 +8,6 @@ from process.login import setup_ui
 
 gcloud_path = get_env_instance().GCLOUD_PATH
 
-gcloud_path = gcloud_path
 os.environ["PATH"] = gcloud_path + os.pathsep + os.environ["PATH"]
 
 
