@@ -101,13 +101,14 @@ class TEXTS(Enum):
     NONE = "None"
     UPLOAD_BUTTON = "Upload"
     DOWNLOAD_BUTTON = "Download"
+    APPLY = "Apply"
     BACK_TO_MAIN = "Back to Main"
     INSTRUCTIONS = "1. Sign in with Google\n2. Copy the verification code that appears in the browser\n3. Paste it here and click 'Next'"
     VERIFICATION_CODE = "Paste the verification code here"
     CONFIRM_VERIFICATION = "Confirm verification code"
     CURRENT_PATH = "Current path: /"
     LOGGED_IN = "🎉 You have successfully logged in! Loading user information..."
-    NO_SUBFOLDER = "📂 No subfolders found"
+    NO_SUBFOLDER = "No subfolders found"
     PAGE_TITLE = "שער האריות"
     BASIC_TITLE = "Welcome"
     INVALID_FOLDER = "Invalid folder or bucket"
@@ -117,10 +118,11 @@ class TEXTS(Enum):
 
 
 class COLORS(Enum):
-    MAIN_COLOR = ft.colors.BLUE_ACCENT_700
+    MAIN_COLOR = ft.colors.GREEN_700
     BACKGROUND_COLOR = ft.colors.WHITE
     GRAY_COLOR = ft.colors.GREY
     FAILED_COLOR = ft.colors.RED
     SUCCESS_COLOR = ft.colors.GREEN
     PROCESS_COLOR = ft.colors.BLUE
     VALID_MESSAGES_COLORS = ft.colors.ORANGE
+    BLACK_COLOR = ft.colors.BLACK

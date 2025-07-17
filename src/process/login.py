@@ -21,7 +21,7 @@ def setup_ui(page: ft.Page) -> None:
     background_container = _create_background_container(page)
     column = _create_main_column()
     title = _create_title()
-    instructions = Text(TEXTS.INSTRUCTIONS.value, color=COLORS.MAIN_COLOR.value)
+    instructions = Text(TEXTS.INSTRUCTIONS.value)
     login_button = ElevatedButton(
         TEXTS.SIGN_IN.value,
         on_click=lambda e: start_login_process(page, column, login_button),
@@ -140,7 +140,7 @@ def reset_ui(page: ft.Page, column: Column, login_button: ElevatedButton) -> Non
     """Resets UI to initial state."""
     login_button.disabled = False
     title = _create_title()
-    instructions = Text(TEXTS.INSTRUCTIONS.value, color=COLORS.MAIN_COLOR.value)
+    instructions = Text(TEXTS.INSTRUCTIONS.value)
     column.controls = [title, instructions, login_button]
     page.update()
 

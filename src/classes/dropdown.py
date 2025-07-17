@@ -16,12 +16,13 @@ class Dropdown(ft.Dropdown):
         width: Optional[int] = None,
     ) -> None:
         super().__init__(
-            color=COLORS.MAIN_COLOR.value,
             bgcolor=COLORS.BACKGROUND_COLOR.value,
             border_color=COLORS.MAIN_COLOR.value,
             border_width=2,
             border_radius=8,
             filled=True,
+            label=label,
+            label_style=ft.TextStyle(color=COLORS.MAIN_COLOR.value),
         )
         self.value = value
         self.options = options
