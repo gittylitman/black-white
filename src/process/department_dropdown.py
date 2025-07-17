@@ -18,6 +18,7 @@ from config.const import (
 )
 from process.folder_selector import hierarchical_folder_selector
 
+
 def get_bucket_by_run_type(env_type: Env_Type, run_type: Run_Type) -> Any:
     """Get bucket that matches the department."""
     department = get_department(env_type, run_type)

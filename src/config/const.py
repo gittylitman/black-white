@@ -9,10 +9,10 @@ class Run_Type(Enum):
 
 
 class Project_id(Enum):
-    UPLOAD_PROD="dig-drn-dev-t-lgupld-1"
-    UPLOAD_DEV="dig-drn-dev-t-lgupld-1"
-    DOWNLOAD_DEV="dig-drn-dev-t-lgupld-1"
-    DOWNLOAD_PROD="dig-drn-dev-t-lgupld-1"
+    UPLOAD_PROD = "dig-drn-dev-t-lgupld-1"
+    UPLOAD_DEV = "dig-drn-dev-t-lgupld-1"
+    DOWNLOAD_DEV = "dig-drn-dev-t-lgupld-1"
+    DOWNLOAD_PROD = "dig-drn-dev-t-lgupld-1"
 
 
 class Env_Type(Enum):
@@ -61,10 +61,30 @@ class DepartmentsBucketsDownloadProd(Enum):
 
 
 class Departments(Enum):
-    BLACK_PROD = (DepartmentsBucketsDownloadProd, Env_Type.PROD.value, Run_Type.DOWNLOAD, Project_id.DOWNLOAD_PROD.value)
-    BLACK_DEV = (DepartmentsBucketsDownloadDev, Env_Type.DEV.value, Run_Type.DOWNLOAD, Project_id.DOWNLOAD_DEV.value)
-    WHITE_DEV = (DepartmentsBucketsUploadDev, Env_Type.DEV.value, Run_Type.UPLOAD, Project_id.UPLOAD_DEV.value)
-    WHITE_PROD = (DepartmentsBucketsUploadProd, Env_Type.PROD.value, Run_Type.UPLOAD, Project_id.UPLOAD_PROD.value)
+    BLACK_PROD = (
+        DepartmentsBucketsDownloadProd,
+        Env_Type.PROD.value,
+        Run_Type.DOWNLOAD,
+        Project_id.DOWNLOAD_PROD.value,
+    )
+    BLACK_DEV = (
+        DepartmentsBucketsDownloadDev,
+        Env_Type.DEV.value,
+        Run_Type.DOWNLOAD,
+        Project_id.DOWNLOAD_DEV.value,
+    )
+    WHITE_DEV = (
+        DepartmentsBucketsUploadDev,
+        Env_Type.DEV.value,
+        Run_Type.UPLOAD,
+        Project_id.UPLOAD_DEV.value,
+    )
+    WHITE_PROD = (
+        DepartmentsBucketsUploadProd,
+        Env_Type.PROD.value,
+        Run_Type.UPLOAD,
+        Project_id.UPLOAD_PROD.value,
+    )
 
     def __init__(self, department_bucket, env, run_type, project_id) -> None:
         self.department_bucket = department_bucket

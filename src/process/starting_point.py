@@ -77,7 +77,12 @@ def starting_point(page: ft.Page) -> Column:
 def set_env_type(page: ft.Page, env_type: Env_Type):
     try:
         ACTION_TYPE = get_env_instance().ACTION_TYPE
-        project_id = get_department(env_type, Run_Type.UPLOAD if ACTION_TYPE == Run_Type.UPLOAD.value else Run_Type.DOWNLOAD).project_id
+        project_id = get_department(
+            env_type,
+            Run_Type.UPLOAD
+            if ACTION_TYPE == Run_Type.UPLOAD.value
+            else Run_Type.DOWNLOAD,
+        ).project_id
         set_project_id(project_id)
         if ACTION_TYPE == Run_Type.UPLOAD.value:
             display_upload_page(page, Run_Type.UPLOAD, env_type)
@@ -85,4 +90,3 @@ def set_env_type(page: ft.Page, env_type: Env_Type):
             display_download_page(page, Run_Type.DOWNLOAD, env_type)
     except Exception as error:
         show_message(page, str(error), COLORS.FAILED_COLOR.value)
-        
