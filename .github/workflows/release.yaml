@@ -37,7 +37,7 @@ jobs:
           python -m PyInstaller --onefile --hidden-import "flet" --hidden-import "dotenv" --noconfirm main.py
       
       - name: 📂 Check current directory
-        run: ls -Force
+        run: Get-ChildItem -Force | Select-Object Name, Attributes, @{Name="Permissions";Expression={(Get-Acl $_.FullName).AccessToString}}
 
       
       - name: 🚚 Copy .env
