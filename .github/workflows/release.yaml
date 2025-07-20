@@ -27,7 +27,7 @@ jobs:
         run: |
           pip install .
           python -m PyInstaller --onefile --hidden-import "flet" --hidden-import "dotenv" --noconfirm main.py
-      
+
       - name: 🚚 Copy .env
         run: |
           Copy-Item -Path ".env" -Destination "./dist/"
