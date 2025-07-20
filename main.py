@@ -6,16 +6,18 @@ import flet as ft
 from config.const import TEXTS
 from modules.set_system_variable import get_env_instance
 from process.login import setup_ui
+try:
+    load_dotenv()
 
-load_dotenv()
+    gcloud_path = get_env_instance().GCLOUD_PATH
 
-gcloud_path = get_env_instance().GCLOUD_PATH
+    os.environ["PATH"] = gcloud_path + os.pathsep + os.environ["PATH"]
+except Exception as e:
 
-os.environ["PATH"] = gcloud_path + os.pathsep + os.environ["PATH"]
 
-print("os.environ")
-print(os.environ)
-print("os.environ")
+    print("os.environ")
+    print(os.environ)
+    print("os.environ")
 
 
 def main(page: ft.Page):
