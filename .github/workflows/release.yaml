@@ -39,14 +39,17 @@ jobs:
       - name: 🚚 Copy .env
         run: |
           Copy-Item -Path ".env" -Destination "./dist/"
+
+      - name: 💫 Extract actionType
+        run: |
           $envFile = Get-Content .env
           $actionType = $envFile | Where-Object { $_ -match '^ACTION_TYPE=' } | ForEach-Object { $_.Split('=')[1].Trim('"') }
-          $actionType
-
+          echo "ACTION_TYPE=$actionType" >> $GITHUB_ENV
+          echo $ACTION_TYPE
 
       - name: ⬆️ Upload Executable
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ inputs.action_type }}
+          name: $ACTION_TYPE
           include-hidden-files: true
           path: ./dist
