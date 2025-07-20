@@ -8,6 +8,9 @@ from modules.set_system_variable import get_env_instance
 from process.login import setup_ui
 
 load_dotenv()
+print("os.environ")
+print(os.environ)
+print("os.environ")
 
 gcloud_path = get_env_instance().GCLOUD_PATH
 
