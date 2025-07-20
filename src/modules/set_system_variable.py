@@ -1,5 +1,6 @@
 import os
 
+
 class _SetupEnv:
     def init_settings(self):
         try:
