@@ -41,7 +41,6 @@ jobs:
       - name: 🔧 Build exe file
         run: |
           pip install .
-          cd src
           python -m PyInstaller --onefile --hidden-import "flet" --hidden-import "dotenv" --noconfirm --add-data ".env;." main.py
 
       - name: ⬆️ Upload Executable
