@@ -28,8 +28,9 @@ jobs:
 
       - name: 📄 Generate config_variables.py
         run: |
-          echo "ACTION_TYPE = '${{ inputs.action_type }}'" > src/config/config_variables.py
-          echo "GCLOUD_PATH = '${{ env.GCLOUD_PATH }}'" >> src/config/config_variables.py
+          # echo "ACTION_TYPE = '${{ inputs.action_type }}'" > src/config/config_variables.py
+          # echo "GCLOUD_PATH = '${{ env.GCLOUD_PATH }}'" >> src/config/config_variables.py
+          cat src/.env
 
       - name: ⏬ Install Dependencies
         run: |
