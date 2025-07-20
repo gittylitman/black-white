@@ -1,4 +1,3 @@
-# from config.config_variables import ACTION_TYPE, GCLOUD_PATH
 import os
 
 class _SetupEnv:

@@ -8,19 +8,14 @@ from modules.set_system_variable import get_env_instance
 from process.login import setup_ui
 
 load_dotenv()
-# print("os.environ")
-# print(os.environ)
-# print("os.environ")
 
-try:
+gcloud_path = get_env_instance().GCLOUD_PATH
 
-    gcloud_path = get_env_instance().GCLOUD_PATH
+os.environ["PATH"] = gcloud_path + os.pathsep + os.environ["PATH"]
 
-    os.environ["PATH"] = gcloud_path + os.pathsep + os.environ["PATH"]
-except Exception as e:
-    print('os.environ')
-    print(os.environ)
-    print("os.environ")
+print("os.environ")
+print(os.environ)
+print("os.environ")
 
 
 def main(page: ft.Page):
