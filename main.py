@@ -6,19 +6,12 @@ import flet as ft
 from config.const import TEXTS
 from modules.set_system_variable import get_env_instance
 from process.login import setup_ui
-try:
-    load_dotenv()
 
-    gcloud_path = get_env_instance().GCLOUD_PATH
+load_dotenv()
 
-    os.environ["PATH"] = gcloud_path + os.pathsep + os.environ["PATH"]
-except Exception as e:
+gcloud_path = get_env_instance().GCLOUD_PATH
 
-
-    print("os.environ")
-    print(os.environ)
-    print("os.environ")
-
+os.environ["PATH"] = gcloud_path + os.pathsep + os.environ["PATH"]
 
 def main(page: ft.Page):
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
