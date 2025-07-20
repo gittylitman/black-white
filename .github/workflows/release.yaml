@@ -42,12 +42,16 @@ jobs:
       
       - name: 🚚 Copy .env
         run: |
+          echo "hello"
           ls -Force ./dist
+          echo "hello"
           cp .env ./dist/
+          echo "hello"
           ls -Force ./dist
+          echo "hello"
 
       - name: ⬆️ Upload Executable
         uses: actions/upload-artifact@v4
         with:
           name: ${{ inputs.action_type }}
-          path: ./dist
+          path: ./dist/.env
