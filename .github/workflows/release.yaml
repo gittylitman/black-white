@@ -45,7 +45,7 @@ jobs:
           echo "hello"
           ls -Force ./dist
           echo "hello"
-          cp .env ./dist/
+          Copy-Item -Path ".env" -Destination "./dist/"
           echo "hello"
           ls -Force ./dist
           echo "hello"
@@ -54,4 +54,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ inputs.action_type }}
-          path: ${{ github.workspace }}/dist
+          path: ./dist
