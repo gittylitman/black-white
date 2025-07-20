@@ -2,15 +2,7 @@ name: 🐍 Release
 
 on:
   workflow_dispatch:
-    inputs:
-      action_type:
-        description: "Action Type"
-        required: true
-        default: "Download"
-        type: choice
-        options:
-          - Download
-          - Upload
+
 
 jobs:
   release:
