@@ -38,7 +38,6 @@ def dropdown(
     result_container = Container()
     selected_folder_text = Text("")
 
-
     def on_change_dropdown(e: ft.ControlEvent):
         selected_bucket = e.control.value
         on_folder_selected(selected_bucket)

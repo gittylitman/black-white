@@ -54,11 +54,12 @@ def get_folders_and_files(bucket_name: str, path: str = "") -> List[str]:
             for line in list_folders_and_files
             if line.strip().endswith("/")
         ]
-        
+
         return sorted(set(list_folders))
 
     except Exception as e:
         raise e
+
 
 def upload_files_to_gcp(bucket_name: str, folder_name: str, file_path: str) -> None:
     """Upload a file or directory to GCP using gsutil."""

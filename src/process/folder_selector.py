@@ -23,7 +23,7 @@ def hierarchical_folder_selector(
     page: ft.Page,
     bucket: str,
     on_folder_selected: Callable[[str], None],
-    initial_path: str = ""
+    initial_path: str = "",
 ) -> Container:
     current_path = initial_path.strip("/")
     path_stack = []
@@ -48,7 +48,9 @@ def hierarchical_folder_selector(
                                 text=folder,
                                 on_click=lambda e, f=folder: enter_folder(f),
                                 style=ft.ButtonStyle(
-                                    color={ft.ControlState.DEFAULT: COLORS.BLACK_COLOR.value},
+                                    color={
+                                        ft.ControlState.DEFAULT: COLORS.BLACK_COLOR.value
+                                    },
                                 ),
                             )
                         ],
@@ -61,7 +63,8 @@ def hierarchical_folder_selector(
 
             current_path_display = (
                 TEXTS.CURRENT_PATH.value + current_path
-                if current_path else TEXTS.CHOOSE_FOLDER.value
+                if current_path
+                else TEXTS.CHOOSE_FOLDER.value
             )
             current_path_text.value = current_path_display
             page.update()
@@ -103,14 +106,25 @@ def hierarchical_folder_selector(
         [back_button, choose_button], spacing=10, alignment=ft.MainAxisAlignment.CENTER
     )
 
-    chosen_folder_column = Column(scroll=ft.ScrollMode.AUTO, controls=[chosen_folder], height=17)
-    current_path_text_column = Column(scroll=ft.ScrollMode.AUTO, controls=[current_path_text], height=25)
+    chosen_folder_column = Column(
+        scroll=ft.ScrollMode.AUTO, controls=[chosen_folder], height=17
+    )
+    current_path_text_column = Column(
+        scroll=ft.ScrollMode.AUTO, controls=[current_path_text], height=25
+    )
     main_column = Column(
-        [current_path_text_column, chosen_folder_column, folder_scroll_container, buttons_row],
+        [
+            current_path_text_column,
+            chosen_folder_column,
+            folder_scroll_container,
+            buttons_row,
+        ],
         spacing=10,
         alignment=ft.MainAxisAlignment.START,
     )
 
-    container = Container(content=main_column, alignment=ft.alignment.top_center, width=300)
+    container = Container(
+        content=main_column, alignment=ft.alignment.top_center, width=300
+    )
     update_folder_list()
     return container

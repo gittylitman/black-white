@@ -59,9 +59,7 @@ def upload_files(page: ft.Page, run_type: Run_Type, env_type: Env_Type) -> Colum
                 update_file_label(1)
 
             except Exception as e:
-                show_message(
-                    page, str(e), COLORS.FAILED_COLOR.value
-                )
+                show_message(page, str(e), COLORS.FAILED_COLOR.value)
         elif not is_folder and e.files:
             selected_files["files"] = e.files
             update_file_label(len(e.files))

@@ -1,6 +1,9 @@
 import os
 from dotenv import load_dotenv
+
 load_dotenv()
+
+
 class _SetupEnv:
     def init_settings(self):
         try:
@@ -10,7 +13,11 @@ class _SetupEnv:
         except KeyError as e:
             raise ValueError(f"Missing key in env: {e}")
         return self
+
+
 env = None
+
+
 def get_env_instance() -> _SetupEnv:
     try:
         global env
