@@ -26,10 +26,21 @@ jobs:
       - name: 🔧 Build exe file
         run: |
           pip install .
-          python -m PyInstaller --onefile --hidden-import "flet" --noconfirm src/main.py
+          python -m PyInstaller --onefile --hidden-import "flet" --hidden-import "dotenv" --noconfirm main.py
+
+      - name: 🚚 Copy .env
+        run: |
+          Copy-Item -Path ".env" -Destination "./dist/"
+
+      - name: 💫 Extract actionType
+        run: |
+          $envFile = Get-Content .env
+          $actionType = $envFile | Where-Object { $_ -match '^ACTION_TYPE=' } | ForEach-Object { $_.Split('=')[1].Trim('"') }
+          echo "ACTION_TYPE=$actionType" >> $env:GITHUB_ENV
 
       - name: ⬆️ Upload Executable
         uses: actions/upload-artifact@v4
         with:
-          name: upload
+          name: ${{ env.ACTION_TYPE }}
+          include-hidden-files: true
           path: ./dist
