@@ -79,7 +79,7 @@ def upload_files_to_gcp(bucket_name: str, folder_name: str, file_path: str) -> N
             capture_output=True,
             text=True,
             startupinfo=startupinfo,
-            timeout=60,
+            timeout=360,
         )
 
         if result.returncode != 0:
