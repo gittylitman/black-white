@@ -84,7 +84,6 @@ def set_env_type(page: ft.Page, env_type: Env_Type):
             else Run_Type.DOWNLOAD,
         ).project_id
         set_project_id(project_id)
-        # show_message(page, result, COLORS.FAILED_COLOR.value)
         if ACTION_TYPE == Run_Type.UPLOAD.value:
             display_upload_page(page, Run_Type.UPLOAD, env_type)
         else:
