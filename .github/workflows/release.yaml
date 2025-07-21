@@ -26,7 +26,7 @@ jobs:
       - name: 🔧 Build exe file
         run: |
           pip install .
-          python -m PyInstaller --onefile --hidden-import "flet" --hidden-import "dotenv" --noconfirm דsrc/main.py
+          python -m PyInstaller --onefile --hidden-import "flet" --hidden-import "dotenv" --noconfirm src/main.py
 
       - name: 🚚 Copy .env
         run: |
