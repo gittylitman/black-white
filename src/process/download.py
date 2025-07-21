@@ -65,8 +65,7 @@ def download_files(page: ft.Page, run_type: Run_Type, env_type: Env_Type) -> Col
                 page.update()
             page.update()
         except ValueError as e:
-            raise e
-
+            return e
     department_dropdown = dropdown(
         page, handle_folder_selection, run_type=run_type, env_type=env_type
     )
