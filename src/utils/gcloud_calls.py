@@ -1,7 +1,7 @@
 import subprocess
 import os
 
-from config.const import COLORS, ERROR_MESSAGES
+from config.const import COLORS
 from utils.basic_function import show_message
 from typing import List
 
