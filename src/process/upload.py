@@ -46,7 +46,7 @@ def upload_files(page: ft.Page, run_type: Run_Type, env_type: Env_Type) -> Colum
             try:
                 original_folder_name = os.path.basename(e.path)
                 temp_dir = tempfile.gettempdir()
-                zip_base_name = os.path.join(temp_dir, original_folder_name)
+                zip_base_name = os.path.abspath(os.path.join(temp_dir, original_folder_name))
                 zip_path = f"{zip_base_name}.zip"
 
                 shutil.make_archive(
