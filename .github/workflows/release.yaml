@@ -39,8 +39,8 @@ jobs:
           $envFile = Get-Content .env
           $actionType = $envFile | Where-Object { $_ -match '^ACTION_TYPE=' } | ForEach-Object { $_.Split('=')[1].Trim('"') }
           echo "ACTION_TYPE=$actionType" >> $env:GITHUB_ENV
-          echo $actionType
-          echo "${{ env.ACTION_TYPE }}"
+          echo "ACTION_TYPE: ${{ env.ACTION_TYPE }}"
+          $actionType
 
       - name: ⬆️ Upload Executable
         uses: actions/upload-artifact@v4
