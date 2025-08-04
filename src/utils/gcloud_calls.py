@@ -1,9 +1,8 @@
 import subprocess
 import os
 
-from config.const import COLORS
+from config.const import COLORS, ERROR_MESSAGES
 from utils.basic_function import show_message
-from typing import List
 
 
 def set_project_id(project_id: str):
@@ -32,36 +31,28 @@ def set_project_id(project_id: str):
     except Exception as e:
         raise e
 
-def get_folders_and_files(bucket_name: str, path: str = "") -> List[str]:
+def get_folders_and_files(bucket_name: str):
     """Bringing the files and folders from GCP."""
-    try:
-        startupinfo = subprocess.STARTUPINFO()
-        startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-
-        full_path = f"gs://{bucket_name}/{path}".rstrip("/") + "/"
-
-        command = ["cmd", "/c", "gcloud", "storage", "ls", full_path]
-        result = subprocess.run(
-            command,
-            capture_output=True,
-            text=True,
-            startupinfo=startupinfo,
-        )
-
-        if result.returncode != 0:
-            raise Exception(result.stderr)
-
-        list_folders_and_files = result.stdout.strip().split("\n")
-        list_folders = [
-            line.strip().split("/")[-2]
-            for line in list_folders_and_files
-            if line.strip().endswith("/")
-        ]
-
-        return sorted(set(list_folders))
-
-    except Exception as e:
-        raise e
+    startupinfo = subprocess.STARTUPINFO()
+    startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+    result = subprocess.run(
+        [
+            "cmd",
+            "/c",
+            "gcloud",
+            "storage",
+            "ls",
+            "--recursive",
+            "--format=gsutil",
+            f"gs://{bucket_name}/",
+        ],
+        capture_output=True,
+        text=True,
+        startupinfo=startupinfo,
+    )
+    if result.returncode != 0:
+        raise Exception(result.stderr)
+    return result.stdout
 
 
 def upload_files_to_gcp(bucket_name: str, folder_name: str, file_path: str) -> None:
@@ -84,7 +75,7 @@ def upload_files_to_gcp(bucket_name: str, folder_name: str, file_path: str) -> N
             capture_output=True,
             text=True,
             startupinfo=startupinfo,
-            timeout=360,
+            timeout=60,
         )
 
         if result.returncode != 0:
@@ -146,8 +137,18 @@ def download_files_from_gcp(page, bucket_name: str, folder_path: str, file_name:
             startupinfo=startupinfo,
         )
         if result.returncode != 0:
+            show_message(
+                page,
+                ERROR_MESSAGES.ERROR_FETCHING_FOLDERS.value,
+                COLORS.VALID_MESSAGES_COLORS.value,
+            )
             raise Exception(result.stderr)
         return result.stdout
     
     except Exception as e:
+        show_message(
+            page,
+            ERROR_MESSAGES.ERROR_FETCHING_FOLDERS.value,
+            COLORS.FAILED_COLOR.value,
+        )
         raise e
