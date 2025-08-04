@@ -123,7 +123,7 @@ def show_progress_popup(
         success_count = 0
         failure_count = 0
 
-        with ThreadPoolExecutor(max_workers=5) as executor:
+        with ThreadPoolExecutor() as executor:
             futures = [
                 executor.submit(
                     process_file, pc, bucket, folder, pc["file_path"], action_func

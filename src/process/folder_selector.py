@@ -8,6 +8,8 @@ from classes.container import Container
 from classes.row import Row
 from classes.text import Text
 from config.const import COLORS, TEXTS
+from utils.basic_function import show_message
+from utils.gcloud_calls import get_folders_and_files
 
 
 def get_folders_in_path(folders: Dict[str, List[str]], path: str = "") -> List[str]:
@@ -21,75 +23,69 @@ def hierarchical_folder_selector(
     page: ft.Page,
     bucket: str,
     on_folder_selected: Callable[[str], None],
-    folders,
+    initial_path: str = "",
 ) -> Container:
-    """Hierarchical folder selector."""
-    current_path = ""
+    current_path = initial_path.strip("/")
     path_stack = []
+
     folder_column = Column(spacing=10, scroll=ft.ScrollMode.AUTO, controls=[])
     folder_scroll_container = Container(
         content=folder_column, height=130, width=300, alignment=ft.alignment.center
     )
     current_path_text = Text(text="", size=20, width=500)
-    chosen_folder = Text(
-        text=TEXTS.CHOSEN_FOLDER.value + TEXTS.NONE.value,
-        size=12,
-    )
+    chosen_folder = Text(text=TEXTS.CHOSEN_FOLDER.value + TEXTS.NONE.value, size=12)
 
     def update_folder_list():
-        """ "Update folder list."""
-        nonlocal folders
-        folders_chosen = get_folders_in_path(folders, current_path)
         folder_column.controls.clear()
+        try:
+            folders = get_folders_and_files(bucket, current_path)
+            if folders:
+                for folder in folders:
+                    row = ft.Row(
+                        [
+                            ft.TextButton(
+                                icon=ft.icons.CREATE_NEW_FOLDER_ROUNDED,
+                                text=folder,
+                                on_click=lambda e, f=folder: enter_folder(f),
+                                style=ft.ButtonStyle(
+                                    color={
+                                        ft.ControlState.DEFAULT: COLORS.BLACK_COLOR.value
+                                    },
+                                ),
+                            )
+                        ],
+                        alignment=ft.MainAxisAlignment.START,
+                        spacing=5,
+                    )
+                    folder_column.controls.append(row)
+            else:
+                folder_column.controls.append(Text(TEXTS.NO_SUBFOLDER.value))
 
-        if folders_chosen:
-            for folder in folders_chosen:
-                row = ft.Row(
-                    [
-                        ft.TextButton(
-                            icon=ft.icons.CREATE_NEW_FOLDER_ROUNDED,
-                            text=folder,
-                            on_click=lambda e, f=folder: enter_folder(f),
-                            style=ft.ButtonStyle(
-                                color={
-                                    ft.ControlState.DEFAULT: COLORS.BLACK_COLOR.value
-                                },
-                            ),
-                        )
-                    ],
-                    alignment=ft.MainAxisAlignment.START,
-                    spacing=5,
-                )
-                folder_column.controls.append(row)
-        else:
-            folder_column.controls.append(Text(TEXTS.NO_SUBFOLDER.value))
-
-        current_path_display = (
-            TEXTS.CURRENT_PATH.value + current_path
-            if current_path
-            else TEXTS.CHOOSE_FOLDER.value
-        )
-        current_path_text.value = current_path_display
-        page.update()
+            current_path_display = (
+                TEXTS.CURRENT_PATH.value + current_path
+                if current_path
+                else TEXTS.CHOOSE_FOLDER.value
+            )
+            current_path_text.value = current_path_display
+            page.update()
+        except Exception as e:
+            show_message(page, str(e), COLORS.PROCESS_COLOR.value)
 
     def enter_folder(folder: str):
-        """Enter folder"""
         nonlocal current_path
         path_stack.append(current_path)
         current_path = f"{current_path}/{folder}".strip("/")
         update_folder_list()
 
     def go_back(e):
-        """Go back."""
         nonlocal current_path
         if path_stack:
             current_path = path_stack.pop()
             update_folder_list()
         chosen_folder.value = TEXTS.CHOSEN_FOLDER.value + TEXTS.NONE.value
-        on_folder_selected(f"{bucket}/")
+        on_folder_selected(f"{bucket}/{current_path}".strip("/"))
 
     def choose_this_folder(e):
-        """Choose folder"""
         full_path = f"{bucket}/{current_path}".strip("/")
         chosen_folder.value = TEXTS.CHOSEN_FOLDER.value + current_path
         on_folder_selected(full_path)
@@ -130,6 +126,5 @@ def hierarchical_folder_selector(
     container = Container(
         content=main_column, alignment=ft.alignment.top_center, width=300
     )
-
     update_folder_list()
     return container
